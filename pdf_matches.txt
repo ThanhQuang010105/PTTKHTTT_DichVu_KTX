@@ -1,0 +1,23 @@
+................................................................................ 43 13. Tạo yêu cầu trả phòng ................................................................................................ 44
+ https://drive.google.com/file/d/1j7j6UrB3ObHcOKOxFJiFW2dQY035VX1n/view?usp=sharing 13. Tạo yêu cầu trả phòng 44 13.1 Các tiêu chí đánh giá giao diện ● Quy trình và thói quen người dùng: Màn hình được thiết kế
+ theo luồng xử lý thực tế của nhân viên sale khi tiếp nhận yêu cầu trả phòng: Tra cứu thông tin khách thuê → Kiểm tra thông tin khách thuê và hợp đồng → Nhập thông tin yêu cầu 
+trả phòng → Tạo yêu cầu trả phòng. Nhân viên có thể tra cứu bằng số điện thoại, CCCD/CMND, mã hợp đồng hoặc họ tên khách thuê . Sau k
+hị thông tin khách thuê, hợp đồng, phòng/giường và tiền cọc. Cuối cùng, nhân viên nhập ngày dự kiến trả phòng, lý do trả phòng, ghi chú và xác nhận tạo yêu cầu. ● Tối thiểu hóa sự bất ngờ & có khả năng khôi ph
+viên sửa nhầm dữ liệu gốc. Nút [HỦY BỎ] dùng để hủy thao tác và không lưu dữ liệu. Nút [TẠO YÊU CẦU TRẢ PHÒNG] được đặt ở góc dưới bên phải và làm nổi bật vì đây là hành động chính của màn hình. ● Tính nhất qu
+h thuê. ● Khu vực 2: Hiển thị thông tin khách thuê và hợp đồng. ● Khu vực 3: Nhập thông tin yêu cầu trả phòng. 45 Các trường dữ liệu được trình bày theo dạng nhãn – giá trị. Những trường bắt buộc như Số điện t
+hoại , Ngày dự kiến trả phòng , Lý do trả phòng được đánh dấu sao (*) để người dùng biết cần nhập trước khi lưu. 13.2. Chi tiết từng bước thực hiện
+đồng và tiền cọc. ● Bước 4: Nếu hợp đồng đang ở trạng thái hợp lệ, nhân viên nhập thông tin yêu cầu trả phòng gồm: ngày dự kiến trả phòng, lý do trả phòng và ghi chú nếu có. ● Bước 5: Nhân viên nhấn [TẠO YÊU C
+ẦU TRẢ PHÒNG] . Hệ thống ghi nhận yêu cầu trả phòng và chuyển hồ sơ sang bước Chờ kiểm tra hiện trạng . ● Bước 6: Nếu nhân viên không muốn tiếp tục, nh
+ đồng và tiền cọc. Các dữ liệu này không cho phép chỉnh sửa trực tiếp. 46 ● DatePicker Ngày dự kiến trả phòng: Dùng để chọn ngày khách dự kiến trả phòng, giúp tránh lỗi nhập sai định dạng ngày. ● ComboBox Lý d
+o trả phòng: Dùng để chọn lý do trả phòng từ danh sách có sẵn như: hết nhu cầu thuê, hết hạn thuê, chuyển nơi ở khác hoặc lý do khác. ● TextA
+rea Ghi chú: Dùng để nhập thông tin bổ sung như thời gian khách hẹn trả phòng hoặc lưu ý cho bước kiểm tra hiện trạng. ● Info Box / Khung lưu ý: Thông báo cho nhân viên biết sau
+ soát tài chính. ● Button [HỦY BỎ]: Hủy thao tác hiện tại, không lưu dữ liệu. ● Button [TẠO YÊU CẦU TRẢ PHÒNG]: Lưu yêu cầu trả phòng và cập nhật trạng thái hợp đồng sang “Chờ kiểm tra hiện trạng”. b. Logic xử
+phải tồn tại trong hệ thống. ○ Hợp đồng phải đang ở trạng thái “Đang hiệu lực” mới được tạo yêu cầu trả phòng. ○ Nếu hợp đồng đã thanh lý hoặc đang chờ xử lý trả phòng, hệ thống không cho tạo yêu cầu mới. ○ Ng
+ày dự kiến trả phòng không được nhỏ hơn ngày bắt đầu ở. ○ Ngày dự kiến trả phòng không được để trống. ○ Lý do trả phòng là trường bắt buộc. ○ Nếu chưa tra cứu hợp đồng mà nhấn [TẠO
+ YÊU CẦU TRẢ PHÒNG] , hệ thống báo lỗi: “Vui lòng tra cứu hợp đồng trước khi tạo yêu cầu trả phòng.” ● Logic nghiệp vụ: ○ Khi tra cứu thành công, hệ thống tự động hiển thị thông tin khách thuê và hợ
+p đồng tương ứng. ○ Hệ thống chỉ cho phép tạo yêu cầu trả phòng với hợp đồng còn hiệu lực. ○ Sau khi tạo yêu cầu, hệ thống ghi nhận ngày dự kiến trả phòng, lý do t
+t kế theo đúng luồng làm việc của nhân viên quản lý khi kiểm tra phòng sau khi khách đã tạo yêu cầu trả phòng: Tra cứu thông tin khách hàng / hợp đồng → Kiểm tra thông tin khách thuê và phòng/giường → Nhập hiệ
+ra cứu khách thuê theo số điện thoại. Đây là thông tin dễ nhớ và thường được dùng khi khách yêu cầu trả phòng. ● TextBox CCCD/CMND: Dùng để tra cứu khách thuê khi cần đối chiếu giấy tờ cá nhân. 51 ● TextBox Mã
+u để hiển thị lên màn hình. ○ Hệ thống chỉ cho phép kiểm tra hiện trạng đối với hồ sơ đã có yêu cầu trả phòng và đang chờ kiểm tra. ○ Danh sách tài sản kiểm tra được lấy từ biên bản bàn giao hoặc danh sách tài
+ Quy trình và Thói quen người dùng: Màn hình được thiết kế theo luồng xử lý cuối cùng của quy trình trả phòng: Tra cứu hồ sơ chờ thanh lý → Kiểm tra thông tin khách thuê, hợp đồng, phiếu đặt cọc → Xem kết quả 
+g: Màn hình được thiết kế theo đúng luồng làm việc tuyến tính của nhân viên kế toán khi xử lý hồ sơ trả phòng: Tra cứu hợp đồng đủ điều kiện → Đọc thông tin tổng quan để xác nhận đúng người, đúng hợp đồng → Rà
