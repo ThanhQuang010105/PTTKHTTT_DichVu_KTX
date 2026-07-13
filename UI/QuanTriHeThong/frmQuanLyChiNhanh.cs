@@ -17,7 +17,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
         private readonly TextBox txtSoDienThoai = new TextBox();
         private readonly ComboBox cboTrangThai = new ComboBox();
         private readonly Label lblTrangThai = new Label();
-        private int _maChiNhanh;
+        private string _maChiNhanh = string.Empty;
 
         public frmQuanLyChiNhanh()
         {
@@ -161,7 +161,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
         private void FillSelectedRow()
         {
             if (dgvChiNhanh.CurrentRow == null) return;
-            _maChiNhanh = Convert.ToInt32(dgvChiNhanh.CurrentRow.Cells["MaChiNhanh"].Value);
+            _maChiNhanh = Convert.ToString(dgvChiNhanh.CurrentRow.Cells["MaChiNhanh"].Value) ?? string.Empty;
             txtTen.Text = Convert.ToString(dgvChiNhanh.CurrentRow.Cells["TenChiNhanh"].Value);
             txtKhuVuc.Text = Convert.ToString(dgvChiNhanh.CurrentRow.Cells["KhuVuc"].Value);
             txtDiaChi.Text = Convert.ToString(dgvChiNhanh.CurrentRow.Cells["DiaChi"].Value);
@@ -171,7 +171,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
 
         private void ClearForm()
         {
-            _maChiNhanh = 0;
+            _maChiNhanh = string.Empty;
             txtTen.Clear();
             txtKhuVuc.Clear();
             txtDiaChi.Clear();

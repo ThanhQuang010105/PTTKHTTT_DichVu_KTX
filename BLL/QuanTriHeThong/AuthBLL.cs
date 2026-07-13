@@ -31,7 +31,9 @@ namespace HomeStayDorm.BLL.QuanTriHeThong
             }
 
             string hash = HashMatKhau(matKhau);
-            if (!string.Equals(nhanVien.MatKhauHash, hash, StringComparison.OrdinalIgnoreCase))
+            bool dungMatKhau = string.Equals(nhanVien.MatKhauHash, matKhau, StringComparison.Ordinal)
+                || string.Equals(nhanVien.MatKhauHash, hash, StringComparison.OrdinalIgnoreCase);
+            if (!dungMatKhau)
             {
                 return DangNhapResult.ThatBai("Tài khoản hoặc mật khẩu không đúng.");
             }
@@ -55,13 +57,13 @@ namespace HomeStayDorm.BLL.QuanTriHeThong
         {
             return new NhanVienDTO
             {
-                MaNhanVien = Convert.ToInt32(row["MaNhanVien"]),
+                MaNhanVien = Convert.ToString(row["MaNhanVien"]) ?? string.Empty,
                 HoTen = Convert.ToString(row["HoTen"]) ?? string.Empty,
                 TenDangNhap = Convert.ToString(row["TenDangNhap"]) ?? string.Empty,
                 Email = Convert.ToString(row["Email"]) ?? string.Empty,
                 SoDienThoai = Convert.ToString(row["SoDienThoai"]),
                 VaiTro = Convert.ToString(row["VaiTro"]) ?? string.Empty,
-                MaChiNhanh = row.Table.Columns.Contains("MaChiNhanh") && row["MaChiNhanh"] != DBNull.Value ? Convert.ToInt32(row["MaChiNhanh"]) : null,
+                MaChiNhanh = row.Table.Columns.Contains("MaChiNhanh") && row["MaChiNhanh"] != DBNull.Value ? Convert.ToString(row["MaChiNhanh"]) : null,
                 TenChiNhanh = row.Table.Columns.Contains("TenChiNhanh") ? Convert.ToString(row["TenChiNhanh"]) : null,
                 MatKhauHash = row.Table.Columns.Contains("MatKhauHash") ? Convert.ToString(row["MatKhauHash"]) : null,
                 TrangThai = Convert.ToString(row["TrangThai"]) ?? string.Empty,

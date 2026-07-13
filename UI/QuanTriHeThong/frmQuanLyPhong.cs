@@ -31,8 +31,8 @@ namespace HomeStayDorm.UI.QuanTriHeThong
         private readonly ComboBox cboTrangThaiGiuong = new ComboBox();
         private readonly Label lblTrangThai = new Label();
 
-        private int _maPhong;
-        private int _maGiuong;
+        private string _maPhong = string.Empty;
+        private string _maGiuong = string.Empty;
 
         public frmQuanLyPhong()
         {
@@ -251,9 +251,9 @@ namespace HomeStayDorm.UI.QuanTriHeThong
             cboChiNhanh.ValueMember = "MaChiNhanh";
 
             UiHelper.ConfigureCombo(cboGioiTinh, "Nam", "Nữ", "Không yêu cầu");
-            UiHelper.ConfigureCombo(cboLoaiPhong, "Tiêu chuẩn", "Cao cấp", "Studio");
-            UiHelper.ConfigureCombo(cboTrangThaiPhong, "Trống", "Đang ghép", "Đang ở", "Đã đặt cọc", "Ngừng sử dụng");
-            UiHelper.ConfigureCombo(cboTrangThaiGiuong, "Trống", "Đang ở", "Đã đặt cọc", "Ngừng sử dụng");
+            UiHelper.ConfigureCombo(cboLoaiPhong, "Phòng 4 Người", "Phòng Đơn");
+            UiHelper.ConfigureCombo(cboTrangThaiPhong, "Hoạt động", "Ngừng sử dụng");
+            UiHelper.ConfigureCombo(cboTrangThaiGiuong, "Trống", "Đã thuê", "Ngừng sử dụng");
             nudSucChua.Minimum = 1;
             nudSucChua.Maximum = 30;
             ConfigureMoney(nudGiaPhong);
@@ -297,7 +297,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
                     return;
                 }
 
-                int maPhong = Convert.ToInt32(cboPhongGiuong.SelectedValue);
+                string maPhong = Convert.ToString(cboPhongGiuong.SelectedValue) ?? string.Empty;
                 dgvGiuong.DataSource = _giuongBLL.LayDanhSachTheoPhong(maPhong);
             }
             catch
@@ -309,8 +309,8 @@ namespace HomeStayDorm.UI.QuanTriHeThong
         private void FillSelectedPhong()
         {
             if (dgvPhong.CurrentRow == null) return;
-            _maPhong = Convert.ToInt32(dgvPhong.CurrentRow.Cells["MaPhong"].Value);
-            cboChiNhanh.SelectedValue = Convert.ToInt32(dgvPhong.CurrentRow.Cells["MaChiNhanh"].Value);
+            _maPhong = Convert.ToString(dgvPhong.CurrentRow.Cells["MaPhong"].Value) ?? string.Empty;
+            cboChiNhanh.SelectedValue = Convert.ToString(dgvPhong.CurrentRow.Cells["MaChiNhanh"].Value);
             txtTenPhong.Text = Convert.ToString(dgvPhong.CurrentRow.Cells["TenPhong"].Value);
             txtKhuVuc.Text = Convert.ToString(dgvPhong.CurrentRow.Cells["KhuVuc"].Value);
             cboGioiTinh.SelectedItem = Convert.ToString(dgvPhong.CurrentRow.Cells["GioiTinhQuyDinh"].Value);
@@ -324,7 +324,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
         private void FillSelectedGiuong()
         {
             if (dgvGiuong.CurrentRow == null) return;
-            _maGiuong = Convert.ToInt32(dgvGiuong.CurrentRow.Cells["MaGiuong"].Value);
+            _maGiuong = Convert.ToString(dgvGiuong.CurrentRow.Cells["MaGiuong"].Value) ?? string.Empty;
             txtTenGiuong.Text = Convert.ToString(dgvGiuong.CurrentRow.Cells["TenGiuong"].Value);
             nudGiaGiuong.Value = Convert.ToDecimal(dgvGiuong.CurrentRow.Cells["GiaThue"].Value);
             cboTrangThaiGiuong.SelectedItem = Convert.ToString(dgvGiuong.CurrentRow.Cells["TrangThaiGiuong"].Value);
@@ -332,7 +332,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
 
         private void ClearPhong()
         {
-            _maPhong = 0;
+            _maPhong = string.Empty;
             txtTenPhong.Clear();
             txtKhuVuc.Clear();
             if (cboChiNhanh.Items.Count > 0) cboChiNhanh.SelectedIndex = 0;
@@ -345,7 +345,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
 
         private void ClearGiuong()
         {
-            _maGiuong = 0;
+            _maGiuong = string.Empty;
             txtTenGiuong.Clear();
             nudGiaGiuong.Value = 1000000;
             cboTrangThaiGiuong.SelectedIndex = 0;
@@ -358,11 +358,11 @@ namespace HomeStayDorm.UI.QuanTriHeThong
                 PhongDTO dto = new PhongDTO
                 {
                     MaPhong = _maPhong,
-                    MaChiNhanh = Convert.ToInt32(cboChiNhanh.SelectedValue),
+                    MaChiNhanh = Convert.ToString(cboChiNhanh.SelectedValue) ?? string.Empty,
                     TenPhong = txtTenPhong.Text.Trim(),
                     KhuVuc = txtKhuVuc.Text.Trim(),
                     GioiTinhQuyDinh = Convert.ToString(cboGioiTinh.SelectedItem) ?? "Không yêu cầu",
-                    LoaiPhong = Convert.ToString(cboLoaiPhong.SelectedItem) ?? "Tiêu chuẩn",
+                    LoaiPhong = Convert.ToString(cboLoaiPhong.SelectedItem) ?? "Phòng 4 Người",
                     SucChua = Convert.ToInt32(nudSucChua.Value),
                     GiaThue = nudGiaPhong.Value,
                     TrangThaiPhong = Convert.ToString(cboTrangThaiPhong.SelectedItem) ?? "Trống"
@@ -401,7 +401,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
                 GiuongDTO dto = new GiuongDTO
                 {
                     MaGiuong = _maGiuong,
-                    MaPhong = Convert.ToInt32(cboPhongGiuong.SelectedValue),
+                    MaPhong = Convert.ToString(cboPhongGiuong.SelectedValue) ?? string.Empty,
                     TenGiuong = txtTenGiuong.Text.Trim(),
                     GiaThue = nudGiaGiuong.Value,
                     TrangThaiGiuong = Convert.ToString(cboTrangThaiGiuong.SelectedItem) ?? "Trống"

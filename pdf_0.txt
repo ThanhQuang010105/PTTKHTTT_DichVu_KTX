@@ -1,0 +1,1521 @@
+   
+ 
+  1 
+ TRƯ ỜNG Đ ẠI HỌC KHOA H ỌC TỰ NHIÊN -ĐHQG -HCM   
+_______________________  
+ 
+  BÀI BÁO CÁO    
+HỆ THỐNG QU ẢN LÝ KÝ TÚC XÁ 
+HOMESTAY DORM  
+BÁO CÁO: PHÂN TÍCH NGHI ỆP VỤ VÀ PHÂN  
+TÍCH H Ệ THỐNG 
+ 
+Môn học: Phân tích Thiết kế Hệ thống thông tin  
+ Giáo Viên:   
+TS. Lê Nguyễn Hoài Nam  
+  ThS. Nguyễn Ngọc Minh Châu  
+ThS. Tiết Gia Hồng  
+                          
+                                        
+ 
+   
+ 
+  2 
+ MỤC LỤC 
+PHẦN I – PHÂN TÍCH NGHI ỆP VỤ ................................ ................................ ..............  5 
+1. Use-case nghi ệp vụ ................................ ................................ ............................  5 
+Danh sách tác nhân nghi ệp vụ ................................ ................................ ...............  5 
+Danh sách use -case nghi ệp vụ ................................ ................................ ..............  5 
+2. Đặc tả & Activity Diagram  ................................ ................................ ..................  7 
+Quy trình Đăng ký thuê phòng  ................................ ................................ ...............  8 
+Quy trình Ki ểm tra phòng/giư ờng phù h ợp ................................ ..........................  10 
+Quy trình Ki ểm tra thông tin thuê phòng  ................................ ..............................  12 
+Quy trình Đ ặt cọc ................................ ................................ ................................ .. 14 
+Quy trình Thanh toán  ................................ ................................ ............................  16 
+Quy trình Ki ểm tra thông tin và đi ều kiện cư trú  ................................ ..................  18 
+Quy trình Ký thuê phòng và Thanh toán  ................................ ..............................  20 
+Quy trình Bàn giao phòng ................................ ................................ .....................  22 
+Quy trình Tr ả phòng ................................ ................................ ..............................  24 
+Quy trình Tính ti ền hoàn c ọc ................................ ................................ ................  27 
+3. Sơ đ ồ lớp mức phân tích  ................................ ................................ .................  29 
+PHẦN II – PHÂN TÍCH H Ệ THỐNG................................ ................................ ............  31 
+4. Use-case h ệ thống ................................ ................................ ...........................  32 
+Danh sách tác nhân h ệ thống ................................ ................................ ..............  32 
+Danh sách use -case h ệ thống................................ ................................ ..............  32 
+Sơ đ ồ use-case h ệ thống ................................ ................................ .....................  33 
+5. Đặc tả use-case h ệ thống ................................ ................................ ................  34 
+Tạo đăng ký thuê / Tra c ứu phòng/giư ờng kh ả dụng ................................ ..........  35 
+Lập lịch xem phòng / C ập nhật kết quả tư vấn ................................ ....................  36 
+Kiểm tra thông tin khách thuê / C ập nhật thông tin  ................................ .............  38 
+Xử lý phòng đã đ ặt trước ................................ ................................ .....................  39 
+Lập yêu c ầu thanh toán c ọc / Đối chiếu & xác nh ận chứng từ ...........................  40 
+Tra c ứu thông tin đ ặt cọc / Cập nhật hồ sơ cư trú  ................................ ..............  42 
+Phê duy ệt điều kiện lưu trú / Xfi lý h ủy thủ tục thuê  ................................ ............  43 
+Lập hợp đồng thuê / L ập phi ếu thu / Xác nh ận thanh toán  ................................ . 45 
+Lập biên b ản bàn giao  ................................ ................................ ..........................  47 
+Quản lý tr ả phòng  ................................ ................................ ................................ . 48    
+ 
+  3 
+  
+ 
+ 
+Danh sách thành viên nhóm 4  
+MSSV  Họ và tên  
+23120028  Nguy ễn Hoàng Danh  
+23120087  Phạm Ng ọc Thanh  
+23120361  Đào Đ ức Thịnh 
+23120344  Đặng Dương Thanh Quang  
+23120411  Thạch Ý 
+ 
+    
+ 
+  4 
+ Bảng phân công  
+Thành 
+viên Phân tích nghi ệp vụ 
+(Business Analysis)  Phân tích h ệ thống (System 
+Analysis)  
+Thạch Ý    
+- Đặc tả UC 3.1.1 (Đăng 
+ký thuê phòng) .  
+- Vẽ Activity Diagram 
+3.1.1.  - Vẽ System Use-case diagram cho 
+chức năng đăng ký .  
+- Đặc tả chi tiết System UC ph ần 
+đăng ký.  
+Phạm 
+Ngọc 
+Thanh  - Đặc tả UC 3.1.2 (Đ ặt 
+cọc & Xác nh ận thuê) .  
+- Vẽ Activity Diagram 
+3.1.2.  - System UC cho đ ặt cọc (Xác nh ận 
+cọc, Tính ti ền cọc, Thanh toán, H ủy 
+cọc) . 
+- Đặc tả chi tiết System UC ph ần đặt 
+cọc. 
+Đào Đ ức 
+Thịnh - Đặc tả UC 3.1.3 (Nh ận 
+phòng, Ký HĐ & Bàn 
+giao) .  
+- Vẽ Activity Diagram 
+3.1.3.  - System UC cho nh ận phòng (Ki ểm 
+tra đặt cọc, Lập HĐ, Thu phí, Bàn 
+giao) .  
+- Đặc tả chi tiết System UC ph ần 
+nhận phòng.  
+Nguy ễn 
+Hoàng 
+Danh  - Đặc tả UC 3.1.4 (Tr ả 
+phòng & Hoàn c ọc) . 
+- Vẽ Activity Diagram 
+3.1.4.  - System UC cho tr ả phòng (Đăng ký, 
+Tính hoàn c ọc, Đối soát, Thanh lý 
+HĐ) .  
+- Đặc tả chi tiết System UC ph ần trả 
+phòng.  
+Đặng 
+Dương 
+Thanh 
+Quang  - Vẽ Business Use -case 
+diagram t ổng . 
+- Vẽ sơ đồ use case h ệ 
+thống 
+- Vẽ sơ đồ lớp mức phân 
+tích. - Tổng hợp và review toàn b ộ System 
+Use-case c ủa 4 quy trình .  
+- Đảm bảo nhất quán gi ữa UC nghi ệp 
+vụ và UC h ệ thống. 
+- Viết báo cáo  
+ 
+    
+ 
+  5 
+ PHẦN I – PHÂN TÍCH NGHI ỆP VỤ 
+ 
+1. Use-case nghi ệp vụ 
+ 
+Danh sách tác nhân nghi ệp vụ 
+ 
+STT Tác nhân  Mô tả 
+1 Khách hàng  Cá nhân ho ặc đại diện nhóm có nhu c ầu thuê phòng/giư ờng 
+2 Nhân viên sale  Tiếp nhận, tư v ấn, sắp xếp lịch xem phòng và h ỗ trợ khách 
+hàng trong toàn b ộ quy trình  
+3 Quản lý Kiểm tra đi ều kiện, phê duy ệt và giám sát các quy trình lưu trú  
+4 Bộ phận kế 
+toán Tính toán, l ập phi ếu thu/chi, xác nh ận thanh toán và hoàn c ọc 
+5 Nhân viên ph ụ  
+trách  Lập và hư ớng dẫn ký h ợp đồng thuê, bàn giao phòng  
+ 
+Danh sách use -case nghi ệp vụ 
+ 
+STT Tên use -
+case 
+nghi ệp vụ Tác nhân chính  Mô tả ngắn 
+1 Đăng ký thuê phòng  Khách hàng, Nhân 
+viên sale  Tiếp nhận nhu c ầu, ghi nh ận 
+thông tin, s ắp xếp lịch xem 
+phòng  
+2 Kiểm tra phòng/ 
+giường phù h ợp Nhân viên sale  Đối chiếu phòng/giư ờng còn 
+trống với yêu c ầu khách 
+hàng  
+   
+ 
+  6 
+ 3 Kiểm tra thông tin 
+thuê phòng  Nhân viên sale, Qu ản 
+lý Rà soát thông tin và đi ều 
+kiện lưu trú trư ớc khi nh ận 
+cọc 
+4 Đặt cọc Khách hàng, Nhân 
+viên sale  Xác nh ận điều kiện, nội quy và 
+tiến hành đ ặt cọc 
+5 Thanh toán  Kế toán, Qu ản lý Tính ti ền cọc, lập yêu c ầu 
+thanh toán và đ ối chiếu 
+chứng từ 
+6 Kiểm tra thông tin và 
+điều kiện cư trú  Nhân viên sale, Qu ản 
+lý Đối chiếu giấy tờ, điều kiện 
+lưu trú khi nh ận phòng  
+7 Ký thuê 
+phòng và 
+Thanh toán  Nhân viên ph ụ trách, 
+Kế toán Lập hợp đồng, hư ớng dẫn 
+ký và thu phí nh ận phòng  
+8 Bàn giao phòng  Quản lý, Khách hàng  Kiểm tra hi ện trạng và bàn 
+giao phòng/giư ờng cho khách  
+9 Trả phòng  Khách hàng, Nhân 
+viên sale, Qu ản lý, 
+Kế toán Tiếp nhận trả phòng, ki ểm 
+tra tài s ản, thanh lý h ợp 
+đồng 
+10 Tính ti ền hoàn c ọc Kế toán Xác đ ịnh tỷ lệ hoàn c ọc, 
+khấu trừ chi phí, l ập bảng 
+đối soát  
+ 
+Sơ đ ồ use-case nghi ệp vụ tổng quan     
+ 
+  7 
+  
+   
+ 
+  8 
+ 2. Đặc tả & Activity Diagram  
+ 
+Quy trình Đăng ký thuê phòng  
+Đặc tả use-case nghi ệp vụ 
+Trường Nội dung  
+Tên use -case  Đăng ký thuê phòng  
+Mô tả UC b ắt đầu khi khách hàng ho ặc ngư ời đại diện nhóm thuê có 
+nhu c ầu thuê phòng/giư ờng tại HomeStay Dorm. UC mô t ả quá 
+trình nhân viên sale ti ếp nhận nhu c ầu thuê, ghi nh ận thông tin 
+đăng ký, ki ểm tra phòng/ giư ờng phù h ợp, sắp xếp lịch xem 
+phòng và tư v ấn thông tin thuê cho khách hàng.  
+Dòng cơ b ản 1. Nhân viên sale ti ếp nhận nhu c ầu thuê phòng/giư ờng từ 
+khách hàng ho ặc ngư ời đại diện nhóm thuê.  
+2. Nhân viên sale tư v ấn sơ b ộ cho khách hàng v ề hình 
+thức thuê (phòng nguyên căn ho ặc giư ờng ở ghép).  
+3. Nhân viên sale ghi nh ận thông tin đăng ký thuê c ủa khách 
+hàng.  
+4. Thực hiện use -case nghi ệp vụ Kiểm tra phòng/giư ờng phù 
+hợp. 
+5. Nhân viên sale s ắp xếp lịch xem phòng cho khách hàng.  
+6. Nhân viên sale thông báo l ịch xem phòng cho khách hàng 
+qua email ho ặc số điện tho ại. 
+7. Nhân viên sale d ẫn khách hàng đi xem phòng theo l ịch hẹn. 
+8. Nhân viên sale gi ới thiệu thông tin phòng/giư ờng, giá thuê, s ố 
+người ở tối đa, n ội quy, chi phí đi ện nư ớc, dịch vụ đi kèm, quy 
+định đặt cọc – giữ phòng và quy đ ịnh lưu trú.  
+9. Nhân viên sale ghi nh ận quy ết định của khách hàng 
+sau khi xem phòng.  
+10. Nhân viên sale ghi nh ận trạng thái đăng ký là khách hàng 
+có nhu c ầu đặt cọc phòng/giư ờng đã xem.  
+   
+ 
+  9 
+ Dòng thay th ế A3: Tại bước 3, n ếu thông tin đăng ký chưa đ ầy đủ → nhân 
+viên sale yêu c ầu khách b ổ sung → quay l ại bước 3. 
+A4: Tại bước 4, n ếu không có phòng/giư ờng phù h ợp → 
+thông báo khách hàng. N ếu khách mu ốn điều chỉnh tiêu chí 
+→ quay l ại bước 3. N ếu không ti ếp tục → k ết thúc UC.  
+A7: Tại bước 7, n ếu khách không đ ến xem phòng → nhân viên 
+liên h ệ lại. Nếu còn nhu c ầu → quay l ại bước 5. N ếu không còn 
+nhu c ầu → k ết thúc UC.  
+ A9: Tại bước 9, n ếu khách chưa quy ết định đặt cọc → ghi nh ận 
+nhu c ầu tiếp theo. Xem thêm phòng → bư ớc 5. Đi ều chỉnh tiêu 
+chí → bư ớc 3. 
+Không ti ếp tục → k ết thúc UC.  
+ 
+Activity Diagram     
+ 
+  10 
+  
+ 
+ 
+ 
+   
+ 
+  11 
+ Quy trình Ki ểm tra phòng/giư ờng phù h ợp 
+Đặc tả use-case nghi ệp vụ 
+Trường Nội dung  
+Tên use -case  Kiểm tra phòng/giư ờng phù h ợp 
+Mô tả UC b ắt đầu khi nhân viên sale đã ghi nh ận thông tin đăng ký 
+thuê c ủa khách hàng. UC mô t ả quá trình ki ểm tra tình tr ạng 
+phòng/giư ờng hi ện có và đ ối chiếu với yêu c ầu thuê c ủa 
+khách hàng.  
+Dòng cơ b ản 1. Nhân viên sale ki ểm tra tình tr ạng phòng/giư ờng hi ện có t ại ký 
+túc xá.  
+2. Nhân viên sale xác đ ịnh các phòng/giư ờng còn tr ống và 
+chưa đư ợc đặt cọc. 
+3. Đối chiếu phòng/giư ờng còn tr ống với khu v ực mong mu ốn 
+của khách hàng.  
+4. Đối chiếu với giới tính và quy đ ịnh khu v ực của ký túc xá.  
+5. Đối chiếu với số lượng ngư ời dự kiến ở và sức chứa phòng.  
+6. Đối chiếu với loại phòng, m ức giá, th ời gian d ự kiến vào ở, 
+thời hạn thuê và các tiêu chí ưu tiên khác.  
+7. Lập danh sách phòng/giư ờng phù h ợp với yêu c ầu đăng ký 
+thuê.  
+Dòng thay th ế A2: Tại bước 2, n ếu không có phòng/giư ờng còn tr ống ho ặc 
+tất cả đã đặt cọc → ghi nh ận không có phòng/giư ờng phù 
+hợp → k ết thúc UC.  
+A3–A6: Tại các bư ớc 3, 4, 5, 6, n ếu không có phòng/giư ờng 
+nào phù h ợp với yêu c ầu → ghi nh ận lý do không phù h ợp → 
+kết thúc UC.  
+ 
+ 
+ 
+ 
+ 
+    
+ 
+  12 
+ Activity Diagram  
+ 
+   
+ 
+  13 
+ Quy trình Ki ểm tra thông tin thuê phòng  
+Đặc tả use-case nghi ệp vụ 
+Trường Nội dung  
+Tên use -case  Kiểm tra thông tin thuê phòng  
+Mô tả UC b ắt đầu khi khách hàng xác nh ận thuê phòng/giư ờng. UC 
+mô tả quá trình rà soát thông tin, đi ều kiện lưu trú và ki ểm tra 
+tình tr ạng phòng th ực tế để quyết định vi ệc nhận cọc. 
+Dòng cơ b ản 1. Nhân viên sale nh ận được yêu c ầu thuê phòng/giư ờng. 
+2. Nhân viên sale rà soát thông tin và đi ều kiện lưu trú c ủa khách 
+hàng.  
+3. Nhân viên sale liên h ệ quản lý ki ểm tra tình tr ạng phòng th ực 
+tế. 
+4. Nhân viên sale thông báo khách hàng ti ến hành đ ặt cọc. 
+Dòng thay th ế A4: Tại bước 4, n ếu phòng không còn kh ả năng nh ận cọc → 
+nhân viên sale thông báo và đ ề nghị khách xem xét l ựa chọn 
+khác → k ết thúc quy trình.  
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+    
+ 
+  14 
+ Activity Diagram  
+ 
+ 
+ 
+ 
+ 
+ 
+   
+ 
+  15 
+ Quy trình Đ ặt cọc 
+Đặc tả use-case nghi ệp vụ 
+Trường Nội dung  
+Tên use -case  Đặt cọc 
+Mô tả UC b ắt đầu khi khách thuê (ho ặc đại diện nhóm thuê) xác nh ận 
+đồng ý tuân th ủ các đi ều kiện thuê và n ội quy ký túc xá. UC mô 
+tả quá trình xác nh ận nội quy lưu trú, rà soát và c ập nhật thông 
+tin thuê phòng n ếu có s ự thay đ ổi. 
+Dòng cơ b ản 1. Nhân viên sale yêu c ầu khách hàng xác nh ận tuân th ủ 
+điều kiện và n ội quy.  
+2. Nhân viên sale yêu c ầu khách hàng ki ểm tra l ại thông tin 
+thuê d ựa trên Phi ếu đăng ký thuê.  
+3. Nhân viên sale th ực hiện các bư ớc tiếp theo đ ể tiến hành đ ặt 
+cọc. 
+Dòng thay th ế A1: Tại bước 1, n ếu khách hàng không xác nh ận tuân th ủ → 
+kết thúc use -case.  
+A2: Tại bước 2, n ếu khách hàng phát sinh nhu c ầu thay đ ổi 
+thông tin thuê → khách hàng b ổ sung/c ập nhật thông tin → 
+nhân viên sale ghi nh ận → k ết thúc use -case.  
+ 
+Activity Diagram     
+ 
+  16 
+  
+ 
+ 
+   
+ 
+  17 
+ Quy trình Thanh toán  
+Đặc tả use-case nghi ệp vụ 
+Trường Nội dung  
+Tên use -case  Thanh toán  
+Mô tả UC b ắt đầu khi nhân viên sale chuy ển thông tin xác nh ận thuê 
+cho b ộ phận kế toán. UC mô t ả quá trình tính ti ền cọc, tạo yêu 
+cầu thanh toán đ ến khi khách hàng hoàn t ất thanh toán và 
+quản lý xác nh ận. 
+Công th ức tính 
+cọc Tiền cọc = (Ti ền thuê 2 tháng) × (S ố giường thuê)  
+Lưu ý: thuê nguyên phòng → s ố giường thuê = s ức chứa tối 
+đa của phòng.  
+Dòng cơ b ản 1. Nhân viên sale chuy ển thông tin xác nh ận thuê cho b ộ phận 
+kế toán.  
+2. Kế toán tính ti ền cọc theo công th ức. 
+3. Kế toán t ạo yêu c ầu thanh toán ti ền cọc cho khách hàng.  
+4. Nhân viên sale thông báo m ức tiền cọc và hư ớng dẫn thanh 
+toán cho khách hàng.  
+5. Kế toán nh ận tiền cọc trong vòng 24 gi ờ. 
+6. Quản lý nh ận chứng từ/hình ảnh giao d ịch và đ ối chiếu xác 
+nhận. 
+7. Nhân viên sale thông báo đ ặt cọc hoàn t ất và th ống nh ất 
+thời gian nh ận phòng.  
+Dòng thay th ế A5: Tại bước 5, n ếu khách hàng thanh toán quá 24 gi ờ → yêu 
+cầu đặt cọc bị hủy tự động → k ết thúc use -case.  
+A6: Tại bước 6, n ếu kết quả đối chiếu chứng từ không h ợp lệ 
+→ kết thúc use -case.  
+ 
+ 
+ 
+    
+ 
+  18 
+ Activity Diagram  
+ 
+ 
+ 
+   
+ 
+  19 
+ Quy trình Ki ểm tra thông tin và đi ều kiện cư trú  
+Đặc tả use-case nghi ệp vụ 
+Trường Nội dung  
+Tên use -case  Kiểm tra thông tin và đi ều kiện cư trú  
+Mô tả UC b ắt đầu khi khách hàng đ ến nhận phòng theo l ịch hẹn. UC 
+mô tả quá trình ki ểm tra thông tin và đi ều kiện lưu trú c ủa 
+khách hàng (cá nhân ho ặc nhóm).  
+Dòng cơ b ản 1. Nhân viên sale ki ểm tra thông  tin đặt cọc. 
+2. Nhân viên sale đ ối chiếu giấy tờ tùy thân c ủa khách hàng.  
+3. Nhân viên sale thu th ập đầy đủ thông tin cư trú c ần thiết. 
+4. Quản lý ki ểm tra l ại điều kiện lưu trú c ủa khách hàng.  
+5. Quản lý xác nh ận đủ điều kiện. 
+Dòng thay th ế A3: Tại bước 3, n ếu là khách thuê theo nhóm → ghi nh ận số 
+lượng thành viên → th ực hiện tiếp bước 4. 
+A4.1: Tại bước 4, n ếu khách hàng cá nhân không đáp ứng 
+điều kiện → k ết thúc use -case.  
+A4.2: Tại bước 4, n ếu thành viên nhóm không đáp ứng đi ều kiện: 
+• Nếu nhóm ch ọn tiếp tục → lo ại bỏ người không đáp 
+ứng → th ực hiện bước 5. 
+• Nếu nhóm ch ọn không ký h ợp đồng → k ết thúc use -case.  
+ 
+Activity Diagram     
+ 
+  20 
+  
+ 
+ 
+ 
+   
+ 
+  21 
+ Quy trình Ký thuê phòng và Thanh toán  
+Đặc tả use-case nghi ệp vụ 
+Trường Nội dung  
+Tên use -case  Ký thuê phòng và Thanh toán  
+Mô tả UC b ắt đầu sau khi khách hàng đã hoàn t ất bước kiểm tra đi ều 
+kiện. UC mô t ả quá trình ký h ợp đồng và thanh toán các kho ản 
+cần thiết khi nh ận phòng.  
+Dòng cơ b ản 1. Nhân viên ph ụ trách l ập thỏa thu ận/hợp đồng thuê.  
+2. Nhân viên ph ụ trách hư ớng dẫn khách hàng ký th ỏa 
+thuận/hợp đồng thuê.  
+3. Nhân viên k ế toán tính các kho ản cần thanh toán theo h ợp 
+đồng. 
+4. Nhân viên k ế toán xác nh ận khách hàng đã thanh toán đ ủ 
+các kho ản cần thu.  
+Dòng thay th ế A2: Tại bước 2, n ếu khách hàng không ký h ợp đồng → k ết 
+thúc use - case.  
+A4: Tại bước 4, n ếu khách hàng thanh toán chưa đ ủ → th ực 
+hiện lại bước 4 cho đ ến khi đ ủ. 
+ 
+Activity Diagram     
+ 
+  22 
+  
+ 
+ 
+   
+ 
+  23 
+ Quy trình Bàn giao phòng  
+Đặc tả use-case nghi ệp vụ 
+Trường Nội dung  
+Tên use -case  Bàn giao phòng  
+Mô tả UC b ắt đầu sau khi khách hàng đã hoàn t ất ký h ợp đồng và 
+thanh toán đ ầy đủ. UC mô t ả quá trình ki ểm tra hi ện trạng và 
+bàn giao phòng/ giư ờng cho khách hàng.  
+Dòng cơ b ản 1. Nhân viên qu ản lý ki ểm tra hi ện trạng khu v ực ở. 
+2. Nhân viên qu ản lý ghi nh ận các v ật dụng đư ợc cấp (giư ờng, 
+nệm, tủ, chìa khóa/th ẻ từ). 
+3. Nhân viên qu ản lý hư ớng dẫn quy đ ịnh sử dụng tiện ích 
+chung và các lưu ý an toàn.  
+4. Nhân viên qu ản lý và khách hàng cùng xác nh ận vào 
+biên b ản bàn giao.  
+5. Nhân viên qu ản lý ti ến hành bàn giao phòng/giư ờng và 
+tài sản cho khách hàng.  
+Dòng thay th ế A2: Tại bước 2, n ếu khách hàng phát hi ện vật dụng bị thiếu 
+hoặc có v ấn đề → nhân viên ghi l ại và b ổ sung → ti ếp tục. 
+A4: Tại bước 4, n ếu khách hàng không xác nh ận biên b ản 
+→ kết thúc use -case.  
+ 
+Activity Diagram     
+ 
+  24 
+  
+ 
+ 
+ 
+ 
+ 
+ 
+   
+ 
+  25 
+  Quy trình Tr ả phòng  
+Đặc tả use-case nghi ệp vụ 
+Trường Nội dung  
+Tên use -case  Trả phòng  
+Tác nhân  Khách hàng, Nhân viên sale, Nhân viên qu ản lý, Nhân viên k ế 
+toán 
+Mô tả UC mô t ả quy trình ti ếp nhận yêu c ầu trả phòng, ki ểm tra hi ện 
+trạng, x ử lý thủ tục tài chính, thanh lý h ợp đồng và thu h ồi tài 
+sản. Use -case này bao g ồm (<<include>>) vi ệc tính toán đ ối 
+soát qua use -case "Tính ti ền hoàn c ọc". 
+Tiền điều kiện Khách hàng liên h ệ nhân viên sale đ ể đăng ký th ời gian tr ả 
+phòng và cung c ấp thông tin h ợp đồng/phi ếu đặt cọc. 
+Hậu điều kiện Biên b ản trả phòng và h ợp đồng thuê đư ợc thanh lý. Th ủ tục tài 
+chính hoàn t ất. Tài s ản được thu h ồi và phòng/giư ờng đư ợc ghi 
+nhận trống. 
+Luồng sự kiện 
+chính  1. Nhân viên sale nh ận yêu c ầu trả phòng t ừ khách hàng.  
+2. Nhân viên sale yêu c ầu cung c ấp thông tin h ợp đồng và 
+phiếu đặt cọc. 
+3. Nhân viên qu ản lý ki ểm tra tình tr ạng th ực tế của 
+phòng/giư ờng (tài s ản, vệ sinh, hư h ỏng) và đ ối chiếu hợp 
+đồng. 
+4. Nhân viên qu ản lý chuy ển thông tin cho k ế toán.  
+5. <<include>> use -case "Tính ti ền hoàn c ọc": kế toán tính 
+toán và l ập bảng đối soát.  
+6. Nhân viên qu ản lý thông báo chi ti ết kho ản khấu trừ và số 
+tiền hoàn c ọc cho khách, xác nh ận khách đ ồng ý.  
+7. Thống nh ất phương th ức hoàn ti ền (tiền mặt hoặc chuy ển 
+khoản). 
+8. Khách hàng ký biên b ản trả phòng và thanh lý h ợp đồng thuê.  
+9. Kế toán th ực hiện hoàn c ọc theo s ố tiền đã đ ối soát và ghi 
+nhận hoàn t ất. 
+10. Quản lý thu h ồi chìa khóa/th ẻ ra vào, c ập nhật thông tin 
+bàn giao tài s ản. 
+11. Quản lý ghi nh ận phòng/giư ờng là tr ống và s ẵn sàng cho 
+thuê.     
+ 
+  26 
+ Luồng sự kiện 
+thay th ế (6a) Chi phí phát sinh l ớn hơn ti ền cọc: 
+• Tại bước 6, qu ản lý thông báo s ố tiền khách c ần thanh toán 
+thêm.  
+Khách hàng thanh toán ph ần chênh l ệch theo hư ớng dẫn kế 
+toán.  
+Tiếp tục bước 8. B ỏ qua bư ớc 9 (không hoàn c ọc). 
+ 
+ 
+Activity Diagram     
+ 
+  27 
+  
+ 
+Quy trình Tính ti ền hoàn c ọc 
+Đặc tả use-case nghi ệp vụ 
+Trường Nội dung  
+Tên use -case  Tính ti ền hoàn c ọc 
+   
+ 
+  28 
+ Tác nhân  Use-case "Tr ả phòng" (đư ợc gọi qua <<include>>)  
+Mô tả UC th ực hiện nghi ệp vụ tính toán t ỷ lệ hoàn c ọc, kh ấu trừ các 
+chi phí phát sinh và l ập bảng đối soát phi ếu thanh toán.  
+Tiền điều kiện Nhân viên k ế toán nh ận được thông tin ki ểm tra hi ện trạng và 
+đối chiếu hợp đồng từ nhân viên qu ản lý. 
+Hậu điều kiện Bảng đối soát phi ếu thanh toán đư ợc lập xong, xác đ ịnh rõ s ố 
+dư hoàn l ại hoặc số tiền khách c ần đóng thêm.  
+Tỷ lệ hoàn c ọc 
+cơ b ản • Đã c ọc nhưng chưa ký h ợp đồng (ho ặc hủy trước ký): hoàn 
+80% ti ền cọc. 
+• Đã ký h ợp đồng, chưa h ết hạn, lưu trú dư ới 6 tháng: hoàn 
+50% ti ền cọc. 
+• Đã ký h ợp đồng, chưa h ết hạn, lưu trú trên 6 tháng: hoàn 
+70% ti ền cọc. 
+• Hết hạn thuê theo h ợp đồng: hoàn 100% ti ền cọc. 
+Luồng sự kiện 
+chính  1. Kế toán xác đ ịnh tỷ lệ hoàn c ọc cơ b ản dựa trên tình 
+trạng ký h ợp đồng và th ời gian lưu trú.  
+2. Kế toán tính kh ấu trừ các chi phí phát sinh: ti ền thuê còn n ợ, 
+tiền điện nước/dịch vụ, chi phí s ửa chữa/bồi thường, kho ản 
+phạt vi ph ạm (nếu có).  
+3. Kế toán xác đ ịnh kết quả cuối cùng: s ố dư còn hoàn tr ả 
+hoặc số tiền chênh l ệch khách c ần đóng thêm.  
+4. Kế toán l ập bảng đối soát phi ếu thanh toán và báo k ết quả 
+cho nhân viên qu ản lý. 
+Luồng sự kiện 
+thay th ế Không có. M ọi xử lý hệ quả của kết quả tính toán đ ều được thực 
+hiện tại use -case "Tr ả phòng".  
+ 
+Activity Diagram     
+ 
+  29 
+  
+ 
+3. Sơ đ ồ lớp mức phân tích  
+ 
+   
+ 
+  30 
+  
+Xác đ ịnh các l ớp phân tích  
+ 
+STT Tên l ớp Mô tả ngắn 
+1 KhachHang  Thông tin cá nhân c ủa ngư ời thuê (cá nhân ho ặc đại diện 
+nhóm)  
+2 NhomThue  Nhóm khách hàng thuê cùng m ột phòng/giư ờng 
+3 PhieuDangKyThue  Ghi nh ận nhu c ầu và tiêu chí thuê c ủa khách hàng  
+4 LichXemPhong  Thông tin l ịch hẹn xem phòng gi ữa khách và nhân viên 
+sale 
+5 PhongO  Thông tin phòng: v ị trí, lo ại phòng, s ức chứa, giá thuê, 
+trạng thái  
+6 Giuong  Thông tin giư ờng trong phòng: tr ạng thái, giá thuê  
+7 PhieuDatCoc  Ghi nh ận thông tin đ ặt cọc: phòng/giư ờng, khách, th ời 
+điểm, chi nhánh  
+8 HopDongThue  Nội dung h ợp đồng, đi ều kho ản, kỳ thanh toán, phí d ịch 
+vụ 
+9 BienBanBanGiao  Ghi nh ận hiện trạng và danh m ục tài s ản bàn giao  
+10 PhieuThanhToan  Yêu c ầu thanh toán/phi ếu thu phí tương ứng từng giao 
+dịch 
+11 BangDoiSoatCoc  Tỷ lệ hoàn c ọc, kh ấu trừ và số tiền cọc được hoàn ho ặc 
+đóng thêm  
+12 NhanVien  Quản lý thông tin cá nhân, tài kho ản và phân quy ền truy 
+cập hệ thống của toàn b ộ nhân s ự dựa trên thu ộc tính vai 
+trò (Sale, Qu ản lý, K ế toán).  
+13 VatDung  Quản lý danh m ục các trang thi ết bị, tài s ản được trang b ị 
+trong ký túc xá (giư ờng, tủ, máy l ạnh, chìa khóa...) và 
+quy đ ịnh đơn giá đ ền bù khi x ảy ra hao h ụt, hư h ỏng.    
+ 
+  31 
+ 14 ChiSoDienNuoc  Ghi nh ận số liệu chỉ số điện và nư ớc tiêu th ụ định kỳ theo 
+từng phòng qua các tháng, làm căn c ứ tính phí d ịch vụ 
+hàng tháng và trích xu ất chỉ số cũ cho k ỳ chốt cuối cùng 
+khi khách tr ả phòng.  
+15 ChiNhanh    Quản lý đ ịa điểm, phân công nhân viên theo chi nhánh  
+16 PhiPhatSinh    Ghi t ừng kho ản khấu trừ khi tính hoàn c ọc 
+17 KyThanhToanThue   Theo dõi khách đã thanh toán ti ền thuê hàng tháng chưa  
+ 
+Sơ đ ồ lớp mức phân tích t ổng th ể 
+ 
+ 
+Link Draw.io:  
+https://drive.google.com/file/d/1Cn1gUob -
+zoPn6gQUbkHihUyk205Jxe4U/view?usp=sharing  
+ 
+ 
+   
+ 
+  32 
+ PHẦN II – PHÂN TÍCH H Ệ THỐNG 
+ 
+4. Use-case h ệ thống 
+ 
+Danh sách tác nhân h ệ thống 
+ 
+STT Tác nhân  Vai trò trong h ệ thống 
+1 Người dùng  Đăng nh ập / Đăng ký tài kho ản hệ thống 
+2 Nhân viên sale  Quản lý đăng ký thuê, l ịch xem phòng, h ồ sơ cư trú  
+3 Bộ phận kế toán Lập phi ếu thanh toán, xác nh ận thu ti ền, qu ản lý hoàn c ọc 
+4 Quản lý Kiểm tra phòng, phê duy ệt hồ sơ, đ ối chiếu chứng từ, bàn 
+giao phòng  
+5 Nhân viên ph ụ  
+trách  Lập hợp đồng thuê, hư ớng dẫn ký và bàn giao phòng  
+6 Quản trị viên Quản trị người dùng, thông s ố hệ thống, các d ịch vụ của hệ 
+thống, sao lưu và khôi ph ục dữ liệu 
+ 
+Danh sách use -case h ệ thống 
+STT Tác nhân  Tên use -case h ệ 
+thống Quan h ệ 
+1 Người dùng  Đăng nh ập  
+2 Người dùng  Đăng xu ất  
+3 Nhân viên sale  Tạo đăng ký thuê  <<include>> Tra c ứu 
+phòng/giư ờng kh ả dụng 
+4 Nhân viên sale  Lập lịch xem phòng   
+   
+ 
+  33 
+ 5 Nhân viên sale  Cập nhật kết quả tư 
+vấn  
+6 Nhân viên sale  Kiểm tra thông tin 
+khách thuê  <<extend>> C ập nhật thông tin  
+7 Nhân viên sale  Xử lý phòng đã đ ặt 
+trước  
+8 Nhân viên sale  Tra c ứu thông tin đ ặt 
+cọc  
+9 Nhân viên sale  Cập nhật hồ sơ cư trú   
+10 Bộ phận kế toán Lập yêu c ầu thanh 
+toán c ọc <<include>> Tính ti ền cọc 
+11 Nhân viên k ế 
+toán Lập phi ếu thu phí nh ận 
+phòng   
+12 Nhân viên k ế 
+toán Xác nh ận thanh toán   
+13 Quản lý Kiểm tra tình tr ạng 
+phòng/giư ờng  
+14 Quản lý Đối chiếu & xác nh ận 
+chứng từ  
+15 Quản lý Phê duy ệt điều kiện 
+lưu trú  <<extend>> X ử lý hủy thủ tục 
+thuê 
+16 Quản lý Lập biên b ản bàn giao   
+17 Nhân viên ph ụ 
+trách  Lập hợp đồng thuê   
+18      Nhân viên sale  Tạo yêu c ầu trả phòng      
+ 
+  34 
+ 19 Nhân viên k ế toán  Lập bảng đối soát c ọc  
+20 Nhân viên ph ụ 
+trách  Thanh lý h ợp đồng  
+21 Quản trị viên Quản trị người dùng và 
+phân quy ền  
+22 Quản trị viên Quản trị thông s ố hệ 
+thống  
+23 Quản trị viên Quản trị danh m ục chi 
+nhánh   
+24 Quản trị viên Quản trị danh m ục 
+phòng giư ờng  
+25 Quản trị viên Quản trị danh m ục dịch 
+vụ và tiện ích  
+26 Quản trị viên Quản trị danh m ục vật 
+dụng và tài s ản  
+27 Quản trị viên Sao lưu d ữ liệu  
+28 Quản trị viên Phục hồi dữ liệu  
+ 
+ 
+    
+ 
+  35 
+ Sơ đ ồ use-case h ệ thống 
+ 
+Link Draw.io:  
+https://drive.google.com/file/d/1nb2hHcn3VcTfohnBJKQMzgW7ms9iPYwF/vie
+w?usp=sharing  
+5. Đặc tả use-case h ệ thống 
+ 
+Use-case đăng nh ập, đăng xu ất 
+Trường Nội dung  
+Tên use -case  Đăng nh ập 
+   
+ 
+  36 
+ Mô tả Use-case cho phép ngư ời dùng đăng nh ập vào h ệ thống để thực 
+hiện những ch ức năng c ủa mình.  
+Actor  Người dùng, Qu ản trị viên 
+Điều kiện kích 
+hoạt Khi ngư ời dùng b ắt đầu mở chương trình h ệ thống. 
+Tiền điều kiện Người dùng ph ải có tài kho ản hệ thống. 
+Hậu điều kiện Người dùng đăng nh ập thành công.  
+Luồng sự kiện 
+chính  1. Hệ thống hi ển thị màn hình đăng nh ập. 
+2. Người dùng nh ập tên đăng nh ập và m ật khẩu. 
+3. Hệ thống hi ển thị kiểm tra thông tin đăng nh ập. 
+4. Nếu thành công h ệ thống hi ển thị màn hình đăng nh ập thành 
+công.  
+5. Kết thúc use -case.  
+Luồng sự kiện 
+phụ A3 – Thông tin không h ợp lệ: 
+− Hệ thống hi ển thị lại màn hình đăng nh ập kèm theo 
+thông báo l ỗi tên đăng nh ập + m ật khẩu sai.  
+− Quay l ại bước 2. 
+ 
+Trường Nội dung  
+Tên use -case  Đăng xu ất 
+Mô tả Cho phép ngư ời dùng k ết thúc phiên làm vi ệc hiện tại và thoát 
+khỏi hệ thống m ột cách an toàn đ ể bảo mật thông tin.  
+Actor  Người dùng, Qu ản trị viên 
+Điều kiện kích 
+hoạt Người dùng đang trong tr ạng thái đã đăng nh ập và phiên làm 
+việc vẫn còn hi ệu lực. 
+Tiền điều kiện Người dùng đã đăng nh ập vào tài kho ản hệ thống.    
+ 
+  37 
+ Hậu điều kiện Phiên làm vi ệc hiện tại bị hủy bỏ trên máy ch ủ, ngư ời dùng 
+không th ể tiếp tục thực hiện các ch ức năng yêu c ầu quy ền truy 
+cập mà không đăng nh ập lại.. 
+Luồng sự kiện 
+chính  1. Người dùng ch ọn chức năng "Đăng xu ất". 
+2. Hệ thống tiếp nhận yêu c ầu. 
+3. Hệ thống xóa các thông tin lưu tr ữ của phiên làm vi ệc 
+hiện tại (xóa session, cookie ho ặc thu h ồi token).  
+4. Hệ thống chuy ển hướng ngư ời dùng tr ở về màn hình 
+"Đăng nh ập". 
+ 
+Tạo đăng ký thuê / Tra c ứu phòng/giư ờng kh ả dụng 
+Trường Nội dung  
+Tên use -case  Tạo đăng ký thuê  
+Mô tả Cho phép nhân viên sale t ạo phi ếu đăng ký thuê phòng/giư ờng 
+dựa trên thông tin và nhu c ầu do khách hàng cung c ấp. 
+Actor  Nhân viên sale  
+Điều kiện kích 
+hoạt Nhân viên sale ch ọn chức năng t ạo đăng ký thuê.  
+Tiền điều kiện Nhân viên sale đã đăng nh ập vào h ệ thống. 
+Hậu điều kiện Phiếu đăng ký thuê đư ợc tạo trên h ệ thống. 
+Luồng sự kiện 
+chính  6. Hệ thống hi ển thị màn hình t ạo đăng ký thuê.  
+7. Nhân viên sale nh ập thông tin khách hàng và nhu c ầu thuê.  
+8. Nhân viên sale ch ọn hình th ức thuê: thuê nguyên phòng 
+hoặc thuê giư ờng ở ghép.  
+9. Hệ thống ki ểm tra tính h ợp lệ của thông tin đăng ký.  
+10. Hệ thống lưu phi ếu đăng ký thuê.  
+11. Hệ thống th ực hiện use -case "Tra c ứu phòng/giư ờng kh ả 
+dụng". 
+12. Hệ thống hi ển thị kết quả phòng/giư ờng phù h ợp.    
+ 
+  38 
+ Luồng sự kiện 
+phụ A4 – Thông tin không h ợp lệ (rẽ nhánh t ại bước 4): 
+1. Hệ thống hi ển thị thông báo l ỗi thông tin chưa h ợp lệ 
+hoặc còn thi ếu. 
+2. Nhân viên sale b ổ sung ho ặc chỉnh sửa thông tin.  
+3. Quay l ại bước 4. 
+ 
+Lập lịch xem phòng / C ập nhật kết quả tư vấn 
+ 
+Trường Nội dung  
+Tên use -case  Lập lịch xem phòng  
+Mô tả Cho phép nhân viên sale l ập lịch xem phòng/giư ờng cho 
+khách hàng sau khi đã có phòng/giư ờng phù h ợp. 
+Actor  Nhân viên sale  
+Tiền điều kiện Phiếu đăng ký thuê đã t ồn tại và có phòng/giư ờng phù h ợp để 
+giới thiệu. 
+Hậu điều kiện Lịch xem phòng đư ợc lưu trên h ệ thống. 
+Luồng sự kiện 
+chính  1. Hệ thống hi ển thị thông tin phi ếu đăng ký thuê và danh 
+sách phòng/ giư ờng phù h ợp. 
+2. Nhân viên sale ch ọn phòng/giư ờng cần hẹn xem.  
+3. Nhân viên sale nh ập thời gian h ẹn xem phòng.  
+4. Hệ thống ki ểm tra thông tin l ịch hẹn. 
+5. Hệ thống lưu l ịch xem phòng và c ập nhật trạng thái đăng 
+ký là "Đã h ẹn xem phòng".  
+Luồng sự kiện 
+phụ A4 – Thông tin l ịch hẹn không h ợp lệ (rẽ nhánh t ại bước 4): 
+1. Hệ thống hi ển thị thông báo l ỗi thời gian h ẹn không h ợp lệ. 
+2. Nhân viên sale ch ỉnh sửa thời gian h ẹn → quay l ại bước 4. 
+ 
+Trường Nội dung     
+ 
+  39 
+ Tên use -case  Cập nhật kết quả tư vấn 
+Mô tả Cho phép nhân viên sale c ập nhật kết quả sau khi tư v ấn 
+hoặc dẫn khách hàng xem phòng.  
+Actor  Nhân viên sale  
+Tiền điều kiện Phiếu đăng ký thuê đã t ồn tại trên h ệ thống. 
+Hậu điều kiện Trạng thái đăng ký thuê đư ợc cập nhật theo quy ết định của 
+khách hàng.  
+Luồng sự kiện 
+chính  1. Hệ thống hi ển thị thông tin phi ếu đăng ký thuê.  
+2. Nhân viên sale ch ọn kết quả tư vấn và nh ập ghi chú (n ếu có).  
+3. Hệ thống ki ểm tra và c ập nhật trạng thái đăng ký thuê.  
+Luồng sự kiện 
+phụ • Khách mu ốn đặt cọc → tr ạng thái: "Mu ốn đặt cọc". 
+• Khách mu ốn xem thêm phòng → tr ạng thái: "Mu ốn xem thêm 
+phòng"  
+→ tiếp tục lập lịch xem phòng.  
+• Khách mu ốn điều chỉnh tiêu chí → tr ạng thái: "C ần điều chỉnh 
+tiêu chí"  
+→ ch ỉnh sửa đăng ký.  
+• Khách không ti ếp tục thuê → tr ạng thái: "Không ti ếp tục". 
+ 
+Kiểm tra thông tin khách thuê / C ập nhật thông tin  
+ 
+Trường Nội dung  
+Tên use -case  Kiểm tra thông tin khách thuê  
+Tác nhân  Nhân viên sale  
+Mô tả Hỗ trợ nhân viên sale rà soát, ki ểm tra l ại thông tin đăng ký 
+trước khi ti ến hành các bư ớc đặt cọc. Use -case này có th ể mở 
+rộng (extend) đ ể cập nhật lại thông tin n ếu có s ự thay đ ổi. 
+Tiền điều kiện Nhân viên đã đăng nh ập thành công vào h ệ thống.    
+ 
+  40 
+ Hậu điều kiện Thông tin khách thuê đư ợc xác nh ận chính xác, chu ẩn bị 
+chuy ển sang bư ớc lập yêu c ầu thanh toán c ọc. 
+Luồng sự kiện 
+chính  1. Nhân viên truy c ập danh sách h ồ sơ khách hàng.  
+2. Nhân viên ch ọn hồ sơ → h ệ thống hi ển thị chi ti ết thông 
+tin đăng ký ban đ ầu. 
+3. Nhân viên đ ối chiếu thông tin th ực tế với dữ liệu trên h ệ thống. 
+4. Nhân viên nh ấn xác nh ận thông tin h ợp lệ. 
+Luồng sự kiện 
+phụ A3 – Cập nh ật thông tin (r ẽ nhánh t ại bước 3): Nếu thông 
+tin có s ự thay đ ổi, nhân viên th ực hiện use -case extend "C ập 
+nhật thông tin". Sau khi lưu, ti ếp tục bước 4. 
+ 
+Trường Nội dung  
+Tên use -case  Cập nhật thông tin (<<extend>>)  
+Tác nhân  Nhân viên sale  
+Mô tả Hỗ trợ nhân viên sale b ổ sung ho ặc chỉnh sửa thông tin thuê 
+phòng trư ớc khi ti ến hành đ ặt cọc. Là use -case extend c ủa 
+"Kiểm tra thông tin khách thuê".  
+Tiền điều kiện Nhân viên đang rà soát h ồ sơ và khách hàng có nhu c ầu thay 
+đổi thông tin.  
+Hậu điều kiện Thông tin m ới được lưu thành công, đ ảm bảo chính xác trư ớc 
+khi chuy ển sang bư ớc thanh toán c ọc. 
+Luồng sự kiện 
+chính  1. Nhân viên ch ọn chức năng "Ch ỉnh sửa" trên màn hình chi ti ết 
+hồ sơ. 
+2. Hệ thống hi ển thị biểu mẫu chứa thông tin đăng ký hi ện tại 
+(cho phép ch ỉnh sửa). 
+3. Nhân viên nh ập thông tin thay đ ổi hoặc bổ sung.  
+4. Nhân viên nh ấn "Lưu".  
+5. Hệ thống ki ểm tra tính h ợp lệ. 
+6. Hệ thống cập nhật dữ liệu, hiển thị thông báo "C ập nhật thành 
+công".     
+ 
+  41 
+ Luồng sự kiện 
+phụ A5 – Dữ liệu không h ợp lệ: hệ thống báo l ỗi → quay l ại bước 3. 
+A1 – Hủy cập nh ật: nhân viên nh ấn "Hủy" → h ệ thống xóa 
+thay đ ổi chưa lưu → quay l ại màn hình chi ti ết hồ sơ. 
+ 
+Xử lý phòng đã đ ặt trước 
+ 
+Trường Nội dung  
+Tên use -case  Xử lý phòng đã đ ặt trước 
+Tác nhân  Nhân viên sale  
+Mô tả Xử lý ngo ại lệ khi phòng/giư ờng mà khách mu ốn chọn đã b ị 
+khách khác gi ữ chỗ hoặc đặt cọc trước đó.  
+Tiền điều kiện Nhân viên sale đã đăng nh ập và đang thao tác ch ọn phòng cho 
+khách hàng.  
+Hậu điều kiện Khách hàng ch ọn được phòng m ới hoặc hồ sơ đăng ký t ạm thời 
+bị hủy. 
+Luồng sự kiện 
+chính  1. Nhân viên nh ập mã phòng/giư ờng khách ch ọn vào h ệ thống. 
+2. Hệ thống cảnh báo phòng đã đư ợc đặt trước hoặc đã có ngư ời 
+cọc. 
+3. Nhân viên ghi nh ận và thông báo tr ực tiếp cho khách hàng.  
+4. Nhân viên tư v ấn, tìm phòng tr ống khác phù h ợp và c ập 
+nhật lựa chọn mới. 
+Luồng sự kiện 
+phụ A4 – Khách không đ ồng ý đ ổi phòng: nhân viên đóng h ồ sơ 
+và kết thúc use -case.  
+ 
+Lập yêu c ầu thanh toán c ọc / Đối chiếu & xác nh ận chứng từ 
+ 
+Trường Nội dung  
+Tên use -case  Lập yêu c ầu thanh toán c ọc    
+ 
+  42 
+ Tác nhân  Bộ phận kế toán 
+Mô tả Tạo phi ếu yêu c ầu thanh toán ti ền cọc, bao g ồm việc gọi chức 
+năng t ự động tính toán s ố tiền cọc (<<include>> Tính ti ền cọc). 
+Tiền điều kiện Bộ phận kế toán đã đăng nh ập. Hồ sơ khách thuê đang ở trạng 
+thái ch ờ thanh toán.  
+Hậu điều kiện Phiếu yêu c ầu thanh toán đư ợc tạo thành công, h ệ thống lưu 
+và hi ển thị số tiền cần thu.  
+Luồng sự kiện 
+chính  1. Bộ phận kế toán truy c ập danh sách h ồ sơ xác nh ận thuê.  
+2. Chọn hồ sơ và nh ấn "Lập yêu c ầu thanh toán".  
+3. Thực hiện use -case "Tính ti ền cọc" để tự động lấy số liệu. 
+4. Hệ thống hi ển thị bản nháp phi ếu yêu c ầu với số tiền đã tính.  
+5. Bộ phận kế toán ki ểm tra và nh ấn "Xác nh ận & G ửi yêu c ầu". 
+Luồng sự kiện 
+phụ A1 – Không tìm th ấy thông tin xác nh ận thuê: hệ thống thông 
+báo l ỗi 
+→ kết thúc use -case.  
+ 
+Trường Nội dung  
+Tên use -case  Đối chiếu & xác nh ận chứng từ 
+Tác nhân  Quản lý 
+Mô tả Kiểm tra hình ảnh ch ứng từ/giao d ịch thanh toán c ủa khách 
+hàng, đ ối chiếu số tiền để hoàn t ất thủ tục đặt cọc. 
+Tiền điều kiện Khách hàng đã thanh toán và h ệ thống đã ghi nh ận hình ảnh 
+chứng từ. Quản lý đã đăng nh ập. 
+Hậu điều kiện Giao d ịch đư ợc duy ệt, trạng thái phòng chuy ển sang "Đã đ ặt 
+cọc".    
+ 
+  43 
+ Luồng sự kiện 
+chính  1. Quản lý truy c ập danh sách phi ếu yêu c ầu đang ch ờ duyệt. 
+2. Chọn phi ếu → xem chi ti ết hình ảnh ch ứng từ giao d ịch đính 
+kèm.  
+3. Đối chiếu với biến động số dư tài kho ản ngân hàng th ực tế. 
+4. Quản lý nh ấn "Xác nh ận hợp lệ". 
+5. Hệ thống lưu tr ạng thái duy ệt và hoàn t ất quy trình đ ặt cọc. 
+Luồng sự kiện 
+phụ A4 – Chứng tfi không h ợp lệ: Quản lý nh ấn "Từ chối xác 
+nhận" và nh ập lý do → h ệ thống cảnh báo l ại nhân viên sale 
+→ gi ữ nguyên tr ạng thái ch ờ thanh toán.  
+ 
+Tra c ứu thông tin đ ặt cọc / Cập nhật hồ sơ cư trú  
+ 
+Trường Nội dung  
+Tên use -case  Tra c ứu thông tin đ ặt cọc 
+Tác nhân  Nhân viên sale  
+Mô tả Hỗ trợ nhân viên tìm ki ếm và xác th ực thông tin phi ếu đặt cọc 
+của khách hàng khi đ ến nhận phòng.  
+Tiền điều kiện Nhân viên đã đăng nh ập thành công.  
+Hậu điều kiện Hệ thống hi ển thị chi ti ết trạng thái đ ặt cọc, thông tin 
+phòng/giư ờng và thông tin khách hàng.  
+Luồng sự kiện 
+chính  1. Nhân viên nh ập tiêu chí tìm ki ếm (Mã đ ặt cọc, CCCD 
+hoặc số điện tho ại) và nh ấn "Tìm ki ếm". 
+2. Hệ thống tra c ứu trong CSDL và tr ả về danh sách phù h ợp. 
+3. Nhân viên ch ọn đúng phi ếu để xem chi ti ết phòng/giư ờng đã 
+cọc. 
+Luồng sự kiện 
+phụ A1 – Không tìm th ấy dfi li ệu: hệ thống hi ển thị "Không tìm 
+thấy thông tin đ ặt cọc hợp lệ" → quay l ại bước 1 đ ể kiểm tra l ại 
+tiêu chí.  
+    
+ 
+  44 
+ Trường Nội dung  
+Tên use -case  Cập nhật hồ sơ lưu trú  
+Tác nhân  Nhân viên sale  
+Mô tả Cho phép nhân viên nh ập mới hoặc cập nhật thông tin cá nhân 
+và thông tin cư trú chi ti ết của khách thuê (ho ặc tất cả thành 
+viên nhóm thuê).  
+Tiền điều kiện Nhân viên đã tra c ứu thành công thông tin đ ặt cọc. 
+Hậu điều kiện Hồ sơ cư trú m ới được khởi tạo và liên k ết với thông tin đ ặt 
+cọc, trạng thái chuy ển sang "Ch ờ phê duy ệt". 
+Luồng sự kiện 
+chính  1. Nhân viên ch ọn "Cập nhật hồ sơ cư trú" t ừ màn hình chi ti ết 
+phiếu đặt cọc. 
+2. Hệ thống hi ển thị biểu mẫu nhập thông tin cư trú (H ọ tên, 
+CCCD, Gi ới tính, Qu ốc tịch, Đ ịa chỉ...). 
+3. Nhân viên nh ập/cập nhật thông tin (nhóm: nh ập lần lượt 
+cho t ừng thành viên).  
+4. Nhân viên nh ấn "Lưu h ồ sơ" → h ệ thống ki ểm tra, lưu 
+và chuy ển trạng thái sang "Ch ờ phê duy ệt". 
+Luồng sự kiện 
+phụ A1 – Thiếu trư ờng b ắt buộc: hệ thống cảnh báo và đánh 
+dấu ô thi ếu dữ liệu. 
+A2 – Số lượng ngư ời vượt quá gi ới hạn: hệ thống ngăn 
+lưu và báo l ỗi "Số lượng ngư ời vượt quá s ức chứa". 
+ 
+Phê duy ệt điều kiện lưu trú / X ử lý hủy thủ tục thuê  
+ 
+Trường Nội dung  
+Tên use -case  Phê duy ệt điều kiện lưu trú  
+Tác nhân  Quản lý    
+ 
+  45 
+ Mô tả Quản lý ki ểm tra h ồ sơ cư trú v ừa cập nhật, đối chiếu với quy 
+định ký túc xá và ra quy ết định phê duy ệt hoặc từ chối lưu 
+trú. 
+Tiền điều kiện Hồ sơ cư trú đang ở trạng thái "Ch ờ phê duy ệt". 
+Hậu điều kiện Trạng thái h ồ sơ chuy ển sang "Đã phê duy ệt" ho ặc kích ho ạt 
+luồng "X ử lý hủy thủ tục thuê".  
+Luồng sự kiện 
+chính  1. Quản lý truy c ập danh sách h ồ sơ cư trú ch ờ duyệt. 
+2. Hệ thống hi ển thị chi ti ết hồ sơ và các thông s ố quy đ ịnh 
+của phòng/ giư ờng. 
+3. Quản lý đ ối chiếu tiêu chí và nh ấn "Phê duy ệt". 
+4. Hệ thống cập nhật trạng thái h ồ sơ thành "Đã phê duy ệt". 
+Luồng sự kiện 
+phụ A1 – Có thành viên không đáp ứng yêu c ầu: Quản lý click 
+"Không đ ạt" cho thành viên vi ph ạm ho ặc toàn b ộ hồ sơ → h ệ 
+thống chuy ển tiếp sang use -case "X ử lý hủy thủ tục thuê".  
+ 
+Trường Nội dung  
+Tên use -case  Xử lý hủy thủ tục thuê (<<extend>>)  
+Tác nhân  Quản lý, Nhân viên k ế toán 
+Mô tả Xử lý ch ấm dứt tiến trình nh ận phòng khi khách không đáp 
+ứng đi ều kiện hoặc nhóm thuê quy ết định dừng toàn b ộ. Hệ 
+thống tự động đi ều phối dữ liệu sang k ế toán đ ể xử lý tiền 
+cọc. 
+Tiền điều kiện Use-case đư ợc kích ho ạt từ bước xét duy ệt hồ sơ th ất bại 
+hoặc khi khách yêu c ầu dừng th ủ tục. 
+Hậu điều kiện Tiến trình nh ận phòng đóng l ại, phòng/giư ờng đư ợc giải phóng, 
+hồ sơ chuy ển sang "H ủy – Chờ hoàn c ọc".    
+ 
+  46 
+ Luồng sự kiện 
+chính  1. Quản lý ch ọn "Hủy tiến trình nh ận phòng" và ch ọn lý do 
+(Không đáp  
+ứng đi ều kiện / Ch ủ động hủy). 
+2. Hệ thống đóng ti ến trình, c ập nhật phòng/giư ờng về "Còn 
+trống". 
+3. Hệ thống tạo yêu c ầu đối soát tài chính và thông báo sang 
+màn hình k ế toán.  
+4. Kế toán xác nh ận và l ập phi ếu chi ti ền hoàn c ọc (80% theo 
+quy đ ịnh hủy trước ký h ợp đồng). 
+Luồng sự kiện 
+phụ A1 – Nhóm ch ọn tiếp tục với thành viên còn l ại: Quản lý 
+chọn "Cập nhật lại danh sách nhóm" → h ệ thống quay v ề 
+use-case "C ập nhật hồ sơ cư trú" đ ể loại thành viên vi ph ạm. 
+Lập hợp đồng thuê / L ập phi ếu thu / Xác nh ận thanh toán  
+ 
+Trường Nội dung  
+Tên use -case  Lập hợp đồng thuê  
+Tác nhân  Nhân viên ph ụ trách (Sale ho ặc Qu ản lý) 
+Mô tả Khởi tạo biểu mẫu hợp đồng thuê đi ện tử, tự động kết xuất dữ 
+liệu từ thông tin đ ặt cọc và danh sách cư trú đã duy ệt. 
+Tiền điều kiện Hồ sơ cư trú đã đư ợc chuy ển sang tr ạng thái "Đã phê duy ệt". 
+Hậu điều kiện Hợp đồng thuê đư ợc tạo thành công v ới mã h ợp đồng duy nh ất 
+ở trạng thái "Ch ờ thanh toán".  
+Luồng sự kiện 
+chính  1. Nhân viên ch ọn chức năng "L ập hợp đồng thuê" cho h ồ sơ 
+cư trú đã duy ệt. 
+2. Hệ thống tự động trích xu ất và đi ền thông tin khách 
+hàng, phòng/ giư ờng thuê, giá thuê và quy đ ịnh cọc vào 
+mẫu hợp đồng. 
+3. Nhân viên b ổ sung c ấu hình chi ti ết: kỳ thanh toán, phí d ịch 
+vụ đi kèm (đi ện, nư ớc, wifi, g ửi xe...).  
+4. Nhân viên nh ấn "Tạo hợp đồng" → h ệ thống lưu, c ấp mã 
+hợp đồng, thi ết lập trạng thái "Ch ờ thanh toán" và g ửi số liệu 
+sang k ế toán.     
+ 
+  47 
+ Luồng sự kiện 
+phụ A1 – Khách thay đ ổi nhu c ầu dịch vụ tại chỗ: nhân viên 
+tích ch ọn thay đ ổi trực tiếp trư ớc khi nh ấn tạo. 
+ 
+Trường Nội dung  
+Tên use -case  Lập phi ếu thu phí nh ận phòng  
+Tác nhân  Nhân viên k ế toán 
+Mô tả Tính toán t ổng các kho ản chi phí đ ầu vào khách ph ải nộp khi vào 
+ở dựa trên đi ều kho ản hợp đồng. 
+Tiền điều kiện Hợp đồng thuê đang ở trạng thái "Ch ờ thanh toán".  
+Hậu điều kiện Phiếu thu đư ợc tạo thành công, ở trạng thái "Chưa thanh toán".  
+Luồng sự kiện 
+chính  1. Kế toán ch ọn "Lập phi ếu thu phí nh ận phòng" d ựa trên mã h ợp 
+đồng. 
+2. Hệ thống tự động tính: [Ti ền thuê k ỳ đầu] + [Các phí d ịch vụ 
+theo quy đ ịnh]. 
+3. Hệ thống hi ển thị bảng kê chi ti ết để kế toán ki ểm tra.  
+4. Kế toán nh ấn "Xác nh ận tạo phi ếu" → h ệ thống lưu phi ếu thu 
+ở trạng thái "Chưa thanh toán" và hi ển thị phương th ức thanh 
+toán (kèm mã QR n ếu có).  
+ 
+Trường Nội dung  
+Tên use -case  Xác nh ận thanh toán  
+Tác nhân  Nhân viên k ế toán 
+Mô tả Ghi nh ận thông tin thanh toán th ực tế từ khách hàng đ ể đối soát 
+và cập nhật trạng thái tài chính.  
+Tiền điều kiện Phiếu thu phí nh ận phòng đang ở trạng thái "Chưa thanh toán".     
+ 
+  48 
+ Hậu điều kiện Phiếu thu đ ổi sang "Đã thanh toán", h ợp đồng tự động 
+chuy ển sang "Ch ờ bàn giao".  
+Luồng sự kiện 
+chính  1. Kế toán tìm phi ếu thu qua mã phi ếu hoặc tên khách hàng.  
+2. Kế toán ki ểm tra s ố tiền thực nhận (tiền mặt hoặc sao kê ngân 
+hàng).  
+3. Kế toán ch ọn phương th ức (Tiền mặt/Chuy ển kho ản) và 
+nhấn "Xác nh ận đã thu đ ủ tiền". 
+4. Hệ thống cập nhật phiếu thu thành "Đã thanh toán".  
+5. Hệ thống tự động cập nhật hợp đồng liên quan thành "Ch ờ bàn 
+giao".  
+Luồng sự kiện 
+phụ A1 – Khách thanh toán thi ếu: kế toán nh ập số tiền thực thu 
+→ hệ thống ghi nh ận số tiền còn n ợ → gi ữ trạng thái "Chưa 
+thanh toán đ ủ". 
+ 
+Lập biên b ản bàn giao  
+ 
+Trường Nội dung  
+Tên use -case  Lập biên b ản bàn giao  
+Tác nhân  Quản lý 
+Mô tả Ghi nh ận hiện trạng phòng, danh m ục cơ s ở vật chất và s ố 
+lượng vật dụng, chìa khóa c ấp phát khi giao phòng cho khách.  
+Tiền điều kiện Hợp đồng thuê đã chuy ển sang tr ạng thái "Ch ờ bàn giao".  
+Hậu điều kiện Biên b ản bàn giao đi ện tử được lưu tr ữ, hệ thống cập nhật trạng 
+thái phòng/giư ờng thành "Đang s ử dụng".    
+ 
+  49 
+ Luồng sự kiện 
+chính  1. Quản lý ch ọn "Lập biên b ản bàn giao" t ừ màn hình 
+thông tin h ợp đồng. 
+2. Hệ thống hi ển thị biểu mẫu danh m ục vật dụng chu ẩn được 
+cấp phát.  
+3. Quản lý tích ch ọn xác nh ận tình tr ạng từng trang thi ết bị 
+dựa trên ki ểm tra th ực tế. 
+4. Quản lý nh ấn "Hoàn t ất bàn giao" → h ệ thống lưu biên b ản, 
+đổi trạng thái h ợp đồng sang "Đang cư trú" và phòng/giư ờng 
+sang "Đang s ử dụng". 
+Luồng sự kiện 
+phụ A1 – Phát hi ện vật dụng hư h ỏng/thi ếu sót: Quản lý nh ập 
+vào "Ghi chú hi ện trạng" → h ệ thống lưu kèm ghi chú và t ự 
+động tạo phi ếu yêu c ầu sửa chữa gửi bộ phận bảo trì. 
+ 
+ 
+ 
+Tạo yêu c ầu trả phòng  
+Trường Nội dung  
+Tên use -case  Tạo yêu c ầu trả phòng  
+Tác nhân  Nhân viên sale  
+Mô tả Cho phép nhân viên sale ghi nh ận yêu c ầu trả phòng t ừ 
+khách hàng, c ập nhật thông tin d ự kiến và chuy ển trạng thái 
+hợp đồng sang ch ờ xử lý. 
+Tiền điều kiện Hợp đồng thuê c ủa khách hàng đang ở trạng thái "Đang hi ệu 
+lực". 
+Hậu điều kiện Yêu c ầu trả phòng đư ợc ghi nh ận, hợp đồng chuy ển sang 
+trạng thái "Ch ờ thanh lý" (ho ặc "Ch ờ đối soát").     
+ 
+  50 
+ Luồng sự kiện 
+chính  1. Hệ thống hi ển thị màn hình tìm ki ếm hợp đồng. 
+2. Nhân viên sale nh ập mã h ợp đồng ho ặc thông tin khách hàng 
+để tìm ki ếm. 
+3. Hệ thống hi ển thị chi ti ết thông tin h ợp đồng đang hi ệu lực. 
+4. Nhân viên sale nh ập thông tin tr ả phòng (ngày d ự kiến trả, lý do 
+trả phòng).  
+5. Hệ thống ki ểm tra tính h ợp lệ của thông tin nh ập vào.  
+6. Hệ thống lưu yêu c ầu trả phòng và c ập nhật trạng thái h ợp đồng 
+thành "Ch ờ thanh lý".  
+ 
+ A5 – Ngày d ự kiến trả phòng không h ợp lệ (rẽ nhánh t ại bước 5): 
+1. Hệ thống hi ển thị thông báo l ỗi (ví d ụ: ngày tr ả phòng nh ỏ hơn 
+ngày b ắt đầu hợp đồng). 
+2. Nhân viên sale ch ỉnh sửa lại ngày tr ả phòng $ \rightarrow$ quay 
+lại bước 5. 
+ 
+Luồng sự kiện 
+thay th ế  
+ 
+Lập bảng đối soát c ọc 
+Trường Nội dung  
+Tên use -case  Lập bảng đối soát c ọc 
+Tác nhân  Nhân viên k ế toán 
+Mô tả Cho phép nhân viên k ế toán t ự động tổng hợp nợ cũ, đi ện 
+nước kỳ cuối, phí phát sinh và tính t ỷ lệ hoàn c ọc gốc để chốt 
+số dư tài chính cu ối cùng c ủa khách hàng.  
+Tiền điều kiện Hợp đồng đang ở trạng thái "Ch ờ thanh lý". Đã có đ ầy đủ dữ liệu 
+cập nhật về chỉ số điện nước kỳ cuối và biên b ản ghi nh ận phí 
+phát sinh (n ếu có).     
+ 
+  51 
+ Hậu điều kiện • Bảng đối soát c ọc được tạo và lưu trên h ệ thống, xác 
+định rõ s ố tiền KTX c ần hoàn l ại hoặc số tiền khách ph ải 
+đóng thêm.  
+Luồng sự kiện 
+chính  1. Nhân viên k ế toán ch ọn hợp đồng đang "Ch ờ thanh lý".  
+2. Hệ thống tự động truy xu ất dữ liệu: tiền cọc gốc, nợ từ các k ỳ 
+thanh toán trư ớc, tiền điện nước kỳ cuối và các kho ản phí phát sinh 
+chưa thanh toán.  
+3. Hệ thống tự động đối chiếu thời gian ở thực tế để tính t ỷ lệ hoàn 
+cọc (50%, 70% ho ặc 100%).  
+4. Hệ thống th ực hiện phép tính kh ấu trừ và hi ển thị số dư đối soát 
+cuối cùng.  
+5. Nhân viên k ế toán ki ểm tra l ại các con s ố, nhập ghi chú (n ếu 
+có) và nh ấn lưu.  
+6. Hệ thống lưu b ảng đối soát và c ập nhật trạng thái h ồ sơ. 
+ 
+ A2 – Thiếu dữ liệu đầu vào (r ẽ nhánh t ại bước 2): 
+1. Hệ thống cảnh báo thi ếu chỉ số điện nước chốt cuối hoặc dữ liệu 
+kiểm tra tài s ản chưa hoàn t ất. 
+2. Kế toán thông báo cho Qu ản lý c ập nhật dữ liệu $\rightarrow$ 
+Use-case k ết thúc t ạm thời. 
+ 
+Luồng sự kiện 
+thay th ế  
+ 
+Thanh lý h ợp đồng 
+Trường Nội dung  
+Tên use -case  Thanh lý h ợp đồng 
+Tác nhân  Quản lý / Nhân viên ph ụ trách    
+ 
+  52 
+ Mô tả Cho phép nhân viên ph ụ trách xác nh ận hoàn t ất các th ủ tục 
+thực tế (thu h ồi chìa khóa, thanh toán ti ền), chính th ức đóng 
+hồ sơ hợp đồng và gi ải phóng ch ỗ ở. 
+Tiền điều kiện Bảng đối soát c ọc đã đư ợc lập hoàn t ất. 
+Hậu điều kiện Hợp đồng chính th ức chuy ển sang tr ạng thái "Đã thanh lý". 
+Trạng thái c ủa phòng/giư ờng đư ợc cập nhật thành 
+"Trống". 
+Luồng sự kiện 
+chính  1. Qu ản lý ch ọn hồ sơ hợp đồng cần thanh lý.  
+2. Hệ thống hi ển thị kết quả từ Bảng đối soát c ọc và danh sách các 
+thủ tục (checklist) c ần xác nh ận (thu chìa khóa, xác nh ận đã 
+hoàn/thu ti ền). 
+3. Qu ản lý th ực hiện thủ tục với khách ngoài th ực tế và đánh d ấu 
+tick vào các ô checklist trên màn hình.  
+4. Qu ản lý nh ấn nút "Xác nh ận thanh lý h ợp đồng". 
+5. Hệ thống ki ểm tra đi ều kiện checklist.  
+6. Hệ thống lưu l ịch sử giao d ịch, c ập nhật hợp đồng thành "Đã 
+thanh lý" và phòng/giư ờng thành "Tr ống". 
+ 
+ A5 – Thiếu xác nh ận thủ tục (rẽ nhánh t ại bước 5): 
+1. Hệ thống phát hi ện các ô checklist b ắt buộc chưa đư ợc đánh 
+dấu. 
+2. Hệ thống ch ặn thao tác thanh lý và hi ển thị thông báo yêu c ầu 
+xác nh ận đủ các m ục. 
+3. Qu ản lý đánh d ấu bổ sung $ \rightarrow$ quay l ại bước 4. 
+ 
+Luồng sự kiện 
+thay th ế  
+ 
+Nhóm use -case Qu ản trị hệ thống    
+ 
+  53 
+ Trường Nội dung  
+Tên use -case  Quản trị người dùng và phân quy ền 
+Tác nhân  Quản trị viên 
+Mô tả Cho phép qu ản trị viên t ạo mới, cập nhật, khóa tài kho ản và 
+phân quy ền cho các nhân viên (Sale, Qu ản lý, K ế toán) s ử 
+dụng hệ thống. 
+Tiền điều kiện Quản trị viên đã đăng nh ập vào h ệ thống. 
+Hậu điều kiện Thông tin, tr ạng thái và quy ền hạn của tài kho ản ngư ời dùng 
+được cập nhật thành công vào cơ s ở dữ liệu. 
+Luồng sự kiện 
+chính  1. Quản trị viên ch ọn chức năng "Qu ản trị người dùng".  
+2. Hệ thống hi ển thị danh sách tài kho ản hiện có.  
+3. Quản trị viên ch ọn thao tác (Thêm m ới / Ch ỉnh sửa / Khóa 
+tài kho ản). 
+4. Hệ thống hi ển thị biểu mẫu tương ứng. 
+5. Quản trị viên nh ập thông tin (H ọ tên, Tên đăng nh ập, Mật 
+khẩu, Vai trò phân quy ền). 
+6. Quản trị viên nh ấn "Lưu".  
+7. Hệ thống ki ểm tra tính h ợp lệ của dữ liệu, lưu thông tin và 
+hiển thị thông báo thành công.  
+Luồng sự kiện 
+phụ A7 – Dữ liệu không h ợp lệ: 
+− Hệ thống hi ển thị thông báo l ỗi (ví d ụ: Tên đăng nh ập đã t ồn 
+tại, thiếu trư ờng bắt buộc). 
+− Quản trị viên ch ỉnh sửa lại thông tin và quay l ại bước 6. 
+ 
+Trường Nội dung  
+Tên use -case  Quản trị thông s ố hệ thống 
+Tác nhân  Quản trị viên    
+ 
+  54 
+ Mô tả Cấu hình các h ằng số, quy t ắc và chính sách nghi ệp vụ của ký 
+túc xá (th ời hạn thanh toán c ọc, tỷ lệ hoàn c ọc, hệ số tiền cọc) 
+để hệ thống tự động áp d ụng trong các giao d ịch. 
+Tiền điều kiện Quản trị viên đã đăng nh ập vào h ệ thống. 
+Hậu điều kiện Các thông s ố cấu hình m ới được lưu và áp d ụng ngay l ập tức cho 
+các tác v ụ tiếp theo c ủa hệ thống. 
+Luồng sự kiện 
+chính  1. Quản trị viên ch ọn chức năng "C ấu hình thông s ố hệ 
+thống". 
+2. Hệ thống tải và hi ển thị danh sách các tham s ố cấu 
+hình hi ện tại (ví d ụ: tỷ lệ hoàn 80% khi h ủy cọc trước 
+ký hợp đồng, th ời gian thanh toán c ọc 24 gi ờ).  
+3. Quản trị viên ch ỉnh sửa các giá tr ị tham s ố cần thay 
+đổi. 
+4. Quản trị viên nh ấn "Cập nhật". 
+5. Hệ thống xác th ực định dạng dữ liệu. 
+6. Hệ thống lưu c ấu hình m ới, ghi l ại lịch sử thay đ ổi và 
+thông báo c ập nhật thành công.  
+Luồng sự kiện 
+phụ A5 – Định d ạng tham s ố sai: 
+− Hệ thống báo l ỗi giá tr ị không đư ợc chấp nhận (ví d ụ: 
+nhập chữ vào trư ờng bắt buộc nhập số phần trăm).  
+− Quản trị viên đi ều chỉnh lại giá tr ị và quay l ại bước 4. 
+ 
+Trường Nội dung  
+Tên use -case  Quản trị danh m ục chi nhánh  
+Tác nhân  Quản trị viên 
+Mô tả Cho phép qu ản trị viên ho ặc cấp quản lý cao nh ất thêm m ới, 
+cập nhật, vô hi ệu hóa ho ặc tìm ki ếm thông tin c ủa các chi 
+sở/chi nhánh tr ực thu ộc hệ thống HomeStay Dorm.  
+Tiền điều kiện Quản trị viên đã đăng nh ập vào h ệ thống.    
+ 
+  55 
+ Hậu điều kiện Dữ liệu về chi nhánh đư ợc cập nhật vào cơ s ở dữ liệu, sẵn sàng 
+để phân b ổ phòng/giư ờng. 
+Luồng sự kiện 
+chính  1. Quản trị viên ch ọn chức năng "Qu ản trị danh m ục chi 
+nhánh".  
+2. Hệ thống hi ển thị danh sách các chi nhánh hi ện tại. 
+3. Quản trị viên ch ọn thao tác (Thêm m ới / Ch ỉnh sửa / 
+Xóa).  
+4. Quản trị viên nh ập thông tin (Mã chi nhánh, Tên chi 
+nhánh, Đ ịa chỉ, Số điện tho ại liên h ệ, Trạng thái ho ạt 
+động). 
+5. Quản trị viên nh ấn "Lưu".  
+6. Hệ thống ki ểm tra tính h ợp lệ của dữ liệu, lưu thông 
+tin và hi ển thị thông báo thành công.  
+Luồng sự kiện 
+phụ A3 – Không th ể xóa chi nhánh:  
+− Nếu quản trị viên ch ọn "Xóa" m ột chi nhánh đang có 
+dữ liệu phòng/giư ờng ho ặc đang có khách lưu trú, h ệ 
+thống sẽ chặn thao tác.  
+− Hệ thống báo l ỗi: "Không th ể xóa chi nhánh đang ho ạt 
+động. Vui lòng chuy ển trạng thái sang T ạm ngưng".  
+ 
+Trường Nội dung  
+Tên use -case  Quản trị danh m ục phòng giư ờng 
+Tác nhân  Quản trị viên 
+Mô tả Hỗ trợ thêm m ới, chỉnh sửa, xóa và tìm ki ếm thông tin danh 
+mục phòng và giư ờng (s ức chứa, loại phòng, giá thuê, tiêu chí 
+ghép) t ại các chi nhánh.  
+Tiền điều kiện Quản trị viên đã đăng nh ập vào h ệ thống. 
+Hậu điều kiện Danh m ục phòng/giư ờng đư ợc cập nhật để cung c ấp dữ liệu cho 
+use-case "Tra c ứu phòng/giư ờng kh ả dụng".    
+ 
+  56 
+ Luồng sự kiện 
+chính  1. Quản trị viên ch ọn chức năng "Qu ản lý danh m ục 
+Phòng/Giư ờng". 
+2. Hệ thống hi ển thị danh sách phòng/giư ờng hi ện hành 
+kèm tình tr ạng. 
+3. Quản trị viên ch ọn thao tác "Thêm phòng/giư ờng m ới" 
+hoặc "Sửa thông tin".  
+4. Quản trị viên nh ập các thu ộc tính (Mã phòng, Chi 
+nhánh, S ức chứa, Giá thuê, Đi ều kiện giới tính).  
+5. Quản trị viên nh ấn "Lưu".  
+6. Hệ thống cập nhật cơ s ở dữ liệu và hi ển thị kết quả. 
+Luồng sự kiện 
+phụ A3 – Không th ể xóa/s ửa phòng đang s ử dụng: 
+− Nếu quản trị viên ch ọn Xóa ho ặc Sửa cấu trúc đ ối với 
+phòng đang có khách lưu trú ho ặc đã đ ặt cọc, hệ 
+thống sẽ chặn thao tác.  
+− Hệ thống hi ển thị cảnh báo "Phòng đang có giao d ịch, 
+không th ể thay đ ổi". Cần kết thúc tr ạng thái giao d ịch 
+trước khi th ực hiện. 
+ 
+Trường Nội dung  
+Tên use -case  Quản trị danh m ục dịch vụ và tiện ích  
+Tác nhân  Quản trị viên 
+Mô tả Quản lý danh m ục và đơn giá các lo ại dịch vụ phát sinh hàng 
+tháng (đi ện, nư ớc, wifi, gi ữ xe,...) đ ể làm cơ s ở lập phi ếu thu..  
+Tiền điều kiện Quản trị viên đã đăng nh ập vào h ệ thống. 
+Hậu điều kiện Danh sách phí d ịch vụ được cập nhật chính xác và s ẵn sàng liên 
+kết vào h ệ thống H ợp đồng.    
+ 
+  57 
+ Luồng sự kiện 
+chính  1. Quản trị viên truy c ập "Qu ản lý d ịch vụ - tiện ích".  
+2. Hệ thống hi ển thị danh sách d ịch vụ hiện có kèm đơn 
+giá. 
+3. Quản trị viên ch ọn Thêm m ới hoặc Chỉnh sửa một 
+dịch vụ. 
+4. Quản trị viên nh ập Tên d ịch vụ, Đơn giá, Đơn v ị tính 
+(Kwh, Kh ối, Tháng).  
+5. Nhấn "Lưu".  
+6. Hệ thống ki ểm tra và c ập nhật thay đ ổi vào d ữ liệu 
+danh m ục gốc. 
+Luồng sự kiện 
+phụ A1 – Hủy thao tác:  
+− Actor nh ấn "Hủy" trong quá trình nh ập liệu. 
+− Hệ thống đóng bi ểu mẫu, không ghi nh ận dữ liệu và 
+quay v ề màn hình danh sách ban đ ầu. 
+ 
+Trường Nội dung  
+Tên use -case  Quản trị danh m ục vật dụng và tài s ản 
+Tác nhân  Quản trị viên 
+Mô tả Khai báo và qu ản lý danh sách các trang thi ết bị, vật dụng tiêu 
+chuẩn (giư ờng, n ệm, tủ, chìa khóa, th ẻ từ...) để hỗ trợ việc kết 
+xuất danh m ục khi l ập biên b ản bàn giao ho ặc trả phòng.  
+Tiền điều kiện Quản trị viên đã đăng nh ập vào h ệ thống. 
+Hậu điều kiện Danh m ục vật dụng đư ợc cập nhật đầy đủ để tích h ợp vào các 
+Use-case bàn giao/tr ả phòng.  
+Luồng sự kiện 
+chính  1. Quản trị viên truy c ập chức năng "Qu ản trị danh mục vật 
+dụng và tài s ản". 
+2. Hệ thống hiển thị danh mục các nhóm v ật dụng (Đồ nội 
+thất, Thiết bị điện, Chìa khóa/Th ẻ...). 
+3. Quản trị viên chọn thao tác Thêm m ới hoặc Chỉnh sửa 
+một vật dụng.    
+ 
+  58 
+  
+4. Quản trị viên nhập thông tin (Mã v ật dụng, Tên v ật dụng, 
+Phân loại, Giá trị bồi thường mặc định).  
+5. Quản trị viên nhấn "Lưu".  
+6. Hệ thống ghi nh ận dữ liệu và làm m ới danh sách.  
+Luồng sự kiện 
+phụ A5 – Trùng mã v ật dụng: 
+− Hệ thống ki ểm tra th ấy Mã v ật dụng đã t ồn tại trong 
+CSDL.  
+− Hệ thống cảnh báo: "Mã v ật dụng đã t ồn tại. Vui lòng 
+nhập mã khác".  
+− Actor đi ều chỉnh lại mã và nh ấn "Lưu".  
+ 
+Trường Nội dung  
+Tên use -case  Sao lưu d ữ liệu 
+Tác nhân  Quản trị viên 
+Mô tả Thực hiện trích xu ất và t ạo bản sao lưu an toàn cho toàn b ộ dữ 
+liệu quan tr ọng của hệ thống (thông tin khách, ch ứng từ, hợp 
+đồng, tr ạng thái phòng).  
+Tiền điều kiện Quản trị viên đã đăng nh ập vào h ệ thống. 
+Hậu điều kiện Tập tin sao lưu d ữ liệu (.bak, .sql...) đư ợc tạo ra và lưu tr ữ thành 
+công trên máy ch ủ hoặc cloud.  
+Luồng sự kiện 
+chính  1. Quản trị viên truy c ập module "Qu ản trị an toàn" và 
+chọn "Sao lưu d ữ liệu". 
+2. Hệ thống hiển thị các tùy ch ọn sao lưu (Sao lưu toàn b ộ, 
+Sao lưu c ấu trúc, Ch ọn phân vùng d ữ liệu). 
+3. Quản trị viên cấu hình tùy ch ọn và đường dẫn lưu trữ, 
+sau đó nh ấn "Bắt đầu sao lưu".  
+4. Hệ thống tiến hành tổng hợp, nén dữ liệu và tạo file 
+backup.     
+ 
+  59 
+ 5. Hệ thống hiển thị thanh tiến trình hoàn t ất và thông báo 
+"Sao lưu thành công" kèm thông tin file.  
+Luồng sự kiện 
+phụ A4 – Không đ ủ dung lư ợng lưu tr ữ: 
+− Hệ thống phát hi ện không gian đĩa không đ ủ để chứa 
+file backup.  
+− Hệ thống dừng tiến trình, hi ển thị cảnh báo "L ỗi: 
+Không đ ủ dung lư ợng trống". 
+− Quản trị viên ti ến hành d ọn dẹp dung lư ợng và th ực 
+hiện lại từ bước 3. 
+ 
+Trường Nội dung  
+Tên use -case  Phục hồi dữ liệu 
+Tác nhân  Quản trị viên 
+Mô tả Khôi ph ục lại trạng thái ho ạt động của hệ thống và cơ s ở dữ 
+liệu từ một bản sao lưu (backup file) đã đư ợc tạo trước đó đ ể xử 
+lý các s ự cố mất mát d ữ liệu. 
+Tiền điều kiện Quản trị viên đã đăng nh ập với quy ền cao nh ất và đã chu ẩn bị 
+sẵn tệp tin sao lưu (backup file) h ợp lệ. 
+Hậu điều kiện Cơ s ở dữ liệu được khôi ph ục thành công v ề trạng thái t ại thời 
+điểm của tệp sao lưu.  
+Luồng sự kiện 
+chính  1. Quản trị viên truy c ập module "Qu ản trị an toàn" và 
+chọn "Phục hồi dữ liệu". 
+2. Hệ thống yêu cầu tải lên tệp sao lưu ho ặc chọn tệp có 
+sẵn trên máy ch ủ. 
+3. Quản trị viên chọn tệp tin và nh ấn "Tiến hành ph ục hồi". 
+4. Hệ thống hiển thị hộp thoại cảnh báo: "Vi ệc phục hồi sẽ 
+ghi đè lên toàn b ộ dữ liệu hiện tại. Bạn có chắc chắn 
+không?".  
+5. Quản trị viên nhập mật khẩu xác nhận và nhấn "Đồng ý".     
+ 
+  60 
+ 6. Hệ thống thực hiện giải nén và ghi đè cơ s ở dữ liệu. 
+7. Hệ thống thông báo "Ph ục hồi dữ liệu thành công" và 
+yêu cầu đăng nh ập lại. 
+Luồng sự kiện 
+phụ A4 – Tệp sao lưu không h ợp lệ hoặc bị hỏng: 
+− Hệ thống phát hi ện tệp tải lên sai đ ịnh dạng (.bak, 
+.sql) ho ặc dữ liệu bên trong b ị hỏng. 
+− Hệ thống dừng tiến trình ph ục hồi ngay l ập tức để 
+bảo vệ dữ liệu hiện tại. 
+− Hệ thống hi ển thị thông báo l ỗi: "Tệp sao lưu b ị hỏng 
+hoặc không đúng đ ịnh dạng. Ph ục hồi thất bại." 
+ 

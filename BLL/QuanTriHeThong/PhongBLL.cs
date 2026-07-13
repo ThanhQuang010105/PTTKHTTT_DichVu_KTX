@@ -1,6 +1,6 @@
-using System.Data;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using HomeStayDorm.DAL.QuanTriHeThong;
 using HomeStayDorm.DTO;
 
@@ -20,10 +20,10 @@ namespace HomeStayDorm.BLL.QuanTriHeThong
             return _phongDAL.TraCuuPhongKhaDung(tieuChi);
         }
 
-        public int Luu(PhongDTO phong)
+        public string Luu(PhongDTO phong)
         {
             List<string> loi = new List<string>();
-            if (phong.MaChiNhanh <= 0) loi.Add("Vui lòng chọn chi nhánh.");
+            if (string.IsNullOrWhiteSpace(phong.MaChiNhanh)) loi.Add("Vui lòng chọn chi nhánh.");
             if (string.IsNullOrWhiteSpace(phong.TenPhong)) loi.Add("Vui lòng nhập tên phòng.");
             if (string.IsNullOrWhiteSpace(phong.KhuVuc)) loi.Add("Vui lòng nhập khu vực.");
             if (string.IsNullOrWhiteSpace(phong.GioiTinhQuyDinh)) loi.Add("Vui lòng chọn giới tính quy định.");
@@ -35,9 +35,9 @@ namespace HomeStayDorm.BLL.QuanTriHeThong
             return _phongDAL.Luu(phong);
         }
 
-        public void Xoa(int maPhong)
+        public void Xoa(string maPhong)
         {
-            if (maPhong <= 0) throw new InvalidOperationException("Vui lòng chọn phòng cần xóa.");
+            if (string.IsNullOrWhiteSpace(maPhong)) throw new InvalidOperationException("Vui lòng chọn phòng cần xóa.");
             _phongDAL.Xoa(maPhong);
         }
     }

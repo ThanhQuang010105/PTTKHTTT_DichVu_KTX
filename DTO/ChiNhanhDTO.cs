@@ -2,7 +2,7 @@ namespace HomeStayDorm.DTO
 {
     public class ChiNhanhDTO
     {
-        public int MaChiNhanh { get; set; }
+        public string MaChiNhanh { get; set; } = string.Empty;
         public string TenChiNhanh { get; set; } = string.Empty;
         public string KhuVuc { get; set; } = string.Empty;
         public string DiaChi { get; set; } = string.Empty;

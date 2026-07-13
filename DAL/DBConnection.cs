@@ -51,6 +51,22 @@ namespace HomeStayDorm.DAL
             }
         }
 
+        public int ExecuteSqlNonQuery(string sql, SqlParameter[]? parameters = null)
+        {
+            using (SqlConnection conn = GetConnection())
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+                if (parameters != null)
+                {
+                    cmd.Parameters.AddRange(parameters);
+                }
+
+                conn.Open();
+                return cmd.ExecuteNonQuery();
+            }
+        }
+
         /// <summary>
         /// Thực thi Stored Procedure dạng Select (lấy dữ liệu danh sách).
         /// </summary>
@@ -79,6 +95,26 @@ namespace HomeStayDorm.DAL
             }
         }
 
+        public DataTable ExecuteSqlQuery(string sql, SqlParameter[]? parameters = null)
+        {
+            using (SqlConnection conn = GetConnection())
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+                if (parameters != null)
+                {
+                    cmd.Parameters.AddRange(parameters);
+                }
+
+                using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    return dt;
+                }
+            }
+        }
+
         /// <summary>
         /// Thực thi Stored Procedure dạng Select một giá trị đơn (ví dụ: COUNT(*), SUM, ID vừa thêm).
         /// </summary>
@@ -100,6 +136,22 @@ namespace HomeStayDorm.DAL
                     conn.Open();
                     return cmd.ExecuteScalar();
                 }
+            }
+        }
+
+        public object? ExecuteSqlScalar(string sql, SqlParameter[]? parameters = null)
+        {
+            using (SqlConnection conn = GetConnection())
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+                if (parameters != null)
+                {
+                    cmd.Parameters.AddRange(parameters);
+                }
+
+                conn.Open();
+                return cmd.ExecuteScalar();
             }
         }
     }

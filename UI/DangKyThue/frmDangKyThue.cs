@@ -194,10 +194,10 @@ namespace HomeStayDorm.UI.DangKyThue
             cboHinhThucThue.Items.AddRange(new object[] { DangKyThueBLL.ThueNguyenPhong, DangKyThueBLL.ThueGiuongOGhep });
 
             cboKhuVuc.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboKhuVuc.Items.AddRange(new object[] { "Quận 1", "Quận 3", "Bình Thạnh", "Thủ Đức" });
+            cboKhuVuc.Items.AddRange(new object[] { "Quận 1", "Bình Thạnh" });
 
             cboLoaiPhong.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboLoaiPhong.Items.AddRange(new object[] { "Tiêu chuẩn", "Cao cấp", "Studio" });
+            cboLoaiPhong.Items.AddRange(new object[] { "Phòng 4 Người", "Phòng Đơn" });
 
             nudSoNguoi.Minimum = 1;
             nudSoNguoi.Maximum = 20;

@@ -9,53 +9,102 @@ namespace HomeStayDorm.DAL.QuanTriHeThong
     {
         private readonly DBConnection _db = new DBConnection();
 
-        public DataTable LayDanhSachTheoPhong(int maPhong)
+        public DataTable LayDanhSachTheoPhong(string maPhong)
         {
-            return _db.ExecuteQuery("sp_Giuong_DanhSachTheoPhong", new[] { new SqlParameter("@MaPhong", maPhong) });
+            return _db.ExecuteSqlQuery(@"
+                SELECT
+                    MaGiuong,
+                    MaPhong,
+                    TenGiuong,
+                    GiaThueGiuong AS GiaThue,
+                    TrangThaiGiuong
+                FROM dbo.Giuong
+                WHERE MaPhong = @MaPhong
+                ORDER BY TenGiuong",
+                new[] { new SqlParameter("@MaPhong", maPhong) });
         }
 
         public DataTable TraCuuGiuongKhaDung(PhieuDangKyThueDTO tieuChi)
         {
-            SqlParameter[] parameters =
-            {
-                new SqlParameter("@KhuVuc", tieuChi.KhuVucMongMuon),
-                new SqlParameter("@GioiTinh", tieuChi.GioiTinh),
-                new SqlParameter("@LoaiPhong", tieuChi.LoaiPhong),
-                new SqlParameter("@SoNguoiDuKien", tieuChi.SoNguoiDuKien),
-                new SqlParameter("@GiaToiDa", tieuChi.GiaToiDa),
-                new SqlParameter("@NgayVaoDuKien", tieuChi.NgayVaoDuKien.Date),
-                new SqlParameter("@TieuChiUuTien", string.IsNullOrWhiteSpace(tieuChi.TieuChiUuTien)
-                    ? DBNull.Value
-                    : tieuChi.TieuChiUuTien.Trim())
-            };
-
-            return _db.ExecuteQuery("sp_TraCuuGiuongKhaDung", parameters);
+            return _db.ExecuteSqlQuery(@"
+                SELECT
+                    N'Giuong' AS LoaiKetQua,
+                    g.MaGiuong,
+                    g.TenGiuong,
+                    p.MaPhong,
+                    p.TenPhong,
+                    cn.TenChiNhanh,
+                    cn.KhuVuc,
+                    p.GioiTinhQuyDinh,
+                    p.LoaiPhong,
+                    g.GiaThueGiuong AS GiaThue,
+                    g.TrangThaiGiuong
+                FROM dbo.Giuong g
+                INNER JOIN dbo.Phong p ON p.MaPhong = g.MaPhong
+                INNER JOIN dbo.Chi_Nhanh cn ON cn.MaCN = p.MaCN
+                WHERE g.TrangThaiGiuong = N'Trống'
+                  AND p.TrangThaiPhong <> N'Ngừng sử dụng'
+                  AND (cn.KhuVuc = @KhuVuc OR p.KhuVuc = @KhuVuc)
+                  AND (@GioiTinh = N'Không yêu cầu' OR p.GioiTinhQuyDinh = @GioiTinh)
+                  AND p.LoaiPhong = @LoaiPhong
+                  AND g.GiaThueGiuong <= @GiaToiDa
+                ORDER BY g.GiaThueGiuong, p.TenPhong, g.TenGiuong",
+                new[]
+                {
+                    new SqlParameter("@KhuVuc", tieuChi.KhuVucMongMuon),
+                    new SqlParameter("@GioiTinh", tieuChi.GioiTinh),
+                    new SqlParameter("@LoaiPhong", tieuChi.LoaiPhong),
+                    new SqlParameter("@GiaToiDa", tieuChi.GiaToiDa)
+                });
         }
 
-        public int Luu(GiuongDTO giuong)
+        public string Luu(GiuongDTO giuong)
         {
-            SqlParameter maGiuong = new SqlParameter("@MaGiuong", SqlDbType.Int)
-            {
-                Direction = ParameterDirection.InputOutput,
-                Value = giuong.MaGiuong == 0 ? DBNull.Value : giuong.MaGiuong
-            };
+            string maGiuong = string.IsNullOrWhiteSpace(giuong.MaGiuong) ? TaoMaMoi(giuong.MaPhong) : giuong.MaGiuong.Trim();
 
             SqlParameter[] parameters =
             {
-                maGiuong,
+                new SqlParameter("@MaGiuong", maGiuong),
                 new SqlParameter("@MaPhong", giuong.MaPhong),
                 new SqlParameter("@TenGiuong", giuong.TenGiuong),
-                new SqlParameter("@GiaThue", giuong.GiaThue),
+                new SqlParameter("@GiaThueGiuong", giuong.GiaThue),
                 new SqlParameter("@TrangThaiGiuong", giuong.TrangThaiGiuong)
             };
 
-            _db.ExecuteNonQuery("sp_Giuong_Luu", parameters);
-            return Convert.ToInt32(maGiuong.Value);
+            _db.ExecuteSqlNonQuery(@"
+                IF EXISTS (SELECT 1 FROM dbo.Giuong WHERE MaGiuong = @MaGiuong)
+                BEGIN
+                    UPDATE dbo.Giuong
+                    SET MaPhong = @MaPhong,
+                        TenGiuong = @TenGiuong,
+                        GiaThueGiuong = @GiaThueGiuong,
+                        TrangThaiGiuong = @TrangThaiGiuong
+                    WHERE MaGiuong = @MaGiuong;
+                END
+                ELSE
+                BEGIN
+                    INSERT INTO dbo.Giuong (MaGiuong, MaPhong, TenGiuong, GiaThueGiuong, TrangThaiGiuong)
+                    VALUES (@MaGiuong, @MaPhong, @TenGiuong, @GiaThueGiuong, @TrangThaiGiuong);
+                END", parameters);
+
+            return maGiuong;
         }
 
-        public void Xoa(int maGiuong)
+        public void Xoa(string maGiuong)
         {
-            _db.ExecuteNonQuery("sp_Giuong_Xoa", new[] { new SqlParameter("@MaGiuong", maGiuong) });
+            _db.ExecuteSqlNonQuery(
+                "UPDATE dbo.Giuong SET TrangThaiGiuong = N'Ngừng sử dụng' WHERE MaGiuong = @MaGiuong",
+                new[] { new SqlParameter("@MaGiuong", maGiuong) });
+        }
+
+        private string TaoMaMoi(string maPhong)
+        {
+            object? value = _db.ExecuteSqlScalar(@"
+                SELECT ISNULL(MAX(TRY_CONVERT(INT, SUBSTRING(MaGiuong, LEN(@Prefix) + 1, 20))), 0) + 1
+                FROM dbo.Giuong
+                WHERE MaGiuong LIKE @Prefix + '%'",
+                new[] { new SqlParameter("@Prefix", "G" + maPhong.TrimStart('P')) });
+            return $"G{maPhong.TrimStart('P')}{Convert.ToInt32(value):00}";
         }
     }
 }

@@ -15,23 +15,23 @@ namespace HomeStayDorm.BLL.QuanTriHeThong
             return _nhanVienDAL.LayDanhSach();
         }
 
-        public int Luu(NhanVienDTO nhanVien, string? matKhauMoi)
+        public string Luu(NhanVienDTO nhanVien, string? matKhauMoi)
         {
             List<string> loi = new List<string>();
             if (string.IsNullOrWhiteSpace(nhanVien.HoTen)) loi.Add("Vui lòng nhập họ tên nhân viên.");
-            if (string.IsNullOrWhiteSpace(nhanVien.TenDangNhap)) loi.Add("Vui lòng nhập tên đăng nhập.");
             if (string.IsNullOrWhiteSpace(nhanVien.Email)) loi.Add("Vui lòng nhập email.");
             if (string.IsNullOrWhiteSpace(nhanVien.VaiTro)) loi.Add("Vui lòng chọn vai trò.");
-            if (nhanVien.MaNhanVien == 0 && string.IsNullOrWhiteSpace(matKhauMoi)) loi.Add("Vui lòng nhập mật khẩu cho nhân viên mới.");
+            if (string.IsNullOrWhiteSpace(nhanVien.MaChiNhanh)) loi.Add("Vui lòng chọn chi nhánh.");
+            if (string.IsNullOrWhiteSpace(nhanVien.MaNhanVien) && string.IsNullOrWhiteSpace(matKhauMoi)) loi.Add("Vui lòng nhập mật khẩu cho nhân viên mới.");
             if (loi.Count > 0) throw new InvalidOperationException(string.Join(Environment.NewLine, loi));
 
-            nhanVien.MatKhauHash = string.IsNullOrWhiteSpace(matKhauMoi) ? null : AuthBLL.HashMatKhau(matKhauMoi);
+            nhanVien.MatKhauHash = string.IsNullOrWhiteSpace(matKhauMoi) ? null : matKhauMoi;
             return _nhanVienDAL.Luu(nhanVien);
         }
 
-        public void KhoaTaiKhoan(int maNhanVien)
+        public void KhoaTaiKhoan(string maNhanVien)
         {
-            if (maNhanVien <= 0) throw new InvalidOperationException("Vui lòng chọn nhân viên cần khóa.");
+            if (string.IsNullOrWhiteSpace(maNhanVien)) throw new InvalidOperationException("Vui lòng chọn nhân viên cần khóa.");
             _nhanVienDAL.KhoaTaiKhoan(maNhanVien);
         }
     }

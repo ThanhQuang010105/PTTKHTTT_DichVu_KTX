@@ -140,9 +140,9 @@ namespace HomeStayDorm.UI.DangKyThue
         private void LoadDefaults()
         {
             UiHelper.ConfigureCombo(cboHinhThucThue, DangKyThueBLL.ThueNguyenPhong, DangKyThueBLL.ThueGiuongOGhep);
-            UiHelper.ConfigureCombo(cboKhuVuc, "Quận 1", "Quận 3", "Bình Thạnh", "Thủ Đức");
+            UiHelper.ConfigureCombo(cboKhuVuc, "Quận 1", "Bình Thạnh");
             UiHelper.ConfigureCombo(cboGioiTinh, "Nam", "Nữ", "Không yêu cầu");
-            UiHelper.ConfigureCombo(cboLoaiPhong, "Tiêu chuẩn", "Cao cấp", "Studio");
+            UiHelper.ConfigureCombo(cboLoaiPhong, "Phòng 4 Người", "Phòng Đơn");
             nudSoNguoi.Minimum = 1;
             nudSoNguoi.Maximum = 20;
             nudGiaToiDa.Minimum = 500000;

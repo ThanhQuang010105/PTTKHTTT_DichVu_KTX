@@ -15,12 +15,12 @@ namespace HomeStayDorm.BLL.DangKyThue
             return _lichXemPhongDAL.LayDanhSach();
         }
 
-        public int TaoLich(LichXemPhongDTO lich)
+        public string TaoLich(LichXemPhongDTO lich)
         {
             List<string> loi = new List<string>();
             if (string.IsNullOrWhiteSpace(lich.MaDangKy)) loi.Add("Vui lòng tra cứu phiếu đăng ký trước khi lập lịch.");
             if (string.IsNullOrWhiteSpace(lich.LoaiDoiTuong)) loi.Add("Vui lòng chọn phòng/giường cần hẹn xem.");
-            if (!lich.MaPhong.HasValue) loi.Add("Vui lòng chọn phòng/giường hợp lệ.");
+            if (string.IsNullOrWhiteSpace(lich.MaPhong)) loi.Add("Vui lòng chọn phòng/giường hợp lệ.");
             if (lich.NgayGioHen <= DateTime.Now) loi.Add("Thời gian hẹn phải lớn hơn thời điểm hiện tại.");
             if (loi.Count > 0) throw new InvalidOperationException(string.Join(Environment.NewLine, loi));
 

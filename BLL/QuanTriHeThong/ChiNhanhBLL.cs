@@ -15,7 +15,7 @@ namespace HomeStayDorm.BLL.QuanTriHeThong
             return _chiNhanhDAL.LayDanhSach();
         }
 
-        public int Luu(ChiNhanhDTO chiNhanh)
+        public string Luu(ChiNhanhDTO chiNhanh)
         {
             List<string> loi = new List<string>();
             if (string.IsNullOrWhiteSpace(chiNhanh.TenChiNhanh)) loi.Add("Vui lòng nhập tên chi nhánh.");
@@ -26,9 +26,9 @@ namespace HomeStayDorm.BLL.QuanTriHeThong
             return _chiNhanhDAL.Luu(chiNhanh);
         }
 
-        public void Xoa(int maChiNhanh)
+        public void Xoa(string maChiNhanh)
         {
-            if (maChiNhanh <= 0) throw new InvalidOperationException("Vui lòng chọn chi nhánh cần xóa.");
+            if (string.IsNullOrWhiteSpace(maChiNhanh)) throw new InvalidOperationException("Vui lòng chọn chi nhánh cần xóa.");
             _chiNhanhDAL.Xoa(maChiNhanh);
         }
     }

@@ -249,9 +249,9 @@ namespace HomeStayDorm.UI.DangKyThue
                 }
 
                 string loaiKetQua = Convert.ToString(dgvKetQua.CurrentRow.Cells["LoaiKetQua"].Value) ?? string.Empty;
-                int maPhong = Convert.ToInt32(dgvKetQua.CurrentRow.Cells["MaPhong"].Value);
-                int? maGiuong = dgvKetQua.Columns.Contains("MaGiuong")
-                    ? Convert.ToInt32(dgvKetQua.CurrentRow.Cells["MaGiuong"].Value)
+                string maPhong = Convert.ToString(dgvKetQua.CurrentRow.Cells["MaPhong"].Value) ?? string.Empty;
+                string? maGiuong = dgvKetQua.Columns.Contains("MaGiuong")
+                    ? Convert.ToString(dgvKetQua.CurrentRow.Cells["MaGiuong"].Value)
                     : null;
 
                 LichXemPhongDTO lich = new LichXemPhongDTO
@@ -264,7 +264,7 @@ namespace HomeStayDorm.UI.DangKyThue
                     GhiChu = txtGhiChu.Text.Trim()
                 };
 
-                int maLich = _lichXemPhongBLL.TaoLich(lich);
+                string maLich = _lichXemPhongBLL.TaoLich(lich);
                 lblTrangThai.Text = $"Đã lập lịch #{maLich} và cập nhật phiếu {_phieuDangKy.MaDangKy} thành Đã hẹn xem phòng.";
                 lblTrangThai.ForeColor = UiHelper.Success;
                 LoadLichHen();

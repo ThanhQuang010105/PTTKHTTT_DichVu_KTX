@@ -2,8 +2,8 @@ namespace HomeStayDorm.DTO
 {
     public class PhongDTO
     {
-        public int MaPhong { get; set; }
-        public int MaChiNhanh { get; set; }
+        public string MaPhong { get; set; } = string.Empty;
+        public string MaChiNhanh { get; set; } = string.Empty;
         public string TenPhong { get; set; } = string.Empty;
         public string KhuVuc { get; set; } = string.Empty;
         public string GioiTinhQuyDinh { get; set; } = string.Empty;

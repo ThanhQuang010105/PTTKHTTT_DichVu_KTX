@@ -23,7 +23,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
         private readonly ComboBox cboTrangThai = new ComboBox();
         private readonly DateTimePicker dtpNgayVaoLam = new DateTimePicker();
         private readonly Label lblTrangThai = new Label();
-        private int _maNhanVien;
+        private string _maNhanVien = string.Empty;
 
         public frmQuanLyNhanVien()
         {
@@ -129,7 +129,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
             viewport.Controls.Add(content);
             Controls.Add(viewport);
 
-            UiHelper.ConfigureCombo(cboVaiTro, "Sale", "QuanLy", "KeToan");
+            UiHelper.ConfigureCombo(cboVaiTro, "Sale", "Quản lý", "Kế toán");
             UiHelper.ConfigureCombo(cboTrangThai, "Đang làm", "Nghỉ việc");
         }
 
@@ -187,7 +187,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
         private void FillSelectedRow()
         {
             if (dgvNhanVien.CurrentRow == null) return;
-            _maNhanVien = Convert.ToInt32(dgvNhanVien.CurrentRow.Cells["MaNhanVien"].Value);
+            _maNhanVien = Convert.ToString(dgvNhanVien.CurrentRow.Cells["MaNhanVien"].Value) ?? string.Empty;
             txtHoTen.Text = Convert.ToString(dgvNhanVien.CurrentRow.Cells["HoTen"].Value);
             txtTenDangNhap.Text = Convert.ToString(dgvNhanVien.CurrentRow.Cells["TenDangNhap"].Value);
             txtEmail.Text = Convert.ToString(dgvNhanVien.CurrentRow.Cells["Email"].Value);
@@ -196,7 +196,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
             cboTrangThai.SelectedItem = Convert.ToString(dgvNhanVien.CurrentRow.Cells["TrangThai"].Value);
             if (dgvNhanVien.CurrentRow.Cells["MaChiNhanh"].Value != DBNull.Value)
             {
-                cboChiNhanh.SelectedValue = Convert.ToInt32(dgvNhanVien.CurrentRow.Cells["MaChiNhanh"].Value);
+                cboChiNhanh.SelectedValue = Convert.ToString(dgvNhanVien.CurrentRow.Cells["MaChiNhanh"].Value);
             }
             dtpNgayVaoLam.Value = Convert.ToDateTime(dgvNhanVien.CurrentRow.Cells["NgayVaoLam"].Value);
             txtMatKhau.Clear();
@@ -204,7 +204,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
 
         private void ClearForm()
         {
-            _maNhanVien = 0;
+            _maNhanVien = string.Empty;
             txtHoTen.Clear();
             txtTenDangNhap.Clear();
             txtEmail.Clear();
@@ -228,7 +228,7 @@ namespace HomeStayDorm.UI.QuanTriHeThong
                     Email = txtEmail.Text.Trim(),
                     SoDienThoai = txtSoDienThoai.Text.Trim(),
                     VaiTro = Convert.ToString(cboVaiTro.SelectedItem) ?? "Sale",
-                    MaChiNhanh = cboChiNhanh.SelectedValue == null ? null : Convert.ToInt32(cboChiNhanh.SelectedValue),
+                    MaChiNhanh = cboChiNhanh.SelectedValue == null ? null : Convert.ToString(cboChiNhanh.SelectedValue),
                     TrangThai = Convert.ToString(cboTrangThai.SelectedItem) ?? "Đang làm",
                     NgayVaoLam = dtpNgayVaoLam.Value.Date
                 };

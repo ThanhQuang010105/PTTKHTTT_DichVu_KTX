@@ -11,46 +11,110 @@ namespace HomeStayDorm.DAL.QuanTriHeThong
 
         public DataTable DocTheoTenDangNhapHoacEmail(string tenDangNhapHoacEmail)
         {
-            return _db.ExecuteQuery("sp_NhanVien_DocTheoDangNhap", new[]
-            {
-                new SqlParameter("@TenDangNhapHoacEmail", tenDangNhapHoacEmail)
-            });
+            string login = tenDangNhapHoacEmail.Trim();
+            string aliasRole = login.Equals("sale", StringComparison.OrdinalIgnoreCase) ? "Sale"
+                : login.Equals("quanly", StringComparison.OrdinalIgnoreCase) ? "Quản lý"
+                : login.Equals("ketoan", StringComparison.OrdinalIgnoreCase) ? "Kế toán"
+                : string.Empty;
+
+            return _db.ExecuteSqlQuery(@"
+                SELECT TOP 1
+                    nv.MaNV AS MaNhanVien,
+                    nv.MaNV AS TenDangNhap,
+                    nv.HoTen,
+                    nv.Email,
+                    nv.SDT AS SoDienThoai,
+                    nv.VaiTro,
+                    nv.MaCN AS MaChiNhanh,
+                    cn.TenChiNhanh,
+                    nv.MatKhau AS MatKhauHash,
+                    CASE WHEN nv.MatKhau = 'LOCKED' THEN N'Nghỉ việc' ELSE N'Đang làm' END AS TrangThai,
+                    CONVERT(date, GETDATE()) AS NgayVaoLam
+                FROM dbo.Nhan_Vien nv
+                INNER JOIN dbo.Chi_Nhanh cn ON cn.MaCN = nv.MaCN
+                WHERE nv.MaNV = @Login
+                   OR nv.Email = @Login
+                   OR LEFT(nv.Email, CHARINDEX('@', nv.Email + '@') - 1) = @Login
+                   OR (@AliasRole <> '' AND nv.VaiTro = @AliasRole)
+                ORDER BY nv.MaNV",
+                new[]
+                {
+                    new SqlParameter("@Login", login),
+                    new SqlParameter("@AliasRole", aliasRole)
+                });
         }
 
         public DataTable LayDanhSach()
         {
-            return _db.ExecuteQuery("sp_NhanVien_DanhSach");
+            return _db.ExecuteSqlQuery(@"
+                SELECT
+                    nv.MaNV AS MaNhanVien,
+                    nv.MaNV AS TenDangNhap,
+                    nv.HoTen,
+                    nv.Email,
+                    nv.SDT AS SoDienThoai,
+                    nv.VaiTro,
+                    nv.MaCN AS MaChiNhanh,
+                    cn.TenChiNhanh,
+                    CASE WHEN nv.MatKhau = 'LOCKED' THEN N'Nghỉ việc' ELSE N'Đang làm' END AS TrangThai,
+                    CONVERT(date, GETDATE()) AS NgayVaoLam
+                FROM dbo.Nhan_Vien nv
+                INNER JOIN dbo.Chi_Nhanh cn ON cn.MaCN = nv.MaCN
+                ORDER BY nv.MaNV DESC");
         }
 
-        public int Luu(NhanVienDTO nhanVien)
+        public string Luu(NhanVienDTO nhanVien)
         {
-            SqlParameter maNhanVien = new SqlParameter("@MaNhanVien", SqlDbType.Int)
-            {
-                Direction = ParameterDirection.InputOutput,
-                Value = nhanVien.MaNhanVien == 0 ? DBNull.Value : nhanVien.MaNhanVien
-            };
+            string maNhanVien = string.IsNullOrWhiteSpace(nhanVien.MaNhanVien)
+                ? TaoMaMoi()
+                : nhanVien.MaNhanVien.Trim();
 
             SqlParameter[] parameters =
             {
-                maNhanVien,
+                new SqlParameter("@MaNV", maNhanVien),
+                new SqlParameter("@MaCN", string.IsNullOrWhiteSpace(nhanVien.MaChiNhanh) ? DBNull.Value : nhanVien.MaChiNhanh),
                 new SqlParameter("@HoTen", nhanVien.HoTen),
-                new SqlParameter("@TenDangNhap", nhanVien.TenDangNhap),
+                new SqlParameter("@SDT", string.IsNullOrWhiteSpace(nhanVien.SoDienThoai) ? DBNull.Value : nhanVien.SoDienThoai.Trim()),
                 new SqlParameter("@Email", nhanVien.Email),
-                new SqlParameter("@SoDienThoai", string.IsNullOrWhiteSpace(nhanVien.SoDienThoai) ? DBNull.Value : nhanVien.SoDienThoai.Trim()),
                 new SqlParameter("@VaiTro", nhanVien.VaiTro),
-                new SqlParameter("@MaChiNhanh", nhanVien.MaChiNhanh.HasValue ? nhanVien.MaChiNhanh.Value : DBNull.Value),
-                new SqlParameter("@MatKhauHash", string.IsNullOrWhiteSpace(nhanVien.MatKhauHash) ? DBNull.Value : nhanVien.MatKhauHash),
-                new SqlParameter("@TrangThai", nhanVien.TrangThai),
-                new SqlParameter("@NgayVaoLam", nhanVien.NgayVaoLam.Date)
+                new SqlParameter("@MatKhau", string.IsNullOrWhiteSpace(nhanVien.MatKhauHash) ? DBNull.Value : nhanVien.MatKhauHash)
             };
 
-            _db.ExecuteNonQuery("sp_NhanVien_Luu", parameters);
-            return Convert.ToInt32(maNhanVien.Value);
+            _db.ExecuteSqlNonQuery(@"
+                IF EXISTS (SELECT 1 FROM dbo.Nhan_Vien WHERE MaNV = @MaNV)
+                BEGIN
+                    UPDATE dbo.Nhan_Vien
+                    SET MaCN = @MaCN,
+                        HoTen = @HoTen,
+                        SDT = @SDT,
+                        Email = @Email,
+                        VaiTro = @VaiTro,
+                        MatKhau = COALESCE(@MatKhau, MatKhau)
+                    WHERE MaNV = @MaNV;
+                END
+                ELSE
+                BEGIN
+                    INSERT INTO dbo.Nhan_Vien (MaNV, MaCN, HoTen, SDT, Email, VaiTro, MatKhau)
+                    VALUES (@MaNV, @MaCN, @HoTen, @SDT, @Email, @VaiTro, COALESCE(@MatKhau, '123456'));
+                END", parameters);
+
+            return maNhanVien;
         }
 
-        public void KhoaTaiKhoan(int maNhanVien)
+        public void KhoaTaiKhoan(string maNhanVien)
         {
-            _db.ExecuteNonQuery("sp_NhanVien_KhoaTaiKhoan", new[] { new SqlParameter("@MaNhanVien", maNhanVien) });
+            _db.ExecuteSqlNonQuery(
+                "UPDATE dbo.Nhan_Vien SET MatKhau = 'LOCKED' WHERE MaNV = @MaNV",
+                new[] { new SqlParameter("@MaNV", maNhanVien) });
+        }
+
+        private string TaoMaMoi()
+        {
+            object? value = _db.ExecuteSqlScalar(@"
+                SELECT ISNULL(MAX(TRY_CONVERT(INT, SUBSTRING(MaNV, 3, 20))), 0) + 1
+                FROM dbo.Nhan_Vien
+                WHERE MaNV LIKE 'NV%'");
+            return $"NV{Convert.ToInt32(value):000}";
         }
     }
 }

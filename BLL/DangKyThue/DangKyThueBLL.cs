@@ -11,7 +11,7 @@ namespace HomeStayDorm.BLL.DangKyThue
     public class DangKyThueBLL
     {
         public const string ThueNguyenPhong = "Thuê nguyên phòng";
-        public const string ThueGiuongOGhep = "Thuê giường ở ghép";
+        public const string ThueGiuongOGhep = "Thuê giường";
 
         private readonly DangKyThueDAL _dangKyThueDAL = new DangKyThueDAL();
         private readonly PhongBLL _phongBLL = new PhongBLL();
@@ -26,7 +26,6 @@ namespace HomeStayDorm.BLL.DangKyThue
             }
 
             phieuDangKy.MaDangKy = _dangKyThueDAL.TaoPhieuDangKy(phieuDangKy);
-
             DataTable ketQua = LaThueNguyenPhong(phieuDangKy.HinhThucThue)
                 ? _phongBLL.TraCuuPhongKhaDung(phieuDangKy)
                 : _giuongBLL.TraCuuGiuongKhaDung(phieuDangKy);
@@ -93,61 +92,17 @@ namespace HomeStayDorm.BLL.DangKyThue
         public List<string> KiemTraThongTinHopLe(PhieuDangKyThueDTO phieuDangKy)
         {
             List<string> loi = new List<string>();
-
-            if (string.IsNullOrWhiteSpace(phieuDangKy.HoTenKhachHang))
-            {
-                loi.Add("Vui lòng nhập họ tên khách hàng.");
-            }
-
-            if (string.IsNullOrWhiteSpace(phieuDangKy.SoDienThoai))
-            {
-                loi.Add("Vui lòng nhập số điện thoại khách hàng.");
-            }
-            else if (phieuDangKy.SoDienThoai.Trim().Length < 9)
-            {
-                loi.Add("Số điện thoại phải có ít nhất 9 ký tự.");
-            }
-
-            if (string.IsNullOrWhiteSpace(phieuDangKy.GioiTinh))
-            {
-                loi.Add("Vui lòng chọn giới tính/khu vực giới tính.");
-            }
-
-            if (!LaHinhThucThueHopLe(phieuDangKy.HinhThucThue))
-            {
-                loi.Add("Vui lòng chọn hình thức thuê hợp lệ.");
-            }
-
-            if (string.IsNullOrWhiteSpace(phieuDangKy.KhuVucMongMuon))
-            {
-                loi.Add("Vui lòng chọn khu vực mong muốn.");
-            }
-
-            if (string.IsNullOrWhiteSpace(phieuDangKy.LoaiPhong))
-            {
-                loi.Add("Vui lòng chọn loại phòng.");
-            }
-
-            if (phieuDangKy.SoNguoiDuKien <= 0)
-            {
-                loi.Add("Số người dự kiến ở phải lớn hơn 0.");
-            }
-
-            if (phieuDangKy.GiaToiDa <= 0)
-            {
-                loi.Add("Mức giá tối đa phải lớn hơn 0.");
-            }
-
-            if (phieuDangKy.NgayVaoDuKien.Date < DateTime.Today)
-            {
-                loi.Add("Ngày vào dự kiến không được nhỏ hơn ngày hiện tại.");
-            }
-
-            if (phieuDangKy.ThoiHanThueThang <= 0)
-            {
-                loi.Add("Thời hạn thuê phải lớn hơn 0 tháng.");
-            }
-
+            if (string.IsNullOrWhiteSpace(phieuDangKy.HoTenKhachHang)) loi.Add("Vui lòng nhập họ tên khách hàng.");
+            if (string.IsNullOrWhiteSpace(phieuDangKy.SoDienThoai)) loi.Add("Vui lòng nhập số điện thoại khách hàng.");
+            else if (phieuDangKy.SoDienThoai.Trim().Length < 9) loi.Add("Số điện thoại phải có ít nhất 9 ký tự.");
+            if (string.IsNullOrWhiteSpace(phieuDangKy.GioiTinh)) loi.Add("Vui lòng chọn giới tính/khu vực giới tính.");
+            if (!LaHinhThucThueHopLe(phieuDangKy.HinhThucThue)) loi.Add("Vui lòng chọn hình thức thuê hợp lệ.");
+            if (string.IsNullOrWhiteSpace(phieuDangKy.KhuVucMongMuon)) loi.Add("Vui lòng chọn khu vực mong muốn.");
+            if (string.IsNullOrWhiteSpace(phieuDangKy.LoaiPhong)) loi.Add("Vui lòng chọn loại phòng.");
+            if (phieuDangKy.SoNguoiDuKien <= 0) loi.Add("Số người dự kiến ở phải lớn hơn 0.");
+            if (phieuDangKy.GiaToiDa <= 0) loi.Add("Mức giá tối đa phải lớn hơn 0.");
+            if (phieuDangKy.NgayVaoDuKien.Date < DateTime.Today) loi.Add("Ngày vào dự kiến không được nhỏ hơn ngày hiện tại.");
+            if (phieuDangKy.ThoiHanThueThang <= 0) loi.Add("Thời hạn thuê phải lớn hơn 0 tháng.");
             return loi;
         }
 
