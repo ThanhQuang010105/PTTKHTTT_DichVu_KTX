@@ -15,6 +15,11 @@ namespace HomeStayDorm.BLL.QuanTriHeThong
             return _chiNhanhDAL.LayDanhSach();
         }
 
+        public DataTable LayDanhMucKhuVuc()
+        {
+            return _chiNhanhDAL.LayDanhMucKhuVuc();
+        }
+
         public string Luu(ChiNhanhDTO chiNhanh)
         {
             List<string> loi = new List<string>();

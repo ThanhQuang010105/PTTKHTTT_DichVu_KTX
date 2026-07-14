@@ -15,9 +15,24 @@ namespace HomeStayDorm.BLL.QuanTriHeThong
             return _phongDAL.LayDanhSach();
         }
 
+        public DataTable LayDanhMucLoaiPhong()
+        {
+            return _phongDAL.LayDanhMucLoaiPhong();
+        }
+
+        public DataTable LayDanhMucGioiTinhQuyDinh()
+        {
+            return _phongDAL.LayDanhMucGioiTinhQuyDinh();
+        }
+
         public DataTable TraCuuPhongKhaDung(PhieuDangKyThueDTO tieuChi)
         {
-            return _phongDAL.TraCuuPhongKhaDung(tieuChi);
+            return TraCuuPhongPhuHop(tieuChi);
+        }
+
+        public DataTable TraCuuPhongPhuHop(PhieuDangKyThueDTO tieuChi)
+        {
+            return _phongDAL.DocDanhSachPhongTrong(tieuChi);
         }
 
         public string Luu(PhongDTO phong)

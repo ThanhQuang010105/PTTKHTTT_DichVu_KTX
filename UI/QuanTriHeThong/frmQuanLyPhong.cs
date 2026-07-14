@@ -250,8 +250,8 @@ namespace HomeStayDorm.UI.QuanTriHeThong
             cboChiNhanh.DisplayMember = "TenChiNhanh";
             cboChiNhanh.ValueMember = "MaChiNhanh";
 
-            UiHelper.ConfigureCombo(cboGioiTinh, "Nam", "Nữ", "Không yêu cầu");
-            UiHelper.ConfigureCombo(cboLoaiPhong, "Phòng 4 Người", "Phòng Đơn");
+            UiHelper.ConfigureComboFromData(cboGioiTinh, _phongBLL.LayDanhMucGioiTinhQuyDinh(), "GioiTinh", "Nam", "Nữ", "Không yêu cầu");
+            UiHelper.ConfigureComboFromData(cboLoaiPhong, _phongBLL.LayDanhMucLoaiPhong(), "LoaiPhong", "Phòng 4 Người", "Phòng Đơn");
             UiHelper.ConfigureCombo(cboTrangThaiPhong, "Hoạt động", "Ngừng sử dụng");
             UiHelper.ConfigureCombo(cboTrangThaiGiuong, "Trống", "Đã thuê", "Ngừng sử dụng");
             nudSucChua.Minimum = 1;

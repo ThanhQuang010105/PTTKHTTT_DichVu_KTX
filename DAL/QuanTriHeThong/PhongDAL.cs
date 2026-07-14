@@ -28,7 +28,32 @@ namespace HomeStayDorm.DAL.QuanTriHeThong
                 ORDER BY p.MaPhong DESC");
         }
 
+        public DataTable LayDanhMucLoaiPhong()
+        {
+            return _db.ExecuteSqlQuery(@"
+                SELECT DISTINCT LTRIM(RTRIM(LoaiPhong)) AS LoaiPhong
+                FROM dbo.Phong
+                WHERE LoaiPhong IS NOT NULL
+                  AND LTRIM(RTRIM(LoaiPhong)) <> ''
+                ORDER BY LoaiPhong");
+        }
+
+        public DataTable LayDanhMucGioiTinhQuyDinh()
+        {
+            return _db.ExecuteSqlQuery(@"
+                SELECT DISTINCT LTRIM(RTRIM(GioiTinhQuyDinh)) AS GioiTinh
+                FROM dbo.Phong
+                WHERE GioiTinhQuyDinh IS NOT NULL
+                  AND LTRIM(RTRIM(GioiTinhQuyDinh)) <> ''
+                ORDER BY GioiTinh");
+        }
+
         public DataTable TraCuuPhongKhaDung(PhieuDangKyThueDTO tieuChi)
+        {
+            return DocDanhSachPhongTrong(tieuChi);
+        }
+
+        public DataTable DocDanhSachPhongTrong(PhieuDangKyThueDTO tieuChi)
         {
             return _db.ExecuteSqlQuery(@"
                 SELECT

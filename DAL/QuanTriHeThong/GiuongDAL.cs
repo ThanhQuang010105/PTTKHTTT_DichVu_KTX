@@ -26,6 +26,11 @@ namespace HomeStayDorm.DAL.QuanTriHeThong
 
         public DataTable TraCuuGiuongKhaDung(PhieuDangKyThueDTO tieuChi)
         {
+            return DocDanhSachGiuongTrong(tieuChi);
+        }
+
+        public DataTable DocDanhSachGiuongTrong(PhieuDangKyThueDTO tieuChi)
+        {
             return _db.ExecuteSqlQuery(@"
                 SELECT
                     N'Giuong' AS LoaiKetQua,

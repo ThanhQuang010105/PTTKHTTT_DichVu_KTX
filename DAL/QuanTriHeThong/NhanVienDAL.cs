@@ -63,6 +63,16 @@ namespace HomeStayDorm.DAL.QuanTriHeThong
                 ORDER BY nv.MaNV DESC");
         }
 
+        public DataTable LayDanhMucVaiTro()
+        {
+            return _db.ExecuteSqlQuery(@"
+                SELECT DISTINCT LTRIM(RTRIM(VaiTro)) AS VaiTro
+                FROM dbo.Nhan_Vien
+                WHERE VaiTro IS NOT NULL
+                  AND LTRIM(RTRIM(VaiTro)) <> ''
+                ORDER BY VaiTro");
+        }
+
         public string Luu(NhanVienDTO nhanVien)
         {
             string maNhanVien = string.IsNullOrWhiteSpace(nhanVien.MaNhanVien)

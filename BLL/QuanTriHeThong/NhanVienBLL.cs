@@ -15,6 +15,11 @@ namespace HomeStayDorm.BLL.QuanTriHeThong
             return _nhanVienDAL.LayDanhSach();
         }
 
+        public DataTable LayDanhMucVaiTro()
+        {
+            return _nhanVienDAL.LayDanhMucVaiTro();
+        }
+
         public string Luu(NhanVienDTO nhanVien, string? matKhauMoi)
         {
             List<string> loi = new List<string>();

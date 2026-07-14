@@ -128,9 +128,6 @@ namespace HomeStayDorm.UI.QuanTriHeThong
             content.Controls.Add(lblTrangThai);
             viewport.Controls.Add(content);
             Controls.Add(viewport);
-
-            UiHelper.ConfigureCombo(cboVaiTro, "Sale", "Quản lý", "Kế toán");
-            UiHelper.ConfigureCombo(cboTrangThai, "Đang làm", "Nghỉ việc");
         }
 
         private static void AddField(Control parent, string labelText, Control control, int x, int y, int labelWidth, int controlWidth)
@@ -163,6 +160,9 @@ namespace HomeStayDorm.UI.QuanTriHeThong
 
         private void LoadCombos()
         {
+            UiHelper.ConfigureComboFromData(cboVaiTro, _nhanVienBLL.LayDanhMucVaiTro(), "VaiTro", "Sale", "Quản lý", "Kế toán");
+            UiHelper.ConfigureCombo(cboTrangThai, "Đang làm", "Nghỉ việc");
+
             DataTable chiNhanh = _chiNhanhBLL.LayDanhSach();
             cboChiNhanh.DataSource = chiNhanh;
             cboChiNhanh.DisplayMember = "TenChiNhanh";

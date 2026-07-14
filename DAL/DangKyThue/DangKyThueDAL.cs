@@ -61,6 +61,11 @@ namespace HomeStayDorm.DAL.DangKyThue
 
         public string TaoPhieuDangKy(PhieuDangKyThueDTO phieuDangKy)
         {
+            return ThemPhieuDangKy(phieuDangKy);
+        }
+
+        public string ThemPhieuDangKy(PhieuDangKyThueDTO phieuDangKy)
+        {
             string maKhachHang = TaoMaKhachHangMoi();
             string maDangKy = TaoMaDangKyMoi();
 

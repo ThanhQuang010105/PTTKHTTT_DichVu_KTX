@@ -2,6 +2,7 @@ using System;
 using System.Drawing;
 using System.Windows.Forms;
 using HomeStayDorm.BLL.DangKyThue;
+using HomeStayDorm.BLL.QuanTriHeThong;
 using HomeStayDorm.DTO;
 using HomeStayDorm.UI.Common;
 
@@ -9,7 +10,9 @@ namespace HomeStayDorm.UI.DangKyThue
 {
     public class frmTraCuuPhong : Form
     {
-        private readonly DangKyThueBLL _dangKyThueBLL = new DangKyThueBLL();
+        private readonly TraCuuPhongGiuongBLL _traCuuPhongGiuongBLL = new TraCuuPhongGiuongBLL();
+        private readonly ChiNhanhBLL _chiNhanhBLL = new ChiNhanhBLL();
+        private readonly PhongBLL _phongBLL = new PhongBLL();
         private readonly ComboBox cboHinhThucThue = new ComboBox();
         private readonly ComboBox cboKhuVuc = new ComboBox();
         private readonly ComboBox cboGioiTinh = new ComboBox();
@@ -140,9 +143,9 @@ namespace HomeStayDorm.UI.DangKyThue
         private void LoadDefaults()
         {
             UiHelper.ConfigureCombo(cboHinhThucThue, DangKyThueBLL.ThueNguyenPhong, DangKyThueBLL.ThueGiuongOGhep);
-            UiHelper.ConfigureCombo(cboKhuVuc, "Quận 1", "Bình Thạnh");
-            UiHelper.ConfigureCombo(cboGioiTinh, "Nam", "Nữ", "Không yêu cầu");
-            UiHelper.ConfigureCombo(cboLoaiPhong, "Phòng 4 Người", "Phòng Đơn");
+            UiHelper.ConfigureComboFromData(cboKhuVuc, _chiNhanhBLL.LayDanhMucKhuVuc(), "KhuVuc", "Quận 1", "Bình Thạnh");
+            UiHelper.ConfigureComboFromData(cboGioiTinh, _phongBLL.LayDanhMucGioiTinhQuyDinh(), "GioiTinh", "Nam", "Nữ", "Không yêu cầu");
+            UiHelper.ConfigureComboFromData(cboLoaiPhong, _phongBLL.LayDanhMucLoaiPhong(), "LoaiPhong", "Phòng 4 Người", "Phòng Đơn");
             nudSoNguoi.Minimum = 1;
             nudSoNguoi.Maximum = 20;
             nudGiaToiDa.Minimum = 500000;
@@ -174,7 +177,17 @@ namespace HomeStayDorm.UI.DangKyThue
         {
             try
             {
-                DangKyTraCuuResult result = _dangKyThueBLL.TraCuuPhongGiuongKhaDung(BuildDto());
+                PhieuDangKyThueDTO thongTinDK = TaoThongTinDangKyTuBoLoc();
+                TraCuuPhongGiuongResult ketQuaKiemTra = _traCuuPhongGiuongBLL.KiemTraBoLoc(thongTinDK);
+                if (!ketQuaKiemTra.ThanhCong)
+                {
+                    dgvKetQua.DataSource = ketQuaKiemTra.KetQua;
+                    lblTrangThai.Text = ketQuaKiemTra.ThongBao;
+                    lblTrangThai.ForeColor = UiHelper.Danger;
+                    return;
+                }
+
+                TraCuuPhongGiuongResult result = _traCuuPhongGiuongBLL.TraCuuPhongGiuongPhuHop(thongTinDK);
                 dgvKetQua.DataSource = result.KetQua;
                 lblTrangThai.Text = result.ThongBao;
                 lblTrangThai.ForeColor = result.ThanhCong ? UiHelper.Success : UiHelper.Danger;
@@ -186,7 +199,7 @@ namespace HomeStayDorm.UI.DangKyThue
             }
         }
 
-        private PhieuDangKyThueDTO BuildDto()
+        private PhieuDangKyThueDTO TaoThongTinDangKyTuBoLoc()
         {
             return new PhieuDangKyThueDTO
             {

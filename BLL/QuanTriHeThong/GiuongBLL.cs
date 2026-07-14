@@ -18,7 +18,12 @@ namespace HomeStayDorm.BLL.QuanTriHeThong
 
         public DataTable TraCuuGiuongKhaDung(PhieuDangKyThueDTO tieuChi)
         {
-            return _giuongDAL.TraCuuGiuongKhaDung(tieuChi);
+            return TraCuuGiuongPhuHop(tieuChi);
+        }
+
+        public DataTable TraCuuGiuongPhuHop(PhieuDangKyThueDTO tieuChi)
+        {
+            return _giuongDAL.DocDanhSachGiuongTrong(tieuChi);
         }
 
         public string Luu(GiuongDTO giuong)

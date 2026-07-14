@@ -11,6 +11,7 @@ namespace HomeStayDorm.UI.DangKyThue
     public class frmLichXemPhong : Form
     {
         private readonly DangKyThueBLL _dangKyThueBLL = new DangKyThueBLL();
+        private readonly TraCuuPhongGiuongBLL _traCuuPhongGiuongBLL = new TraCuuPhongGiuongBLL();
         private readonly LichXemPhongBLL _lichXemPhongBLL = new LichXemPhongBLL();
         private readonly TextBox txtMaDangKy = new TextBox();
         private readonly TextBox txtThongTinKhach = new TextBox();
@@ -222,7 +223,7 @@ namespace HomeStayDorm.UI.DangKyThue
                 txtThongTinKhach.Text = $"{_phieuDangKy.HoTenKhachHang} - {_phieuDangKy.SoDienThoai}";
                 txtNhuCau.Text = $"{_phieuDangKy.HinhThucThue}, {_phieuDangKy.KhuVucMongMuon}, {_phieuDangKy.LoaiPhong}";
 
-                DangKyTraCuuResult ketQua = _dangKyThueBLL.TraCuuPhongGiuongKhaDung(_phieuDangKy);
+                TraCuuPhongGiuongResult ketQua = _traCuuPhongGiuongBLL.TraCuuPhongGiuongKhaDung(_phieuDangKy);
                 dgvKetQua.DataSource = ketQua.KetQua;
                 lblTrangThai.Text = ketQua.ThongBao;
                 lblTrangThai.ForeColor = UiHelper.Success;

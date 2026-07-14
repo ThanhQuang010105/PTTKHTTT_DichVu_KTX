@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using HomeStayDorm.BLL.QuanTriHeThong;
 using HomeStayDorm.DAL.DangKyThue;
 using HomeStayDorm.DTO;
 
@@ -14,27 +13,37 @@ namespace HomeStayDorm.BLL.DangKyThue
         public const string ThueGiuongOGhep = "Thuê giường";
 
         private readonly DangKyThueDAL _dangKyThueDAL = new DangKyThueDAL();
-        private readonly PhongBLL _phongBLL = new PhongBLL();
-        private readonly GiuongBLL _giuongBLL = new GiuongBLL();
 
-        public DangKyTraCuuResult TaoDangKyVaTraCuu(PhieuDangKyThueDTO phieuDangKy)
+        public DangKyResult TaoDangKy(PhieuDangKyThueDTO phieuDangKy)
         {
-            List<string> loi = KiemTraThongTinHopLe(phieuDangKy);
-            if (loi.Count > 0)
+            DangKyResult ketQuaKiemTra = KiemTraThongTinHopLe(phieuDangKy);
+            return ketQuaKiemTra.ThanhCong
+                ? TaoPhieuDangKy(phieuDangKy)
+                : ketQuaKiemTra;
+        }
+
+        public DangKyResult KiemTraThongTinHopLe(PhieuDangKyThueDTO phieuDangKy)
+        {
+            List<string> loi = LayLoiThongTinDangKy(phieuDangKy);
+            return loi.Count == 0
+                ? DangKyResult.TaoThanhCong(string.Empty, "Thông tin đăng ký hợp lệ.")
+                : DangKyResult.TaoThatBai(string.Join(Environment.NewLine, loi));
+        }
+
+        public DangKyResult TaoPhieuDangKy(PhieuDangKyThueDTO phieuDangKy)
+        {
+            try
             {
-                return DangKyTraCuuResult.TaoThatBai(string.Join(Environment.NewLine, loi));
+                string maDangKy = _dangKyThueDAL.ThemPhieuDangKy(phieuDangKy);
+                phieuDangKy.MaDangKy = maDangKy;
+                return DangKyResult.TaoThanhCong(
+                    maDangKy,
+                    $"Đã tạo phiếu đăng ký {maDangKy}.");
             }
-
-            phieuDangKy.MaDangKy = _dangKyThueDAL.TaoPhieuDangKy(phieuDangKy);
-            DataTable ketQua = LaThueNguyenPhong(phieuDangKy.HinhThucThue)
-                ? _phongBLL.TraCuuPhongKhaDung(phieuDangKy)
-                : _giuongBLL.TraCuuGiuongKhaDung(phieuDangKy);
-
-            string thongBao = ketQua.Rows.Count == 0
-                ? "Không có phòng/giường phù hợp. Hãy điều chỉnh tiêu chí hoặc kết thúc xử lý đăng ký."
-                : $"Đã tạo phiếu {phieuDangKy.MaDangKy} và tìm thấy {ketQua.Rows.Count} kết quả phù hợp.";
-
-            return DangKyTraCuuResult.TaoThanhCong(phieuDangKy.MaDangKy, ketQua, thongBao);
+            catch (Exception ex)
+            {
+                return DangKyResult.TaoThatBai($"Không thể lưu phiếu đăng ký. Chi tiết: {ex.Message}");
+            }
         }
 
         public DataTable LayDanhSachDangKy()
@@ -46,25 +55,6 @@ namespace HomeStayDorm.BLL.DangKyThue
         {
             if (string.IsNullOrWhiteSpace(maDangKy)) return new DataTable();
             return _dangKyThueDAL.LayChiTietDangKy(maDangKy.Trim());
-        }
-
-        public DangKyTraCuuResult TraCuuPhongGiuongKhaDung(PhieuDangKyThueDTO tieuChi)
-        {
-            List<string> loi = KiemTraTieuChiTraCuu(tieuChi);
-            if (loi.Count > 0)
-            {
-                return DangKyTraCuuResult.TaoThatBai(string.Join(Environment.NewLine, loi));
-            }
-
-            DataTable ketQua = LaThueNguyenPhong(tieuChi.HinhThucThue)
-                ? _phongBLL.TraCuuPhongKhaDung(tieuChi)
-                : _giuongBLL.TraCuuGiuongKhaDung(tieuChi);
-
-            string thongBao = ketQua.Rows.Count == 0
-                ? "Không có phòng/giường phù hợp."
-                : $"Tìm thấy {ketQua.Rows.Count} phòng/giường phù hợp.";
-
-            return DangKyTraCuuResult.TaoThanhCong(tieuChi.MaDangKy, ketQua, thongBao);
         }
 
         public PhieuDangKyThueDTO TaoDtoTuDongChiTiet(DataRow row)
@@ -89,7 +79,7 @@ namespace HomeStayDorm.BLL.DangKyThue
             };
         }
 
-        public List<string> KiemTraThongTinHopLe(PhieuDangKyThueDTO phieuDangKy)
+        private List<string> LayLoiThongTinDangKy(PhieuDangKyThueDTO phieuDangKy)
         {
             List<string> loi = new List<string>();
             if (string.IsNullOrWhiteSpace(phieuDangKy.HoTenKhachHang)) loi.Add("Vui lòng nhập họ tên khách hàng.");
@@ -106,53 +96,34 @@ namespace HomeStayDorm.BLL.DangKyThue
             return loi;
         }
 
-        private List<string> KiemTraTieuChiTraCuu(PhieuDangKyThueDTO tieuChi)
-        {
-            List<string> loi = new List<string>();
-            if (string.IsNullOrWhiteSpace(tieuChi.GioiTinh)) loi.Add("Vui lòng chọn giới tính.");
-            if (!LaHinhThucThueHopLe(tieuChi.HinhThucThue)) loi.Add("Vui lòng chọn hình thức thuê hợp lệ.");
-            if (string.IsNullOrWhiteSpace(tieuChi.KhuVucMongMuon)) loi.Add("Vui lòng chọn khu vực.");
-            if (string.IsNullOrWhiteSpace(tieuChi.LoaiPhong)) loi.Add("Vui lòng chọn loại phòng.");
-            if (tieuChi.SoNguoiDuKien <= 0) loi.Add("Số người dự kiến ở phải lớn hơn 0.");
-            if (tieuChi.GiaToiDa <= 0) loi.Add("Mức giá tối đa phải lớn hơn 0.");
-            return loi;
-        }
-
         private static bool LaHinhThucThueHopLe(string hinhThucThue)
         {
             return new[] { ThueNguyenPhong, ThueGiuongOGhep }
                 .Contains(hinhThucThue, StringComparer.OrdinalIgnoreCase);
         }
-
-        private static bool LaThueNguyenPhong(string hinhThucThue)
-        {
-            return string.Equals(hinhThucThue, ThueNguyenPhong, StringComparison.OrdinalIgnoreCase);
-        }
     }
 
-    public class DangKyTraCuuResult
+    public class DangKyResult
     {
-        private DangKyTraCuuResult(bool thanhCong, string maDangKy, DataTable ketQua, string thongBao)
+        private DangKyResult(bool thanhCong, string maDangKy, string thongBao)
         {
             ThanhCong = thanhCong;
             MaDangKy = maDangKy;
-            KetQua = ketQua;
             ThongBao = thongBao;
         }
 
         public bool ThanhCong { get; }
         public string MaDangKy { get; }
-        public DataTable KetQua { get; }
         public string ThongBao { get; }
 
-        public static DangKyTraCuuResult TaoThanhCong(string maDangKy, DataTable ketQua, string thongBao)
+        public static DangKyResult TaoThanhCong(string maDangKy, string thongBao)
         {
-            return new DangKyTraCuuResult(true, maDangKy, ketQua, thongBao);
+            return new DangKyResult(true, maDangKy, thongBao);
         }
 
-        public static DangKyTraCuuResult TaoThatBai(string thongBao)
+        public static DangKyResult TaoThatBai(string thongBao)
         {
-            return new DangKyTraCuuResult(false, string.Empty, new DataTable(), thongBao);
+            return new DangKyResult(false, string.Empty, thongBao);
         }
     }
 }

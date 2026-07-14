@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -173,6 +176,43 @@ namespace HomeStayDorm.UI.Common
             combo.DropDownStyle = ComboBoxStyle.DropDownList;
             combo.Items.Clear();
             combo.Items.AddRange(items);
+            if (combo.Items.Count > 0)
+            {
+                combo.SelectedIndex = 0;
+            }
+        }
+
+        public static void ConfigureComboFromData(ComboBox combo, DataTable data, string columnName, params object[] fallbackItems)
+        {
+            combo.DropDownStyle = ComboBoxStyle.DropDownList;
+            combo.DataSource = null;
+            combo.Items.Clear();
+
+            HashSet<string> added = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            void AddItem(object? value)
+            {
+                string text = Convert.ToString(value)?.Trim() ?? string.Empty;
+                if (text.Length == 0 || !added.Add(text))
+                {
+                    return;
+                }
+
+                combo.Items.Add(text);
+            }
+
+            if (data.Columns.Contains(columnName))
+            {
+                foreach (DataRow row in data.Rows)
+                {
+                    AddItem(row[columnName]);
+                }
+            }
+
+            foreach (object item in fallbackItems)
+            {
+                AddItem(item);
+            }
+
             if (combo.Items.Count > 0)
             {
                 combo.SelectedIndex = 0;

@@ -1,6 +1,8 @@
 using System;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
+using System.Text;
 using System.Windows.Forms;
 using HomeStayDorm.BLL.TienIch;
 using HomeStayDorm.DTO;
@@ -109,15 +111,41 @@ namespace HomeStayDorm.UI.Common
 
         private bool IsInRole(params string[] roles)
         {
+            string currentRole = NormalizeRole(_nhanVien.VaiTro);
             foreach (string role in roles)
             {
-                if (string.Equals(_nhanVien.VaiTro, role, StringComparison.OrdinalIgnoreCase))
+                if (currentRole == NormalizeRole(role))
                 {
                     return true;
                 }
             }
 
             return false;
+        }
+
+        private static string NormalizeRole(string? role)
+        {
+            if (string.IsNullOrWhiteSpace(role))
+            {
+                return string.Empty;
+            }
+
+            string normalized = role.Trim().Normalize(NormalizationForm.FormD);
+            StringBuilder builder = new StringBuilder(normalized.Length);
+            foreach (char c in normalized)
+            {
+                if (CharUnicodeInfo.GetUnicodeCategory(c) == UnicodeCategory.NonSpacingMark)
+                {
+                    continue;
+                }
+
+                if (char.IsLetterOrDigit(c))
+                {
+                    builder.Append(char.ToLowerInvariant(c));
+                }
+            }
+
+            return builder.ToString();
         }
 
         private void LoadStats()

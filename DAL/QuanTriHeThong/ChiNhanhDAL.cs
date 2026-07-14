@@ -23,6 +23,17 @@ namespace HomeStayDorm.DAL.QuanTriHeThong
                 ORDER BY MaCN DESC");
         }
 
+        public DataTable LayDanhMucKhuVuc()
+        {
+            return _db.ExecuteSqlQuery(@"
+                SELECT DISTINCT LTRIM(RTRIM(KhuVuc)) AS KhuVuc
+                FROM dbo.Chi_Nhanh
+                WHERE KhuVuc IS NOT NULL
+                  AND LTRIM(RTRIM(KhuVuc)) <> ''
+                  AND ISNULL(TrangThai, N'Hoạt động') <> N'Ngừng hoạt động'
+                ORDER BY KhuVuc");
+        }
+
         public string Luu(ChiNhanhDTO chiNhanh)
         {
             string maChiNhanh = string.IsNullOrWhiteSpace(chiNhanh.MaChiNhanh)

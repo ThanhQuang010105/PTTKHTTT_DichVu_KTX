@@ -3,13 +3,17 @@ using System.Data.SqlClient;
 using System.Drawing;
 using System.Windows.Forms;
 using HomeStayDorm.BLL.DangKyThue;
+using HomeStayDorm.BLL.QuanTriHeThong;
 using HomeStayDorm.DTO;
+using HomeStayDorm.UI.Common;
 
 namespace HomeStayDorm.UI.DangKyThue
 {
     public class frmDangKyThue : Form
     {
         private readonly DangKyThueBLL _dangKyThueBLL = new DangKyThueBLL();
+        private readonly ChiNhanhBLL _chiNhanhBLL = new ChiNhanhBLL();
+        private readonly PhongBLL _phongBLL = new PhongBLL();
 
         private readonly TextBox txtHoTen = new TextBox();
         private readonly TextBox txtSoDienThoai = new TextBox();
@@ -24,10 +28,8 @@ namespace HomeStayDorm.UI.DangKyThue
         private readonly DateTimePicker dtpNgayVao = new DateTimePicker();
         private readonly NumericUpDown nudThoiHan = new NumericUpDown();
         private readonly TextBox txtTieuChiUuTien = new TextBox();
-        private readonly DataGridView dgvKetQua = new DataGridView();
-        private readonly Label lblMaDangKy = new Label();
         private readonly Label lblTrangThai = new Label();
-        private readonly Button btnLuuVaTraCuu = new Button();
+        private readonly Button btnLuu = new Button();
         private readonly Button btnXoaTrang = new Button();
 
         private static readonly Color Surface = Color.FromArgb(246, 248, 251);
@@ -42,9 +44,9 @@ namespace HomeStayDorm.UI.DangKyThue
 
         private void InitializeComponent()
         {
-            Text = "Tạo đăng ký thuê / Tra cứu phòng-giường khả dụng";
+            Text = "Tạo đăng ký thuê";
             StartPosition = FormStartPosition.CenterScreen;
-            ClientSize = new Size(1120, 760);
+            ClientSize = new Size(1120, 610);
             MinimumSize = new Size(900, 560);
             BackColor = Surface;
             Font = new Font("Segoe UI", 10F);
@@ -60,7 +62,7 @@ namespace HomeStayDorm.UI.DangKyThue
             Panel content = new Panel
             {
                 Location = new Point(0, 0),
-                Size = new Size(1100, 850),
+                Size = new Size(1100, 600),
                 BackColor = Surface
             };
 
@@ -113,24 +115,13 @@ namespace HomeStayDorm.UI.DangKyThue
             txtTieuChiUuTien.ScrollBars = ScrollBars.Vertical;
             AddField(gbNhuCau, "Tiêu chí ưu tiên", txtTieuChiUuTien, 18, 286, 135, 345, 46);
 
-            GroupBox resultGroup = new GroupBox
-            {
-                Text = "Khối 3 - Kết quả tra cứu",
-                Location = new Point(22, 490),
-                Size = new Size(1058, 270),
-                Padding = new Padding(12),
-                ForeColor = TextColor
-            };
-            ConfigureDataGrid();
-            resultGroup.Controls.Add(dgvKetQua);
-
-            ConfigureButton(btnLuuVaTraCuu, "Lưu phiếu && tìm phòng trống", PrimaryColor, Color.White);
-            btnLuuVaTraCuu.Location = new Point(810, 785);
-            btnLuuVaTraCuu.Size = new Size(270, 42);
-            btnLuuVaTraCuu.Click += BtnLuuVaTraCuu_Click;
+            ConfigureButton(btnLuu, "Lưu phiếu đăng ký", PrimaryColor, Color.White);
+            btnLuu.Location = new Point(842, 505);
+            btnLuu.Size = new Size(238, 42);
+            btnLuu.Click += BtnLuu_Click;
 
             ConfigureButton(btnXoaTrang, "Xóa trắng form", Color.White, TextColor);
-            btnXoaTrang.Location = new Point(650, 785);
+            btnXoaTrang.Location = new Point(680, 505);
             btnXoaTrang.Size = new Size(150, 42);
             btnXoaTrang.FlatAppearance.BorderColor = Color.FromArgb(148, 163, 184);
             btnXoaTrang.Click += BtnXoaTrang_Click;
@@ -139,8 +130,7 @@ namespace HomeStayDorm.UI.DangKyThue
             content.Controls.Add(lblTrangThai);
             content.Controls.Add(gbKhachHang);
             content.Controls.Add(gbNhuCau);
-            content.Controls.Add(resultGroup);
-            content.Controls.Add(btnLuuVaTraCuu);
+            content.Controls.Add(btnLuu);
             content.Controls.Add(btnXoaTrang);
             viewport.Controls.Add(content);
             Controls.Add(viewport);
@@ -187,17 +177,10 @@ namespace HomeStayDorm.UI.DangKyThue
             txtEmail.PlaceholderText = "khach@example.com";
             txtTieuChiUuTien.PlaceholderText = "Yên tĩnh, có gửi xe, có điều hòa...";
 
-            cboGioiTinh.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboGioiTinh.Items.AddRange(new object[] { "Nam", "Nữ", "Không yêu cầu" });
-
-            cboHinhThucThue.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboHinhThucThue.Items.AddRange(new object[] { DangKyThueBLL.ThueNguyenPhong, DangKyThueBLL.ThueGiuongOGhep });
-
-            cboKhuVuc.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboKhuVuc.Items.AddRange(new object[] { "Quận 1", "Bình Thạnh" });
-
-            cboLoaiPhong.DropDownStyle = ComboBoxStyle.DropDownList;
-            cboLoaiPhong.Items.AddRange(new object[] { "Phòng 4 Người", "Phòng Đơn" });
+            UiHelper.ConfigureComboFromData(cboGioiTinh, _phongBLL.LayDanhMucGioiTinhQuyDinh(), "GioiTinh", "Nam", "Nữ", "Không yêu cầu");
+            UiHelper.ConfigureCombo(cboHinhThucThue, DangKyThueBLL.ThueNguyenPhong, DangKyThueBLL.ThueGiuongOGhep);
+            UiHelper.ConfigureComboFromData(cboKhuVuc, _chiNhanhBLL.LayDanhMucKhuVuc(), "KhuVuc", "Quận 1", "Bình Thạnh");
+            UiHelper.ConfigureComboFromData(cboLoaiPhong, _phongBLL.LayDanhMucLoaiPhong(), "LoaiPhong", "Phòng 4 Người", "Phòng Đơn");
 
             nudSoNguoi.Minimum = 1;
             nudSoNguoi.Maximum = 20;
@@ -223,46 +206,30 @@ namespace HomeStayDorm.UI.DangKyThue
             cboKhuVuc.SelectedIndex = 0;
             cboLoaiPhong.SelectedIndex = 0;
 
-            lblMaDangKy.Text = string.Empty;
-            SetStatus("Nhập thông tin khách hàng và nhu cầu thuê, sau đó lưu phiếu để tra cứu phòng/giường khả dụng.", MutedColor);
+            SetStatus("Nhập thông tin khách hàng và nhu cầu thuê, sau đó lưu phiếu đăng ký.", MutedColor);
         }
 
-        private void ConfigureDataGrid()
-        {
-            dgvKetQua.Dock = DockStyle.Fill;
-            dgvKetQua.AllowUserToAddRows = false;
-            dgvKetQua.AllowUserToDeleteRows = false;
-            dgvKetQua.ReadOnly = true;
-            dgvKetQua.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dgvKetQua.BackgroundColor = Color.White;
-            dgvKetQua.BorderStyle = BorderStyle.FixedSingle;
-            dgvKetQua.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dgvKetQua.RowHeadersVisible = false;
-            dgvKetQua.EnableHeadersVisualStyles = false;
-            dgvKetQua.ColumnHeadersDefaultCellStyle.BackColor = Color.FromArgb(226, 232, 240);
-            dgvKetQua.ColumnHeadersDefaultCellStyle.ForeColor = TextColor;
-            dgvKetQua.DefaultCellStyle.SelectionBackColor = Color.FromArgb(191, 219, 254);
-            dgvKetQua.DefaultCellStyle.SelectionForeColor = Color.FromArgb(15, 23, 42);
-        }
-
-        private void BtnLuuVaTraCuu_Click(object? sender, EventArgs e)
+        private void BtnLuu_Click(object? sender, EventArgs e)
         {
             try
             {
-                DangKyTraCuuResult result = _dangKyThueBLL.TaoDangKyVaTraCuu(BuildDto());
-                dgvKetQua.DataSource = result.KetQua;
+                PhieuDangKyThueDTO thongTinDangKy = TaoThongTinDangKyTuDuLieuNhap();
+                DangKyResult ketQuaKiemTra = _dangKyThueBLL.KiemTraThongTinHopLe(thongTinDangKy);
 
-                if (!result.ThanhCong)
+                if (!ketQuaKiemTra.ThanhCong)
                 {
-                    lblMaDangKy.Text = string.Empty;
-                    SetStatus(result.ThongBao, Color.FromArgb(220, 38, 38));
+                    SetStatus(ketQuaKiemTra.ThongBao, Color.FromArgb(220, 38, 38));
                     return;
                 }
 
-                lblMaDangKy.Text = $"Mã đăng ký vừa tạo: {result.MaDangKy}";
-                SetStatus($"{lblMaDangKy.Text}. {result.ThongBao}", result.KetQua.Rows.Count == 0
-                    ? Color.FromArgb(180, 83, 9)
-                    : Color.FromArgb(22, 101, 52));
+                DangKyResult ketQuaLuu = _dangKyThueBLL.TaoPhieuDangKy(thongTinDangKy);
+                if (!ketQuaLuu.ThanhCong)
+                {
+                    SetStatus(ketQuaLuu.ThongBao, Color.FromArgb(220, 38, 38));
+                    return;
+                }
+
+                SetStatus(ketQuaLuu.ThongBao, Color.FromArgb(22, 101, 52));
             }
             catch (SqlException ex)
             {
@@ -276,13 +243,17 @@ namespace HomeStayDorm.UI.DangKyThue
 
         private void BtnXoaTrang_Click(object? sender, EventArgs e)
         {
+            ResetCacTruongNhapLieu();
+            SetStatus("Form đã được làm mới.", MutedColor);
+        }
+
+        private void ResetCacTruongNhapLieu()
+        {
             txtHoTen.Clear();
             txtSoDienThoai.Clear();
             txtCCCD.Clear();
             txtEmail.Clear();
             txtTieuChiUuTien.Clear();
-            dgvKetQua.DataSource = null;
-            lblMaDangKy.Text = string.Empty;
             cboGioiTinh.SelectedIndex = 0;
             cboHinhThucThue.SelectedIndex = 0;
             cboKhuVuc.SelectedIndex = 0;
@@ -291,10 +262,9 @@ namespace HomeStayDorm.UI.DangKyThue
             nudGiaToiDa.Value = 4000000;
             dtpNgayVao.Value = DateTime.Today;
             nudThoiHan.Value = 6;
-            SetStatus("Form đã được làm mới.", MutedColor);
         }
 
-        private PhieuDangKyThueDTO BuildDto()
+        private PhieuDangKyThueDTO TaoThongTinDangKyTuDuLieuNhap()
         {
             return new PhieuDangKyThueDTO
             {
