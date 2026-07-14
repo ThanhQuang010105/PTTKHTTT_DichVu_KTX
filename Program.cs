@@ -12,13 +12,13 @@ namespace HomeStayDorm
             ApplicationConfiguration.Initialize();
 
 
-            // Application.Run(new UI.frmDoiSoatCoc());
-            // Application.Run(new UI.frmTaoYeuCauTraPhong());
+             Application.Run(new UI.frmDoiSoatCoc());
+             Application.Run(new UI.frmTaoYeuCauTraPhong());
 
-            // Application.Run(new HomeStayDorm.GUI.DatCoc.FrmTraCuuDatCoc());
+             Application.Run(new HomeStayDorm.GUI.DatCoc.FrmTraCuuDatCoc());
 
 
-            // Application.Run(new frmDangNhap());
+             Application.Run(new frmDangNhap());
             Application.Run(new UI.frmThongTinKhachHang());
 
 
