@@ -1,6 +1,6 @@
 namespace HomeStayDorm.GUI
 {
-    partial class MHHopDongThue
+    partial class frmHopDongThue
     {
         private System.ComponentModel.IContainer components = null;
 
