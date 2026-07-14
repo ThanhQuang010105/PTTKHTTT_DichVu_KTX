@@ -9,7 +9,7 @@ namespace HomeStayDorm
         static void Main()
         {
             ApplicationConfiguration.Initialize();
-            // Application.Run(new UI.Common.frmMain());
+            Application.Run(new HomeStayDorm.GUI.frmHopDongThue());
         }
     }
 }

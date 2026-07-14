@@ -1,6 +1,6 @@
 using System;
 using System.Data;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Configuration;
 
 namespace HomeStayDorm.DAL
@@ -33,7 +33,7 @@ namespace HomeStayDorm.DAL
         /// <param name="spName">Tên Stored Procedure</param>
         /// <param name="parameters">Mảng các SqlParameter (có thể null nếu không có tham số)</param>
         /// <returns>Số dòng bị ảnh hưởng</returns>
-        public int ExecuteNonQuery(string spName, SqlParameter[] parameters = null)
+        public int ExecuteNonQuery(string spName, SqlParameter[]? parameters = null)
         {
             using (SqlConnection conn = GetConnection())
             {
@@ -57,7 +57,7 @@ namespace HomeStayDorm.DAL
         /// <param name="spName">Tên Stored Procedure</param>
         /// <param name="parameters">Mảng các SqlParameter (có thể null nếu không có tham số)</param>
         /// <returns>DataTable chứa kết quả, dễ dàng dùng cho DataGridView WinForms</returns>
-        public DataTable ExecuteQuery(string spName, SqlParameter[] parameters = null)
+        public DataTable ExecuteQuery(string spName, SqlParameter[]? parameters = null)
         {
             using (SqlConnection conn = GetConnection())
             {
@@ -85,7 +85,7 @@ namespace HomeStayDorm.DAL
         /// <param name="spName">Tên Stored Procedure</param>
         /// <param name="parameters">Mảng các SqlParameter (có thể null nếu không có tham số)</param>
         /// <returns>Giá trị trả về dạng object (cần cast sang kiểu mong muốn)</returns>
-        public object ExecuteScalar(string spName, SqlParameter[] parameters = null)
+        public object ExecuteScalar(string spName, SqlParameter[]? parameters = null)
         {
             using (SqlConnection conn = GetConnection())
             {
