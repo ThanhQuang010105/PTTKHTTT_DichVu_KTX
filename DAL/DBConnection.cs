@@ -33,7 +33,7 @@ namespace HomeStayDorm.DAL
         /// <param name="spName">Tên Stored Procedure</param>
         /// <param name="parameters">Mảng các SqlParameter (có thể null nếu không có tham số)</param>
         /// <returns>Số dòng bị ảnh hưởng</returns>
-        public int ExecuteNonQuery(string spName, SqlParameter[] parameters = null)
+        public int ExecuteNonQuery(string spName, SqlParameter[]? parameters = null)
         {
             using (SqlConnection conn = GetConnection())
             {
@@ -51,13 +51,29 @@ namespace HomeStayDorm.DAL
             }
         }
 
+        public int ExecuteSqlNonQuery(string sql, SqlParameter[]? parameters = null)
+        {
+            using (SqlConnection conn = GetConnection())
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+                if (parameters != null)
+                {
+                    cmd.Parameters.AddRange(parameters);
+                }
+
+                conn.Open();
+                return cmd.ExecuteNonQuery();
+            }
+        }
+
         /// <summary>
         /// Thực thi Stored Procedure dạng Select (lấy dữ liệu danh sách).
         /// </summary>
         /// <param name="spName">Tên Stored Procedure</param>
         /// <param name="parameters">Mảng các SqlParameter (có thể null nếu không có tham số)</param>
         /// <returns>DataTable chứa kết quả, dễ dàng dùng cho DataGridView WinForms</returns>
-        public DataTable ExecuteQuery(string spName, SqlParameter[] parameters = null)
+        public DataTable ExecuteQuery(string spName, SqlParameter[]? parameters = null)
         {
             using (SqlConnection conn = GetConnection())
             {
@@ -79,13 +95,33 @@ namespace HomeStayDorm.DAL
             }
         }
 
+        public DataTable ExecuteSqlQuery(string sql, SqlParameter[]? parameters = null)
+        {
+            using (SqlConnection conn = GetConnection())
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+                if (parameters != null)
+                {
+                    cmd.Parameters.AddRange(parameters);
+                }
+
+                using (SqlDataAdapter adapter = new SqlDataAdapter(cmd))
+                {
+                    DataTable dt = new DataTable();
+                    adapter.Fill(dt);
+                    return dt;
+                }
+            }
+        }
+
         /// <summary>
         /// Thực thi Stored Procedure dạng Select một giá trị đơn (ví dụ: COUNT(*), SUM, ID vừa thêm).
         /// </summary>
         /// <param name="spName">Tên Stored Procedure</param>
         /// <param name="parameters">Mảng các SqlParameter (có thể null nếu không có tham số)</param>
         /// <returns>Giá trị trả về dạng object (cần cast sang kiểu mong muốn)</returns>
-        public object ExecuteScalar(string spName, SqlParameter[] parameters = null)
+        public object ExecuteScalar(string spName, SqlParameter[]? parameters = null)
         {
             using (SqlConnection conn = GetConnection())
             {
@@ -100,6 +136,22 @@ namespace HomeStayDorm.DAL
                     conn.Open();
                     return cmd.ExecuteScalar();
                 }
+            }
+        }
+
+        public object? ExecuteSqlScalar(string sql, SqlParameter[]? parameters = null)
+        {
+            using (SqlConnection conn = GetConnection())
+            using (SqlCommand cmd = new SqlCommand(sql, conn))
+            {
+                cmd.CommandType = CommandType.Text;
+                if (parameters != null)
+                {
+                    cmd.Parameters.AddRange(parameters);
+                }
+
+                conn.Open();
+                return cmd.ExecuteScalar();
             }
         }
     }

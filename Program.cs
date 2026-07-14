@@ -1,5 +1,6 @@
 using System;
 using System.Windows.Forms;
+using HomeStayDorm.UI.QuanTriHeThong;
 
 namespace HomeStayDorm
 {
@@ -10,10 +11,14 @@ namespace HomeStayDorm
         {
             ApplicationConfiguration.Initialize();
 
+
             Application.Run(new UI.frmDoiSoatCoc());
             Application.Run(new UI.frmTaoYeuCauTraPhong());
 
             Application.Run(new HomeStayDorm.GUI.DatCoc.FrmTraCuuDatCoc());
+
+
+            Application.Run(new frmDangNhap());
 
         }
     }
