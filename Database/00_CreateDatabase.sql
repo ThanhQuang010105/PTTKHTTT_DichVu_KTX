@@ -30,8 +30,8 @@ DROP TABLE IF EXISTS Phong;
 DROP TABLE IF EXISTS Nhan_Vien;
 DROP TABLE IF EXISTS Chi_Nhanh;
 DROP TABLE IF EXISTS Dang_ky_thue;
-DROP TABLE IF EXISTS Thong_tin_cu_tru;
 DROP TABLE IF EXISTS Khach_hang;
+DROP TABLE IF EXISTS Thong_tin_cu_tru;
 DROP TABLE IF EXISTS Nhom_Thue;
 GO
 
@@ -170,6 +170,7 @@ CREATE TABLE Phieu_Dat_Coc (
     MaPhieu VARCHAR(20) PRIMARY KEY,
     maKH VARCHAR(20) NOT NULL,
     MaNV VARCHAR(20) NOT NULL,
+    MaPhong VARCHAR(20),
     NgayDatCoc DATETIME,
     SoTienCoc DECIMAL(18,2),
     SoGiuongCoc INT,
@@ -177,7 +178,8 @@ CREATE TABLE Phieu_Dat_Coc (
     HinhAnhMinhChung VARCHAR(255),
     TrangThai NVARCHAR(50),
     FOREIGN KEY (maKH) REFERENCES Khach_hang(maKH),
-    FOREIGN KEY (MaNV) REFERENCES Nhan_Vien(MaNV)
+    FOREIGN KEY (MaNV) REFERENCES Nhan_Vien(MaNV),
+    FOREIGN KEY (MaPhong) REFERENCES Phong(MaPhong)
 );
 
 -- 12. Hop_Dong_Thue
@@ -365,8 +367,8 @@ INSERT INTO Lich_xem_phong (MaLich, MaDK, MaGiuong, ThoiGianHen, TrangThaiLich, 
 ('L001', 'DK001', 'G101A', '2026-02-22 14:00:00', N'Đã xem', N'Khách ưng ý phòng sạch sẽ');
 
 -- 10. Phieu_Dat_Coc
-INSERT INTO Phieu_Dat_Coc (MaPhieu, maKH, MaNV, NgayDatCoc, SoTienCoc, SoGiuongCoc, HinhThucThanhToan, TrangThai) VALUES
-('PC000123', 'KH001', 'NV003', '2026-03-01', 3000000.00, 1, N'Tiền mặt', N'Đã thu');
+INSERT INTO Phieu_Dat_Coc (MaPhieu, maKH, MaNV, MaPhong, NgayDatCoc, SoTienCoc, SoGiuongCoc, HinhThucThanhToan, TrangThai) VALUES
+('PC000123', 'KH001', 'NV003', 'P101', '2026-03-01', 3000000.00, 1, N'Tiền mặt', N'Đã thu');
 
 -- 11. Hop_Dong_Thue
 INSERT INTO Hop_Dong_Thue (MaHopDong, maKH, MaPhong, MaPhieu, NgayLap, NgayBatDau, GiaThue, TrangThai, NgayKetThuc, KyThanhToan) VALUES

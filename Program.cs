@@ -9,8 +9,12 @@ namespace HomeStayDorm
         static void Main()
         {
             ApplicationConfiguration.Initialize();
+
             Application.Run(new UI.frmDoiSoatCoc());
             Application.Run(new UI.frmTaoYeuCauTraPhong());
+
+            Application.Run(new HomeStayDorm.GUI.DatCoc.FrmTraCuuDatCoc());
+
         }
     }
 }
