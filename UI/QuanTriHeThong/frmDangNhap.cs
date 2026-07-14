@@ -61,9 +61,9 @@ namespace HomeStayDorm.UI.QuanTriHeThong
 
             lblThongBao.AutoSize = false;
             lblThongBao.ForeColor = UiHelper.Muted;
-            lblThongBao.Text = "Demo: sale / quanly / ketoan, mật khẩu 123456";
-            lblThongBao.Location = new Point(40, 306);
-            lblThongBao.Size = new Size(380, 34);
+            lblThongBao.Text = "Tài khoản: sale | quanly | ketoan | nvphutrach\nMật khẩu chung: 123456";
+            lblThongBao.Location = new Point(40, 300);
+            lblThongBao.Size = new Size(380, 44);
             lblThongBao.TextAlign = ContentAlignment.MiddleLeft;
 
             Controls.Add(title);

@@ -1,4 +1,3 @@
-using System;
 using System.Windows.Forms;
 using HomeStayDorm.UI.QuanTriHeThong;
 
@@ -11,17 +10,9 @@ namespace HomeStayDorm
         {
             ApplicationConfiguration.Initialize();
 
-
-             Application.Run(new UI.frmDoiSoatCoc());
-             Application.Run(new UI.frmTaoYeuCauTraPhong());
-
-             Application.Run(new HomeStayDorm.GUI.DatCoc.FrmTraCuuDatCoc());
-
-
-             Application.Run(new frmDangNhap());
-            Application.Run(new UI.frmThongTinKhachHang());
-
-
+            // Điểm vào duy nhất: màn hình đăng nhập
+            // Sau khi đăng nhập, frmDangNhap sẽ mở frmDashboard
+            Application.Run(new frmDangNhap());
         }
     }
 }

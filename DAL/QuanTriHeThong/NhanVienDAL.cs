@@ -15,6 +15,7 @@ namespace HomeStayDorm.DAL.QuanTriHeThong
             string aliasRole = login.Equals("sale", StringComparison.OrdinalIgnoreCase) ? "Sale"
                 : login.Equals("quanly", StringComparison.OrdinalIgnoreCase) ? "Quản lý"
                 : login.Equals("ketoan", StringComparison.OrdinalIgnoreCase) ? "Kế toán"
+                : login.Equals("nvphutrach", StringComparison.OrdinalIgnoreCase) ? "Nhân viên phụ trách"
                 : string.Empty;
 
             return _db.ExecuteSqlQuery(@"
