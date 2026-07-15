@@ -102,6 +102,7 @@ namespace HomeStayDorm.GUI.DatCoc
                     frm.PhongGiuongCoc = selectedDto.PhongGiuongCoc;
                     frm.SoGiuongCoc = selectedDto.SoGiuongDat;
                     frm.GioiTinhPhong = selectedDto.GioiTinhPhong;
+                    frm.TrangThai = selectedDto.trangThai;
                     
                     frm.ShowDialog();
                 }

@@ -11,13 +11,13 @@ namespace HomeStayDorm.GUI.DatCoc
     {
         private HoSoCuTru bll = new HoSoCuTru();
         private List<HoSoCuTruDTO> inMemoryList = new List<HoSoCuTruDTO>();
-        private int sttCounter = -1; // Dùng số âm cho những người mới thêm (chưa lưu)
 
         // Dữ liệu từ màn hình trước truyền sang
         public string MaDatCocGoc { get; set; }
         public string PhongGiuongCoc { get; set; }
         public int SoGiuongCoc { get; set; }
         public string GioiTinhPhong { get; set; }
+        public string TrangThai { get; set; }
 
         public FrmCapNhatHoSo()
         {
@@ -42,6 +42,21 @@ namespace HomeStayDorm.GUI.DatCoc
             
             RefreshGrid();
             CapNhatSoNguoiDaNhap();
+
+            // Khóa form nếu trạng thái là Đã duyệt
+            if (TrangThai == "Đã duyệt")
+            {
+                btnThem.Enabled = false;
+                btnXoa.Enabled = false;
+                btnLuuHoSo.Enabled = false;
+                btnLuuTamHoSo.Enabled = false;
+                txtHoTen.Enabled = false;
+                txtCCCD.Enabled = false;
+                txtSDT.Enabled = false;
+                cboGioiTinh.Enabled = false;
+                txtQueQuan.Enabled = false;
+                HienThiThongBao("Phiếu đặt cọc đã được duyệt. Bạn chỉ có thể xem chi tiết hồ sơ lưu trú, không thể chỉnh sửa.");
+            }
         }
 
         private void btnThem_Click(object sender, EventArgs e)
@@ -77,10 +92,19 @@ namespace HomeStayDorm.GUI.DatCoc
                 return;
             }
 
+            int nextStt = 1;
+            if (inMemoryList.Count > 0)
+            {
+                foreach (var item in inMemoryList)
+                {
+                    if (item.STT >= nextStt) nextStt = item.STT + 1;
+                }
+            }
+
             // Thêm vào danh sách in-memory
             HoSoCuTruDTO thongTinKhachHang = new HoSoCuTruDTO
             {
-                STT = sttCounter--, // ID tạm thời
+                STT = nextStt, // Số thứ tự nối tiếp danh sách
                 hoTen = hoTen,
                 cccd = cccd,
                 sdt = sdt,
@@ -112,7 +136,11 @@ namespace HomeStayDorm.GUI.DatCoc
                     if (!itemToRemove.isNew)
                     {
                         // Nếu là khách đã lưu trong DB, xóa luôn khỏi DB
-                        bll.DeleteHoSoCuTru(itemToRemove.STT);
+                        if (!bll.DeleteHoSoCuTru(itemToRemove.maKH))
+                        {
+                            HienThiThongBao("Không thể xóa thành viên này từ cơ sở dữ liệu!");
+                            return;
+                        }
                     }
                     inMemoryList.Remove(itemToRemove);
                     RefreshGrid();
@@ -178,8 +206,11 @@ namespace HomeStayDorm.GUI.DatCoc
                 
                 if (allSuccess)
                 {
-                    MessageBox.Show("Hồ sơ đã được lưu tạm vào bộ nhớ/cơ sở dữ liệu. Bạn có thể tiếp tục bổ sung sau.", "Thông báo", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    this.Close();
+                    HienThiThongBao("Lưu tạm hồ sơ thành công!");
+                    // Tải lại danh sách từ CSDL để cập nhật trạng thái isNew và maKH cho các thành viên mới
+                    inMemoryList = bll.GetHoSoCuTruByDatCoc(MaDatCocGoc);
+                    RefreshGrid();
+                    CapNhatSoNguoiDaNhap();
                 }
             }
             else

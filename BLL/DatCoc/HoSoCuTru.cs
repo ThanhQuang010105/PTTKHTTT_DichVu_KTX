@@ -20,7 +20,7 @@ namespace HomeStayDorm.BLL.DatCoc
 
             if (!KiemTraGioiHanNguoiO(totalCount, soGiuongCoc))
             {
-                return "Vượt giới hạn";
+                return $"Vượt giới hạn (Hiện tại DB: {currentDbCount}, Thêm mới: {inMemoryCount}, Tối đa: {soGiuongCoc})";
             }
 
             // Theo thiết kế, có thể insert thẳng vào DB hoặc giữ ở memory rồi insert 1 lượt.
@@ -67,7 +67,7 @@ namespace HomeStayDorm.BLL.DatCoc
             return db.GetHoSoCuTruByDatCoc(maDatCoc);
         }
 
-        public bool DeleteHoSoCuTru(int maKH)
+        public bool DeleteHoSoCuTru(string maKH)
         {
             return db.DeleteHoSoCuTru(maKH);
         }

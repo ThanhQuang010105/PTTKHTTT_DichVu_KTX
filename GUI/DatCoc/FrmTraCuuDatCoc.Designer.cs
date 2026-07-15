@@ -85,7 +85,7 @@ namespace HomeStayDorm.GUI.DatCoc
             // 
             cboTrangThai.DropDownStyle = ComboBoxStyle.DropDownList;
             cboTrangThai.FormattingEnabled = true;
-            cboTrangThai.Items.AddRange(new object[] { "Tất cả", "Chờ bổ sung", "Đã duyệt", "Đã hủy / Quá hạn" });
+            cboTrangThai.Items.AddRange(new object[] { "Tất cả", "Chờ bổ sung", "Chờ phê duyệt", "Đã duyệt", "Đã hủy / Quá hạn" });
             cboTrangThai.Location = new Point(420, 75);
             cboTrangThai.Name = "cboTrangThai";
             cboTrangThai.Size = new Size(176, 23);

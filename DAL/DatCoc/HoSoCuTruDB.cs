@@ -9,82 +9,67 @@ namespace HomeStayDorm.DAL.DatCoc
 
         public int CountNguoiOByDatCoc(string maDatCoc)
         {
-            // Tách "PDC001" -> 1
-            if (maDatCoc.StartsWith("PDC"))
+            SqlParameter[] parameters = new SqlParameter[]
             {
-                if (int.TryParse(maDatCoc.Substring(3), out int id))
-                {
-                    SqlParameter[] parameters = new SqlParameter[]
-                    {
-                        new SqlParameter("@maDatCoc", id)
-                    };
+                new SqlParameter("@maDatCoc", maDatCoc)
+            };
 
-                    object result = dbContext.ExecuteScalar("sp_CountNguoiOByDatCoc", parameters);
-                    if (result != null)
-                    {
-                        return Convert.ToInt32(result);
-                    }
-                }
+            object result = dbContext.ExecuteScalar("sp_CountNguoiOByDatCoc", parameters);
+            if (result != null && result != DBNull.Value)
+            {
+                return Convert.ToInt32(result);
             }
             return 0;
         }
 
         public bool InsertHoSoCuTru(DTO.HoSoCuTruDTO thongTinKhachHang)
         {
-            if (thongTinKhachHang.maDatCoc.StartsWith("PDC"))
+            SqlParameter[] parameters = new SqlParameter[]
             {
-                if (int.TryParse(thongTinKhachHang.maDatCoc.Substring(3), out int id))
-                {
-                    SqlParameter[] parameters = new SqlParameter[]
-                    {
-                        new SqlParameter("@maDatCoc", id),
-                        new SqlParameter("@hoTen", thongTinKhachHang.hoTen),
-                        new SqlParameter("@cccd", thongTinKhachHang.cccd),
-                        new SqlParameter("@sdt", thongTinKhachHang.sdt),
-                        new SqlParameter("@gioiTinh", thongTinKhachHang.gioiTinh),
-                        new SqlParameter("@queQuan", thongTinKhachHang.queQuan)
-                    };
+                new SqlParameter("@maDatCoc", thongTinKhachHang.maDatCoc),
+                new SqlParameter("@hoTen", thongTinKhachHang.hoTen),
+                new SqlParameter("@cccd", thongTinKhachHang.cccd),
+                new SqlParameter("@sdt", thongTinKhachHang.sdt),
+                new SqlParameter("@gioiTinh", thongTinKhachHang.gioiTinh),
+                new SqlParameter("@queQuan", thongTinKhachHang.queQuan)
+            };
 
-                    int affectedRows = dbContext.ExecuteNonQuery("sp_InsertHoSoCuTru", parameters);
-                    return affectedRows > 0;
-                }
-            }
-            return false;
+            int affectedRows = dbContext.ExecuteNonQuery("sp_InsertHoSoCuTru", parameters);
+            return affectedRows > 0;
         }
 
         public System.Collections.Generic.List<DTO.HoSoCuTruDTO> GetHoSoCuTruByDatCoc(string maDatCoc)
         {
             System.Collections.Generic.List<DTO.HoSoCuTruDTO> list = new System.Collections.Generic.List<DTO.HoSoCuTruDTO>();
-            if (maDatCoc.StartsWith("PDC"))
+            
+            SqlParameter[] parameters = new SqlParameter[]
             {
-                if (int.TryParse(maDatCoc.Substring(3), out int id))
-                {
-                    SqlParameter[] parameters = new SqlParameter[]
-                    {
-                        new SqlParameter("@maDatCoc", id)
-                    };
+                new SqlParameter("@maDatCoc", maDatCoc)
+            };
 
-                    System.Data.DataTable dt = dbContext.ExecuteQuery("sp_GetHoSoCuTruByDatCoc", parameters);
-                    foreach (System.Data.DataRow row in dt.Rows)
+            System.Data.DataTable dt = dbContext.ExecuteQuery("sp_GetHoSoCuTruByDatCoc", parameters);
+            if (dt != null)
+            {
+                foreach (System.Data.DataRow row in dt.Rows)
+                {
+                    list.Add(new DTO.HoSoCuTruDTO
                     {
-                        list.Add(new DTO.HoSoCuTruDTO
-                        {
-                            STT = Convert.ToInt32(row["STT"]),
-                            hoTen = row["hoTen"].ToString(),
-                            cccd = row["CCCD"].ToString(),
-                            sdt = row["SDT"].ToString(),
-                            gioiTinh = row["gioiTinh"].ToString(),
-                            queQuan = row["queQuan"].ToString(),
-                            maDatCoc = maDatCoc,
-                            isNew = false
-                        });
-                    }
+                        STT = Convert.ToInt32(row["STT"]),
+                        maKH = row["maKH"].ToString(),
+                        hoTen = row["hoTen"].ToString(),
+                        cccd = row["CCCD"].ToString(),
+                        sdt = row["SDT"].ToString(),
+                        gioiTinh = row["gioiTinh"].ToString(),
+                        queQuan = row["queQuan"] != DBNull.Value ? row["queQuan"].ToString() : "",
+                        maDatCoc = maDatCoc,
+                        isNew = false
+                    });
                 }
             }
             return list;
         }
 
-        public bool DeleteHoSoCuTru(int maKH)
+        public bool DeleteHoSoCuTru(string maKH)
         {
             SqlParameter[] parameters = new SqlParameter[]
             {
@@ -95,19 +80,12 @@ namespace HomeStayDorm.DAL.DatCoc
 
         public bool UpdateTrangThaiPhieuDatCoc(string maDatCoc, string trangThai)
         {
-            if (maDatCoc.StartsWith("PDC"))
+            SqlParameter[] parameters = new SqlParameter[]
             {
-                if (int.TryParse(maDatCoc.Substring(3), out int id))
-                {
-                    SqlParameter[] parameters = new SqlParameter[]
-                    {
-                        new SqlParameter("@maDatCoc", id),
-                        new SqlParameter("@trangThai", trangThai)
-                    };
-                    return dbContext.ExecuteNonQuery("sp_UpdateTrangThaiPhieuDatCoc", parameters) > 0;
-                }
-            }
-            return false;
+                new SqlParameter("@maDatCoc", maDatCoc),
+                new SqlParameter("@trangThai", trangThai)
+            };
+            return dbContext.ExecuteNonQuery("sp_UpdateTrangThaiPhieuDatCoc", parameters) > 0;
         }
     }
 }
