@@ -190,7 +190,7 @@ namespace HomeStayDorm.GUI
             this.lblNgayBD.Location = new System.Drawing.Point(20, 40);
             this.lblNgayBD.AutoSize = true;
             this.dtpNgayBatDau.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpNgayBatDau.Location = new System.Drawing.Point(120, 37);
+            this.dtpNgayBatDau.Location = new System.Drawing.Point(125, 37);
             this.dtpNgayBatDau.Size = new System.Drawing.Size(150, 25);
             this.dtpNgayBatDau.Font = new System.Drawing.Font("Segoe UI", 9.75F);
 
@@ -198,7 +198,7 @@ namespace HomeStayDorm.GUI
             this.lblNgayHH.Location = new System.Drawing.Point(320, 40);
             this.lblNgayHH.AutoSize = true;
             this.dtpNgayHetHan.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpNgayHetHan.Location = new System.Drawing.Point(420, 37);
+            this.dtpNgayHetHan.Location = new System.Drawing.Point(425, 37);
             this.dtpNgayHetHan.Size = new System.Drawing.Size(150, 25);
             this.dtpNgayHetHan.Font = new System.Drawing.Font("Segoe UI", 9.75F);
 

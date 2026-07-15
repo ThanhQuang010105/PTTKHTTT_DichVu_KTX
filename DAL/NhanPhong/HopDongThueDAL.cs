@@ -103,7 +103,6 @@ namespace HomeStayDorm.DAL
                 SqlCommand cmd = new SqlCommand("sp_Insert_HopDongThue", conn);
                 cmd.CommandType = CommandType.StoredProcedure;
                 
-                // Map chính xác theo các Property trong HopDongThue_DTO của bạn
                 cmd.Parameters.AddWithValue("@MaHopDong", hd.MaHopDong);
                 cmd.Parameters.AddWithValue("@MaKH", hd.MaKH);
                 cmd.Parameters.AddWithValue("@MaPhong", hd.MaPhong);
@@ -114,7 +113,10 @@ namespace HomeStayDorm.DAL
                 cmd.Parameters.AddWithValue("@TienCoc", hd.TienCoc); 
                 
                 conn.Open();
-                return cmd.ExecuteNonQuery() > 0;
+                
+                // --- SỬA TẠI ĐÂY ---
+                cmd.ExecuteNonQuery(); 
+                return true; 
             }
         }
 
@@ -126,8 +128,12 @@ namespace HomeStayDorm.DAL
                 cmd.CommandType = CommandType.StoredProcedure;
                 cmd.Parameters.AddWithValue("@MaHopDong", maHopDong);
                 cmd.Parameters.AddWithValue("@MaDV", maDV);
+                
                 conn.Open();
-                return cmd.ExecuteNonQuery() > 0;
+                
+                // --- SỬA TẠI ĐÂY ---
+                cmd.ExecuteNonQuery(); 
+                return true; 
             }
         }
     }
