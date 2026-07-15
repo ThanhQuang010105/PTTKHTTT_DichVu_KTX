@@ -191,13 +191,15 @@ namespace HomeStayDorm.GUI
             this.lblNgayBD.AutoSize = true;
             this.dtpNgayBatDau.Format = System.Windows.Forms.DateTimePickerFormat.Short;
             this.dtpNgayBatDau.Location = new System.Drawing.Point(120, 37);
+            this.dtpNgayBatDau.Size = new System.Drawing.Size(150, 25);
             this.dtpNgayBatDau.Font = new System.Drawing.Font("Segoe UI", 9.75F);
 
             this.lblNgayHH.Text = "Ngày hết hạn:";
-            this.lblNgayHH.Location = new System.Drawing.Point(300, 40);
+            this.lblNgayHH.Location = new System.Drawing.Point(320, 40);
             this.lblNgayHH.AutoSize = true;
             this.dtpNgayHetHan.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dtpNgayHetHan.Location = new System.Drawing.Point(400, 37);
+            this.dtpNgayHetHan.Location = new System.Drawing.Point(420, 37);
+            this.dtpNgayHetHan.Size = new System.Drawing.Size(150, 25);
             this.dtpNgayHetHan.Font = new System.Drawing.Font("Segoe UI", 9.75F);
 
             this.lblKyThanhToan.Text = "Kỳ thanh toán:";
@@ -205,24 +207,24 @@ namespace HomeStayDorm.GUI
             this.lblKyThanhToan.AutoSize = true;
             
             this.rdoKy1Thang.Text = "1 Tháng";
-            this.rdoKy1Thang.Location = new System.Drawing.Point(120, 83);
+            this.rdoKy1Thang.Location = new System.Drawing.Point(140, 83);
             this.rdoKy1Thang.AutoSize = true;
             this.rdoKy1Thang.Checked = true;
 
             this.rdoKy3Thang.Text = "3 Tháng";
-            this.rdoKy3Thang.Location = new System.Drawing.Point(210, 83);
+            this.rdoKy3Thang.Location = new System.Drawing.Point(240, 83);
             this.rdoKy3Thang.AutoSize = true;
 
             this.rdoKy6Thang.Text = "6 Tháng";
-            this.rdoKy6Thang.Location = new System.Drawing.Point(300, 83);
+            this.rdoKy6Thang.Location = new System.Drawing.Point(340, 83);
             this.rdoKy6Thang.AutoSize = true;
 
             this.lblDichVuTitle.Text = "Dịch vụ đi kèm (Check chọn):";
             this.lblDichVuTitle.Location = new System.Drawing.Point(20, 130);
             this.lblDichVuTitle.AutoSize = true;
 
-            this.chkPhiDichVu.Location = new System.Drawing.Point(210, 130);
-            this.chkPhiDichVu.Size = new System.Drawing.Size(670, 80);
+            this.chkPhiDichVu.Location = new System.Drawing.Point(20, 155);
+            this.chkPhiDichVu.Size = new System.Drawing.Size(850, 60);
             this.chkPhiDichVu.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.chkPhiDichVu.Font = new System.Drawing.Font("Segoe UI", 9.75F);
             this.chkPhiDichVu.CheckOnClick = true;
