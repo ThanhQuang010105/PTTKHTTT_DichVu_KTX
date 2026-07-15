@@ -17,8 +17,8 @@ DELETE FROM Hop_Dong_Dich_Vu     WHERE MaHopDong LIKE 'HDTEST%';
 DELETE FROM Phieu_Thu            WHERE MaHopDong LIKE 'HDTEST%';
 DELETE FROM Hop_Dong_Thue        WHERE MaHopDong LIKE 'HDTEST%';
 DELETE FROM Phieu_Dat_Coc        WHERE MaPhieu  LIKE 'PDCTEST%';
-DELETE FROM Khach_hang           WHERE maKH     LIKE 'KHT%';
-DELETE FROM Nhom_Thue            WHERE MaNhom   LIKE 'NTT%';
+DELETE FROM Khach_hang           WHERE maKH     LIKE 'KHT%' OR maKH LIKE 'KHM_%';
+DELETE FROM Nhom_Thue            WHERE MaNhom   LIKE 'NTT%' OR MaNhom LIKE 'NT_PDC_%';
 DELETE FROM Thong_tin_cu_tru     WHERE maCuTru  LIKE 'CTT%';
 DELETE FROM Lich_xem_phong       WHERE MaLich   LIKE 'LXT%';
 DELETE FROM Dang_ky_thue         WHERE MaDK     LIKE 'DKT%';
@@ -131,7 +131,73 @@ VALUES
 ('PDCTEST06','KHT07','NVT03','PT202','2026-07-10',3000000,1,N'Tiền mặt',    N'Đã duyệt'),
 ('PDCTEST07','KHT08','NVT03','PT102','2026-07-12',1500000,1,N'Chuyển khoản',N'Chờ phê duyệt');
 
-PRINT N'✅ Xong Bước 4 – 7 phiếu đặt cọc (đủ 5 trạng thái).';
+-- Bổ sung tạo thêm 30 phiếu đặt cọc để có nhiều dữ liệu cho tra cứu và cập nhật hồ sơ
+DECLARE @i INT = 8;
+WHILE @i <= 37
+BEGIN
+    DECLARE @MaPhieu VARCHAR(20) = 'PDCTEST' + RIGHT('00' + CAST(@i AS VARCHAR), 2);
+    DECLARE @TrangThai NVARCHAR(50);
+    
+    DECLARE @phongIndex INT = (@i % 2) + 1;
+    DECLARE @MaPhong VARCHAR(20) = CASE WHEN @phongIndex = 1 THEN 'PT101' ELSE 'PT102' END;
+    DECLARE @RoomGender NVARCHAR(10) = CASE WHEN @phongIndex = 1 THEN N'Nam' ELSE N'Nữ' END;
+        
+    DECLARE @maKH VARCHAR(20) = 'KHT_PDC_' + CAST(@i AS VARCHAR);
+    IF NOT EXISTS (SELECT 1 FROM Khach_hang WHERE maKH = @maKH)
+    BEGIN
+        INSERT INTO Khach_hang(maKH, hoTen, CCCD, SDT, email, gioiTinh)
+        VALUES (@maKH, N'Khách đại diện ' + CAST(@i AS VARCHAR), '0123' + CAST(@i AS VARCHAR), '09' + CAST(@i AS VARCHAR), 'kh' + CAST(@i AS VARCHAR) + '@a.com', @RoomGender);
+    END
+    
+    DECLARE @MaNV VARCHAR(20) = 'NVT03';
+    DECLARE @SoGiuong INT = ABS(CHECKSUM(NEWID())) % 4 + 1;
+    
+    IF @SoGiuong = 1
+    BEGIN
+        IF @i % 3 = 1 SET @TrangThai = N'Chờ phê duyệt';
+        ELSE IF @i % 3 = 2 SET @TrangThai = N'Đã duyệt';
+        ELSE SET @TrangThai = N'Đã hủy / Quá hạn';
+    END
+    ELSE
+    BEGIN
+        IF @i % 4 = 1 SET @TrangThai = N'Chờ bổ sung';
+        ELSE IF @i % 4 = 2 SET @TrangThai = N'Chờ phê duyệt';
+        ELSE IF @i % 4 = 3 SET @TrangThai = N'Đã duyệt';
+        ELSE SET @TrangThai = N'Đã hủy / Quá hạn';
+    END
+
+    IF NOT EXISTS (SELECT 1 FROM Phieu_Dat_Coc WHERE MaPhieu = @MaPhieu)
+    BEGIN
+        INSERT INTO Phieu_Dat_Coc (MaPhieu, maKH, MaNV, MaPhong, NgayDatCoc, SoTienCoc, SoGiuongCoc, HinhThucThanhToan, TrangThai)
+        VALUES (
+            @MaPhieu, @maKH, @MaNV, @MaPhong, DATEADD(DAY, -@i, GETDATE()),
+            CASE WHEN @i % 2 = 0 THEN 1500000.00 ELSE 500000.00 END,
+            @SoGiuong, CASE WHEN @i % 2 = 0 THEN N'Chuyển khoản' ELSE N'Tiền mặt' END, @TrangThai
+        );
+        
+        IF @TrangThai IN (N'Chờ phê duyệt', N'Đã duyệt')
+        BEGIN
+            DECLARE @MaNhomTest VARCHAR(20) = 'NT_PDC_' + CAST(@i AS VARCHAR);
+            IF NOT EXISTS (SELECT 1 FROM Nhom_Thue WHERE MaNhom = @MaNhomTest)
+            BEGIN
+                INSERT INTO Nhom_Thue(MaNhom, SoLuong, NguoiDaiDien) VALUES (@MaNhomTest, @SoGiuong, @maKH);
+                UPDATE Khach_hang SET MaNhom = @MaNhomTest WHERE maKH = @maKH;
+                
+                DECLARE @k INT = 1;
+                WHILE @k < @SoGiuong
+                BEGIN
+                    DECLARE @MemKH VARCHAR(20) = 'KHM_' + CAST(@i AS VARCHAR) + '_' + CAST(@k AS VARCHAR);
+                    INSERT INTO Khach_hang(maKH, hoTen, CCCD, SDT, gioiTinh, MaNhom)
+                    VALUES (@MemKH, N'Thành viên ' + CAST(@k AS VARCHAR) + N' phiếu ' + CAST(@i AS VARCHAR), '011' + CAST(@i AS VARCHAR) + CAST(@k AS VARCHAR), '088' + CAST(@i AS VARCHAR) + CAST(@k AS VARCHAR), @RoomGender, @MaNhomTest);
+                    SET @k = @k + 1;
+                END
+            END
+        END
+    END
+    SET @i = @i + 1;
+END
+
+PRINT N'✅ Xong Bước 4 – 37 phiếu đặt cọc (đủ 5 trạng thái).';
 GO
 
 -- ==============================================================================
