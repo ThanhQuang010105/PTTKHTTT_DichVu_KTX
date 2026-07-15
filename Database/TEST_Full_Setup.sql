@@ -24,13 +24,14 @@ DELETE FROM Lich_xem_phong       WHERE MaLich   LIKE 'LXT%';
 DELETE FROM Dang_ky_thue         WHERE MaDK     LIKE 'DKT%';
 DELETE FROM Giuong               WHERE MaGiuong LIKE 'GT%';
 DELETE FROM Phong                WHERE MaPhong  LIKE 'PT%';
+DELETE FROM Dich_Vu              WHERE MaDV     LIKE 'DV00%'; -- [NEW] Dọn dẹp dịch vụ
 DELETE FROM Nhan_Vien            WHERE MaNV     LIKE 'NVT%';
 DELETE FROM Chi_Nhanh            WHERE MaCN     LIKE 'CNT%';
 PRINT N'✅ Đã dọn dữ liệu test cũ xong.';
 GO
 
 -- ==============================================================================
--- BƯỚC 1: DỮ LIỆU NỀN (Chi nhánh, Nhân viên 4 vai trò, Phòng, Giường)
+-- BƯỚC 1: DỮ LIỆU NỀN (Chi nhánh, Nhân viên, Phòng, Giường, Dịch vụ)
 -- ==============================================================================
 PRINT N'== BƯỚC 1: TẠO DỮ LIỆU NỀN ==';
 
@@ -45,6 +46,13 @@ VALUES
 ('NVT02', 'CNT01', N'Trần Kế Toán',          '0911000002', 'ketoan@homestay.vn',    N'Kế toán',              '123456'),
 ('NVT03', 'CNT01', N'Lê Văn Sale',           '0911000003', 'sale@homestay.vn',      N'Sale',                 '123456'),
 ('NVT04', 'CNT01', N'Phạm Phụ Trách',        '0911000004', 'nvphutrach@homestay.vn',N'Nhân viên phụ trách', '123456');
+
+-- [NEW] Dịch vụ đi kèm (Load lên CheckedListBox)
+INSERT INTO Dich_Vu (MaDV, TenDV, DonGia) VALUES
+('DV001', N'Điện sinh hoạt (kWh)', 3500),
+('DV002', N'Nước sinh hoạt (người)', 100000),
+('DV003', N'Wifi tốc độ cao (tháng)', 50000),
+('DV004', N'Gửi xe máy (tháng)', 120000);
 
 -- 4 Phòng (2 Nam, 2 Nữ)
 INSERT INTO Phong (MaPhong, MaCN, TenPhong, KhuVuc, LoaiPhong, GioiTinhQuyDinh, SucChuaToiDa, GiaThuePhong, TrangThaiPhong, SoLuongGiuong)
@@ -76,10 +84,18 @@ INSERT INTO Thong_tin_cu_tru (maCuTru, diaChiThuongTru, Tinh, QuanHuyen, ngayKha
 VALUES
 ('CTT01',N'12 Lê Lợi, Q1',N'TP.HCM',N'Quận 1','2026-01-10',N'Đã đăng ký'),
 ('CTT02',N'45 Trần Phú',  N'Đà Nẵng',N'Hải Châu','2026-02-01',N'Đã đăng ký'),
-('CTT03',N'99 Nguyễn Huệ',N'TP.HCM',N'Quận 3','2026-03-01',N'Đã đăng ký');
+('CTT03',N'99 Nguyễn Huệ',N'TP.HCM',N'Quận 3','2026-03-01',N'Đã đăng ký'),
+-- [NEW] Dữ liệu chuẩn bị riêng cho tính năng Lập Hợp Đồng (Trạng thái: Đã phê duyệt)
+('CTT04',N'789 Test Lập Hợp Đồng 1',N'TP.HCM',N'Quận 1','2026-07-15',N'Đã phê duyệt'),
+('CTT05',N'101 Test Lập Hợp Đồng 2',N'TP.HCM',N'Quận 3','2026-07-15',N'Đã phê duyệt');
 
 INSERT INTO Nhom_Thue (MaNhom, SoLuong, NguoiDaiDien)
-VALUES ('NTT01',2,'KHT01'),('NTT02',1,'KHT03');
+VALUES 
+('NTT01',2,'KHT01'),
+('NTT02',1,'KHT03'),
+-- [NEW] Nhóm thuê cho dữ liệu mới
+('NTT03',1,'KHT09'),
+('NTT04',1,'KHT10');
 
 INSERT INTO Khach_hang (maKH, MaNhom, maCuTru, hoTen, CCCD, SDT, email, gioiTinh, QuocTich, KhaNangTC)
 VALUES
@@ -90,7 +106,10 @@ VALUES
 ('KHT05', NULL,  NULL,   N'Võ Thị Thu Hương', '079101000005','0909111005','huong.vt@gmail.com', N'Nữ', N'Việt Nam',  N'Trung bình'),
 ('KHT06', NULL,  NULL,   N'Đỗ Hữu Trí',       '079101000006','0909111006','tri.dh@gmail.com',   N'Nam',N'Việt Nam',  N'Tốt'),
 ('KHT07', NULL,  NULL,   N'Phạm Hoàng Oanh',  '079101000007','0909111007','oanh.ph@gmail.com',  N'Nữ', N'Việt Nam',  N'Khá'),
-('KHT08', NULL,  NULL,   N'Tanaka Yuki',       '079101000008','0909111008','yuki@jp.com',        N'Nữ', N'Nhật Bản', N'Tốt');
+('KHT08', NULL,  NULL,   N'Tanaka Yuki',       '079101000008','0909111008','yuki@jp.com',        N'Nữ', N'Nhật Bản', N'Tốt'),
+-- [NEW] Khách hàng chưa có hợp đồng để test Lập Hợp Đồng
+('KHT09','NTT03','CTT04',N'Khách Lập Hợp Đồng 1', '079999000001','0999000001','lap.hd1@test.com', N'Nam',N'Việt Nam', N'Tốt'),
+('KHT10','NTT04','CTT05',N'Khách Lập Hợp Đồng 2', '079999000002','0999000002','lap.hd2@test.com', N'Nữ', N'Việt Nam', N'Tốt');
 
 PRINT N'✅ Xong Bước 2.';
 GO
@@ -129,67 +148,74 @@ VALUES
 ('PDCTEST04','KHT05','NVT03','PT101','2026-07-05',1500000,1,N'Tiền mặt',    N'Chờ bổ sung'),
 ('PDCTEST05','KHT06','NVT03','PT102','2026-06-15',1500000,1,N'Chuyển khoản',N'Đã hủy / Quá hạn'),
 ('PDCTEST06','KHT07','NVT03','PT202','2026-07-10',3000000,1,N'Tiền mặt',    N'Đã duyệt'),
-('PDCTEST07','KHT08','NVT03','PT102','2026-07-12',1500000,1,N'Chuyển khoản',N'Chờ phê duyệt');
+('PDCTEST07','KHT08','NVT03','PT102','2026-07-12',1500000,1,N'Chuyển khoản',N'Chờ phê duyệt'),
+-- [NEW] Phiếu đặt cọc của khách mới chờ Lập hợp đồng
+('PDCTEST08','KHT09','NVT03','PT101','2026-07-15',1500000,1,N'Chuyển khoản',N'Đã thanh toán'),
+('PDCTEST09','KHT10','NVT03','PT102','2026-07-15',1500000,1,N'Tiền mặt',    N'Đã thanh toán');
 
 -- Bổ sung tạo thêm 30 phiếu đặt cọc để có nhiều dữ liệu cho tra cứu và cập nhật hồ sơ
 DECLARE @i INT = 8;
 WHILE @i <= 37
 BEGIN
     DECLARE @MaPhieu VARCHAR(20) = 'PDCTEST' + RIGHT('00' + CAST(@i AS VARCHAR), 2);
-    DECLARE @TrangThai NVARCHAR(50);
-    
-    DECLARE @phongIndex INT = (@i % 2) + 1;
-    DECLARE @MaPhong VARCHAR(20) = CASE WHEN @phongIndex = 1 THEN 'PT101' ELSE 'PT102' END;
-    DECLARE @RoomGender NVARCHAR(10) = CASE WHEN @phongIndex = 1 THEN N'Nam' ELSE N'Nữ' END;
+    -- Skip qua 08 và 09 vì đã được insert cứng ở trên
+    IF @i NOT IN (8, 9)
+    BEGIN
+        DECLARE @TrangThai NVARCHAR(50);
         
-    DECLARE @maKH VARCHAR(20) = 'KHT_PDC_' + CAST(@i AS VARCHAR);
-    IF NOT EXISTS (SELECT 1 FROM Khach_hang WHERE maKH = @maKH)
-    BEGIN
-        INSERT INTO Khach_hang(maKH, hoTen, CCCD, SDT, email, gioiTinh)
-        VALUES (@maKH, N'Khách đại diện ' + CAST(@i AS VARCHAR), '0123' + CAST(@i AS VARCHAR), '09' + CAST(@i AS VARCHAR), 'kh' + CAST(@i AS VARCHAR) + '@a.com', @RoomGender);
-    END
-    
-    DECLARE @MaNV VARCHAR(20) = 'NVT03';
-    DECLARE @SoGiuong INT = ABS(CHECKSUM(NEWID())) % 4 + 1;
-    
-    IF @SoGiuong = 1
-    BEGIN
-        IF @i % 3 = 1 SET @TrangThai = N'Chờ phê duyệt';
-        ELSE IF @i % 3 = 2 SET @TrangThai = N'Đã duyệt';
-        ELSE SET @TrangThai = N'Đã hủy / Quá hạn';
-    END
-    ELSE
-    BEGIN
-        IF @i % 4 = 1 SET @TrangThai = N'Chờ bổ sung';
-        ELSE IF @i % 4 = 2 SET @TrangThai = N'Chờ phê duyệt';
-        ELSE IF @i % 4 = 3 SET @TrangThai = N'Đã duyệt';
-        ELSE SET @TrangThai = N'Đã hủy / Quá hạn';
-    END
-
-    IF NOT EXISTS (SELECT 1 FROM Phieu_Dat_Coc WHERE MaPhieu = @MaPhieu)
-    BEGIN
-        INSERT INTO Phieu_Dat_Coc (MaPhieu, maKH, MaNV, MaPhong, NgayDatCoc, SoTienCoc, SoGiuongCoc, HinhThucThanhToan, TrangThai)
-        VALUES (
-            @MaPhieu, @maKH, @MaNV, @MaPhong, DATEADD(DAY, -@i, GETDATE()),
-            CASE WHEN @i % 2 = 0 THEN 1500000.00 ELSE 500000.00 END,
-            @SoGiuong, CASE WHEN @i % 2 = 0 THEN N'Chuyển khoản' ELSE N'Tiền mặt' END, @TrangThai
-        );
-        
-        IF @TrangThai IN (N'Chờ phê duyệt', N'Đã duyệt')
+        DECLARE @phongIndex INT = (@i % 2) + 1;
+        DECLARE @MaPhong VARCHAR(20) = CASE WHEN @phongIndex = 1 THEN 'PT101' ELSE 'PT102' END;
+        DECLARE @RoomGender NVARCHAR(10) = CASE WHEN @phongIndex = 1 THEN N'Nam' ELSE N'Nữ' END;
+            
+        DECLARE @maKH VARCHAR(20) = 'KHT_PDC_' + CAST(@i AS VARCHAR);
+        IF NOT EXISTS (SELECT 1 FROM Khach_hang WHERE maKH = @maKH)
         BEGIN
-            DECLARE @MaNhomTest VARCHAR(20) = 'NT_PDC_' + CAST(@i AS VARCHAR);
-            IF NOT EXISTS (SELECT 1 FROM Nhom_Thue WHERE MaNhom = @MaNhomTest)
+            INSERT INTO Khach_hang(maKH, hoTen, CCCD, SDT, email, gioiTinh)
+            VALUES (@maKH, N'Khách đại diện ' + CAST(@i AS VARCHAR), '0123' + CAST(@i AS VARCHAR), '09' + CAST(@i AS VARCHAR), 'kh' + CAST(@i AS VARCHAR) + '@a.com', @RoomGender);
+        END
+        
+        DECLARE @MaNV VARCHAR(20) = 'NVT03';
+        DECLARE @SoGiuong INT = ABS(CHECKSUM(NEWID())) % 4 + 1;
+        
+        IF @SoGiuong = 1
+        BEGIN
+            IF @i % 3 = 1 SET @TrangThai = N'Chờ phê duyệt';
+            ELSE IF @i % 3 = 2 SET @TrangThai = N'Đã duyệt';
+            ELSE SET @TrangThai = N'Đã hủy / Quá hạn';
+        END
+        ELSE
+        BEGIN
+            IF @i % 4 = 1 SET @TrangThai = N'Chờ bổ sung';
+            ELSE IF @i % 4 = 2 SET @TrangThai = N'Chờ phê duyệt';
+            ELSE IF @i % 4 = 3 SET @TrangThai = N'Đã duyệt';
+            ELSE SET @TrangThai = N'Đã hủy / Quá hạn';
+        END
+
+        IF NOT EXISTS (SELECT 1 FROM Phieu_Dat_Coc WHERE MaPhieu = @MaPhieu)
+        BEGIN
+            INSERT INTO Phieu_Dat_Coc (MaPhieu, maKH, MaNV, MaPhong, NgayDatCoc, SoTienCoc, SoGiuongCoc, HinhThucThanhToan, TrangThai)
+            VALUES (
+                @MaPhieu, @maKH, @MaNV, @MaPhong, DATEADD(DAY, -@i, GETDATE()),
+                CASE WHEN @i % 2 = 0 THEN 1500000.00 ELSE 500000.00 END,
+                @SoGiuong, CASE WHEN @i % 2 = 0 THEN N'Chuyển khoản' ELSE N'Tiền mặt' END, @TrangThai
+            );
+            
+            IF @TrangThai IN (N'Chờ phê duyệt', N'Đã duyệt')
             BEGIN
-                INSERT INTO Nhom_Thue(MaNhom, SoLuong, NguoiDaiDien) VALUES (@MaNhomTest, @SoGiuong, @maKH);
-                UPDATE Khach_hang SET MaNhom = @MaNhomTest WHERE maKH = @maKH;
-                
-                DECLARE @k INT = 1;
-                WHILE @k < @SoGiuong
+                DECLARE @MaNhomTest VARCHAR(20) = 'NT_PDC_' + CAST(@i AS VARCHAR);
+                IF NOT EXISTS (SELECT 1 FROM Nhom_Thue WHERE MaNhom = @MaNhomTest)
                 BEGIN
-                    DECLARE @MemKH VARCHAR(20) = 'KHM_' + CAST(@i AS VARCHAR) + '_' + CAST(@k AS VARCHAR);
-                    INSERT INTO Khach_hang(maKH, hoTen, CCCD, SDT, gioiTinh, MaNhom)
-                    VALUES (@MemKH, N'Thành viên ' + CAST(@k AS VARCHAR) + N' phiếu ' + CAST(@i AS VARCHAR), '011' + CAST(@i AS VARCHAR) + CAST(@k AS VARCHAR), '088' + CAST(@i AS VARCHAR) + CAST(@k AS VARCHAR), @RoomGender, @MaNhomTest);
-                    SET @k = @k + 1;
+                    INSERT INTO Nhom_Thue(MaNhom, SoLuong, NguoiDaiDien) VALUES (@MaNhomTest, @SoGiuong, @maKH);
+                    UPDATE Khach_hang SET MaNhom = @MaNhomTest WHERE maKH = @maKH;
+                    
+                    DECLARE @k INT = 1;
+                    WHILE @k < @SoGiuong
+                    BEGIN
+                        DECLARE @MemKH VARCHAR(20) = 'KHM_' + CAST(@i AS VARCHAR) + '_' + CAST(@k AS VARCHAR);
+                        INSERT INTO Khach_hang(maKH, hoTen, CCCD, SDT, gioiTinh, MaNhom)
+                        VALUES (@MemKH, N'Thành viên ' + CAST(@k AS VARCHAR) + N' phiếu ' + CAST(@i AS VARCHAR), '011' + CAST(@i AS VARCHAR) + CAST(@k AS VARCHAR), '088' + CAST(@i AS VARCHAR) + CAST(@k AS VARCHAR), @RoomGender, @MaNhomTest);
+                        SET @k = @k + 1;
+                    END
                 END
             END
         END
@@ -210,6 +236,7 @@ VALUES
 ('HDTEST01','KHT01','PT101','PDCTEST01','2026-05-05','2026-06-01','2026-12-01',1500000,N'Đang hiệu lực',N'Hàng tháng',N'Hoàn 100% nếu báo trước 30 ngày',N'Không hút thuốc, không nuôi thú cưng'),
 ('HDTEST02','KHT03','PT201','PDCTEST02','2026-06-05','2026-07-01','2027-07-01',3000000,N'Đang hiệu lực',N'Hàng tháng',N'Hoàn 80% nếu báo trước 30 ngày', N'Không hút thuốc'),
 ('HDTEST03','KHT07','PT202','PDCTEST06','2026-07-15','2026-08-01','2027-02-01',3000000,N'Chờ ký kết',  N'Hàng tháng',N'Hoàn 100% nếu báo trước 15 ngày',N'Không hút thuốc');
+-- Khách CTT04 (KHT09) và CTT05 (KHT10) cố ý KHÔNG ĐƯỢC TẠO HỢP ĐỒNG ở đây để có thể test trên UI.
 
 INSERT INTO Hop_Dong_Dich_Vu (MaHopDong, MaDV)
 SELECT 'HDTEST01', MaDV FROM Dich_Vu WHERE MaDV IN ('DV001','DV002');
@@ -266,12 +293,10 @@ GO
 
 -- ==============================================================================
 -- BƯỚC 8: ĐỐI SOÁT CỌC (test màn hình Kế toán – Đối soát)
--- Hợp đồng HDTEST01 ở trạng thái "Chờ đối soát" để test full flow
 -- ==============================================================================
 PRINT N'== BƯỚC 8: RESET HỢP ĐỒNG CHO TEST ĐỐI SOÁT ==';
 
 UPDATE Hop_Dong_Thue SET TrangThai = N'Chờ đối soát' WHERE MaHopDong = 'HDTEST01';
--- Xóa đối soát cũ nếu có để chạy lại
 DELETE FROM Bang_Doi_Soat_Coc WHERE MaHopDong = 'HDTEST01';
 
 PRINT N'✅ HDTEST01 → Chờ đối soát. Vào màn hình Đối soát cọc, tìm 0909111001 để test.';
@@ -282,7 +307,6 @@ GO
 -- ==============================================================================
 PRINT N'== BƯỚC 9: ĐẢM BẢO TÀI KHOẢN DEMO ==';
 
--- Đảm bảo các alias đăng nhập (email) đúng để NhanVienDAL tìm được
 UPDATE Nhan_Vien SET Email = 'sale'       WHERE MaNV = 'NVT03';
 UPDATE Nhan_Vien SET Email = 'quanly'     WHERE MaNV = 'NVT01';
 UPDATE Nhan_Vien SET Email = 'ketoan'     WHERE MaNV = 'NVT02';
@@ -316,10 +340,10 @@ PRINT N'-----------------------------------------------------';
 PRINT N'ĐĂNG NHẬP:  sale / quanly / ketoan / nvphutrach';
 PRINT N'MẬT KHẨU:   123456';
 PRINT N'-----------------------------------------------------';
-PRINT N'KỊCH BẢN TEST GỢI Ý:';
+PRINT N'KỊCH BẢN TEST GỢI Ý (Đã cập nhật):';
 PRINT N'[Sale]       Đăng ký: DKT01 | Đặt cọc: PDCTEST03 chờ duyệt';
 PRINT N'[QuanLy]     Phê duyệt DKT02 | Biên bản BBT01 | Xem phòng PT101';
 PRINT N'[KeToan]     Đối soát HDTEST01 (tìm 0909111001) | KỳTT KTTT03 chưa đóng';
-PRINT N'[NvPhuTrach] Lập HĐ từ PDCTEST06 | Xem HĐ HDTEST02';
+PRINT N'[NvPhuTrach] Lập HĐ từ khách CTT04, CTT05 | Xem HĐ HDTEST02';
 PRINT N'=====================================================';
 GO
