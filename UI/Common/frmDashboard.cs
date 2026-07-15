@@ -188,7 +188,7 @@ namespace HomeStayDorm.UI.Common
             if (isNvPhuTach)
             {
                 flow.Controls.Add(MakeSectionLabel("HỢP ĐỒNG THUÊ"));
-                flow.Controls.Add(MakeMenuBtn("📄  Lập hợp đồng thuê",           () => ShowComingSoon("Lập hợp đồng thuê (UC19)")));
+                flow.Controls.Add(MakeMenuBtn("📄  Lập hợp đồng thuê",           () => OpenForm(new HomeStayDorm.GUI.frmHopDongThue(), "Lập hợp đồng thuê (UC19)")));
                 flow.Controls.Add(MakeMenuBtn("📃  Thanh lý hợp đồng",           () => ShowComingSoon("Thanh lý hợp đồng (UC20)")));
                 flow.Controls.Add(MakeSeparator());
             }

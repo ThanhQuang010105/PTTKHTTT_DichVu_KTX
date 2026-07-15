@@ -19,6 +19,12 @@ namespace HomeStayDorm.GUI.DatCoc
         {
             cboTrangThai.SelectedIndex = 0; // Select "Tất cả"
             dgvDanhSachPhieuCoc.AutoGenerateColumns = false;
+            
+            // Định dạng cột Tiền cọc hiển thị có dấu phẩy (VD: 500,000) thay vì 500000.00
+            if (dgvDanhSachPhieuCoc.Columns["soTienCoc"] != null)
+            {
+                dgvDanhSachPhieuCoc.Columns["soTienCoc"].DefaultCellStyle.Format = "N0";
+            }
 
             // Tự động load danh sách phiếu đặt cọc khi vừa mở form
             LoadDuLieuBanDau();
